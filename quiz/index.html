@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Who What When Where Why — Quiz 1</title><style>
+    :root{--paper:#fff;--ink:#050505;--muted:#555;--line:#050505;--active:#e4e4e4;--blue:#0057b8;--red:#e1251b;--yellow:#ffd900;--tile:clamp(18px,calc((100vw - 720px)/22),54px);--gap:3px;--mono:"Cascadia Mono",Consolas,"Lucida Console","Courier New",monospace;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;color-scheme:light}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:500;line-height:1.35}.page{display:grid;grid-template-columns:minmax(calc(var(--tile) + var(--gap)),1fr) minmax(280px,640px) minmax(calc(var(--tile) + var(--gap)),1fr);min-height:100vh;column-gap:0;overflow:hidden}.motif{display:grid;grid-template-columns:repeat(11,var(--tile));grid-auto-rows:var(--tile);grid-auto-flow:dense;gap:var(--gap);width:max-content;min-height:100vh;padding:26px 0;background:#fff;background-image:linear-gradient(to right,transparent var(--tile),var(--line) var(--tile)),linear-gradient(to bottom,transparent var(--tile),var(--line) var(--tile));background-origin:content-box;background-size:calc(var(--tile) + var(--gap)) calc(var(--tile) + var(--gap));overflow:hidden}.motif.left{justify-self:end}.motif.right{justify-self:start;transform:scaleX(-1)}.motif-cell{position:relative;min-width:0;background:#fff;overflow:hidden}.motif-cell:before{content:attr(data-num);position:absolute;top:3px;left:4px;font-family:var(--mono);font-size:clamp(7px,.8vw,11px);font-weight:700;line-height:1}.block-blue,.block-red,.block-yellow,.block-black{background:var(--ink)}.block-blue{background:var(--blue)}.block-red{background:var(--red)}.block-yellow{background:var(--yellow)}.block-black{background:var(--ink)}.block-blue:before,.block-red:before,.block-yellow:before,.block-black:before{content:none}.motif.right .motif-cell:before{transform:scaleX(-1)}main{width:100%;padding:26px 18px 42px;background:var(--paper);border-left:4px solid var(--line);border-right:4px solid var(--line);z-index:1}.topbar{margin-bottom:34px;padding:18px 0 16px;border-top:4px solid var(--line);border-bottom:2px solid var(--line)}h1{margin:0;font:700 clamp(30px,7vw,54px)/1.04 var(--mono);letter-spacing:0}.subtitle{margin:4px 0 0;color:var(--muted);font:600 14px/1.35 var(--mono)}.symbol-key{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;font:700 13px/1.2 var(--mono)}.key-item{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:0 8px;border:2px solid var(--line);background:#fff}.key-symbol,.completion-box{position:relative;display:inline-grid;place-items:center;aspect-ratio:1/1;border:2px solid var(--line);background:#fff;color:var(--ink);font-family:var(--mono);font-weight:700;line-height:1}.key-symbol{width:18px}.completion-box{width:34px;border-width:3px;font-size:24px}.status-unattempted{background:#fff;color:var(--ink)}.status-started{background:var(--active);color:var(--ink)}.status-completed{background:var(--line);color:#fff}.key-symbol.status-started:before,.key-symbol.status-completed:before,.key-symbol.status-completed:after,.completion-box.status-started:before,.completion-box.status-completed:before,.completion-box.status-completed:after{content:"";position:absolute;left:16%;right:16%;top:50%;height:2px;background:currentColor;transform:rotate(-45deg);transform-origin:center}.key-symbol.status-completed:after,.completion-box.status-completed:after{transform:rotate(45deg)}.puzzle-list{display:grid;gap:12px}.puzzle-link{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:14px;min-height:92px;padding:14px;border:4px solid var(--line);color:var(--ink);background:#fff;text-decoration:none}.puzzle-link:hover,.puzzle-link:focus-visible{filter:brightness(.94);outline:0}.puzzle-unattempted{background:#fff;color:var(--ink)}.puzzle-started{background:var(--active);color:var(--ink)}.puzzle-completed{background:var(--line);color:#fff}.puzzle-completed .puzzle-meta{color:#fff}.puzzle-completed .open-label{border-color:#fff}.puzzle-link .completion-box.status-unattempted,.puzzle-link .completion-box.status-started,.puzzle-link .completion-box.status-completed{background:#fff;color:var(--ink)}.puzzle-copy{min-width:0}.puzzle-title{display:block;font:700 clamp(17px,3.2vw,25px)/1.12 var(--mono)}.puzzle-meta{display:block;margin-top:4px;color:var(--muted);font-size:14px}.open-label{min-height:32px;padding:5px 10px;border:2px solid var(--line);font:700 14px/1.2 var(--mono);white-space:nowrap}.archive-note{margin-top:18px;color:var(--muted);font:600 13px/1.35 var(--mono)}@media(max-width:820px){:root{--tile:18px}.page{grid-template-columns:calc((var(--tile) * 2) + var(--gap)) minmax(0,1fr) calc((var(--tile) * 2) + var(--gap))}.motif{grid-template-columns:repeat(2,var(--tile));grid-auto-rows:var(--tile);width:calc((var(--tile) * 2) + var(--gap));padding:16px 0}.motif-cell:before{font-size:7px;left:3px}main{padding:16px 12px 36px}.topbar{margin-bottom:22px}.puzzle-link{grid-template-columns:38px 1fr;gap:12px}.open-label{grid-column:2;width:fit-content}}
+  
+button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(--line);border-radius:0;background:#fff;color:var(--ink);min-height:36px;padding:6px 10px;font:700 14px/1.2 var(--mono);cursor:pointer}button:hover{background:#eee}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}button:disabled{opacity:.55;cursor:default}.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}.dark{background:var(--ink);color:#fff}.dark:hover{background:#222}.theme-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:18px 0}.theme-nav a{border:2px solid var(--line);padding:10px 2px;text-align:center;color:var(--ink);text-decoration:none;font:700 14px var(--mono)}.theme-nav a:hover{background:var(--active)}.edition{font:700 18px var(--mono)}.intro,.round-description{color:var(--muted);font-size:15px}.round{margin:28px 0;scroll-margin-top:16px}.round-header{border:4px solid var(--line);padding:12px 14px;background:#fff}.round:nth-child(3n+1) .round-header{background:rgba(0,87,184,.18)}.round:nth-child(3n+2) .round-header{background:rgba(225,37,27,.16)}.round:nth-child(3n) .round-header{background:rgba(255,217,0,.22)}h2{margin:0;font:700 25px/1.1 var(--mono)}.round-meta{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font:600 13px var(--mono)}.question{padding:20px 0;border-bottom:2px solid var(--line)}.question-top{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}.number{width:34px;height:34px;border:3px solid var(--line);display:grid;place-items:center;font:700 18px var(--mono)}.prompt{margin:3px 0 14px;font-size:17px}.placeholder{color:var(--muted);font-style:italic}.guess{width:100%;border:2px solid var(--line);border-radius:0;padding:10px;background:#fff;color:var(--ink);font-size:16px}.answer-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.answer{padding:12px;border:2px solid var(--line);background:var(--active);margin:10px 0 0}.answer p{margin:5px 0}.mark[aria-pressed=true]{background:var(--ink);color:#fff}.score-panel{border:4px solid var(--line);padding:18px}.score-number{font:700 42px/1.1 var(--mono);margin:10px 0}.status{font:600 13px var(--mono);color:var(--muted);min-height:18px}.footer{margin-top:22px;border-top:2px solid var(--line);padding-top:12px;font:600 13px var(--mono);color:var(--muted)}[hidden]{display:none!important}@media(max-width:480px){h1{font-size:29px}.theme-nav{gap:3px}.theme-nav a{font-size:11px}.question-top{grid-template-columns:28px 1fr;gap:8px}.number{width:28px;height:28px;font-size:14px}.round-header{padding:10px}.prompt{font-size:16px}}@media print{.motif,.toolbar,.theme-nav,.answer-controls,.status,.intro,.footer{display:none!important}.page{display:block}main{border:0;padding:0}.question{break-inside:avoid}.round-header{break-after:avoid}.guess{height:40px}.answer{display:none}.score-panel{break-inside:avoid}h1{font-size:28px}}
+.motif-shell{position:relative;overflow:hidden}.motif{position:absolute;top:0;bottom:0;min-height:0;align-content:start}.motif.left{right:0}.motif.right{left:0}.motif-cell:before{content:none}.prompt{font:500 17px/1.5 var(--mono)}.placeholder{font-style:normal}.theme-subtitle{margin:8px 0 12px;font:600 13px/1.35 var(--mono);color:var(--ink)}@media print{.motif-shell{display:none}.question{min-height:95px}}
+</style></head>
+<body><div class="page"><aside class="motif-shell" aria-hidden="true"><div class="motif left"></div></aside><main>
+<header class="topbar"><h1>Who What When Where Why</h1><p class="subtitle">Five themes. Twenty-five questions. Set by Harry Topper.</p></header>
+<p class="edition">Quiz 1</p><p class="intro">Five questions each on Who, What, When, Where and Why. Make your guess, reveal the answer, then mark the ones you got right.</p>
+<p class="intro">The first quiz is coming soon. All 25 question slots are ready.</p>
+<nav id="themes" class="theme-nav" aria-label="Jump to a theme"></nav>
+<div class="toolbar"><button id="print" class="dark" type="button">Print</button><button id="reset" type="button">Reset quiz</button></div>
+<div id="reset-confirm" hidden><p>Clear all answers, reveals and scores for this quiz?</p><div class="toolbar"><button id="confirm-reset" type="button">Clear progress</button><button id="cancel-reset" type="button">Keep progress</button></div></div>
+<p id="save-status" class="status" role="status">Reveals and scores are saved on this browser when available.</p>
+<div id="rounds"></div>
+<section class="score-panel" aria-labelledby="score-title"><h2 id="score-title">Your score</h2><p id="score" class="score-number" aria-live="polite">0 / 25</p><p id="progress" class="status">0 of 25 revealed</p><p class="intro">One point per correct answer. Score yourself after revealing each answer.</p></section>
+<footer class="footer">Who What When Where Why · Quiz 1 · Offline edition</footer>
+<noscript><p>This quiz needs JavaScript enabled to display its 25 questions.</p></noscript>
+</main><aside class="motif-shell" aria-hidden="true"><div class="motif right"></div></aside></div>
+<!-- AUTHOR: Populate question, answer and explanation in this JSON. Keep the 25 IDs and five groups. Change id for each new edition to give it separate saved progress. -->
+<script id="quiz-data" type="application/json">{
+  "id": "wwwww-001",
+  "title": "Who What When Where Why",
+  "edition": 1,
+  "date": "",
+  "themes": [
+    {
+      "title": "Who",
+      "subtitle": "Names dropped. Points earned.",
+      "description": "People, personalities and identities.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 2,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 3,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 4,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 5,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "title": "What",
+      "subtitle": "What a thing to know.",
+      "description": "Things, ideas and discoveries.",
+      "questions": [
+        {
+          "id": 6,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 7,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 8,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 9,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 10,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "title": "When",
+      "subtitle": "Timing is everything.",
+      "description": "Dates, eras and moments.",
+      "questions": [
+        {
+          "id": 11,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 12,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 13,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 14,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 15,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "title": "Where",
+      "subtitle": "Wish you were here.",
+      "description": "Places, locations and destinations.",
+      "questions": [
+        {
+          "id": 16,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 17,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 18,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 19,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 20,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "title": "Why",
+      "subtitle": "Because we said so.",
+      "description": "Reasons, causes and explanations.",
+      "questions": [
+        {
+          "id": 21,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 22,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 23,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 24,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        },
+        {
+          "id": 25,
+          "question": "",
+          "answer": "",
+          "explanation": ""
+        }
+      ]
+    }
+  ]
+}</script>
+<script>const motifPattern=[{cls:"block-black",col:3,row:2},{},{},{},{},{cls:"block-red",col:3,row:3},{},{},{},{},{cls:"block-yellow",col:4,row:3},{},{},{},{cls:"block-blue",col:2,row:5},{},{},{},{},{cls:"block-black",col:3,row:2},{},{},{},{},{},{},{},{cls:"block-red",col:2,row:3},{},{},{},{},{},{cls:"block-yellow",col:3,row:2},{},{},{},{},{cls:"block-blue",col:4,row:2},{},{},{},{},{},{},{},{},{cls:"block-black",col:2,row:4},{},{},{},{},{},{},{cls:"block-red",col:3,row:2},{},{},{},{},{cls:"block-yellow",col:2,row:3},{},{},{},{},{},{},{},{cls:"block-blue",col:2,row:3},{},{},{cls:"block-black",col:3,row:2},{},{},{},{},{},{},{},{cls:"block-red",col:2,row:2}];
+    const mobileMotifPattern=[{cls:"block-blue",row:2},{},{cls:"block-yellow"},{cls:"block-red",row:2},{},{},{cls:"block-black"},{},{},{cls:"block-yellow",row:2},{cls:"block-blue"},{},{},{cls:"block-black",row:2},{cls:"block-red"},{},{},{},{cls:"block-blue",row:2},{cls:"block-yellow"},{},{},{cls:"block-black"},{},{cls:"block-red",row:2},{},{},{cls:"block-yellow"},{cls:"block-blue"},{},{},{}];
+    const motifMedia=window.matchMedia("(max-width: 820px)");
+    function renderMotifs(){const pattern=motifMedia.matches?mobileMotifPattern:motifPattern;document.querySelectorAll(".motif").forEach((motif)=>{motif.textContent="";for(let repeat=0;repeat<Math.ceil((document.querySelector("main").getBoundingClientRect().height / (parseFloat(getComputedStyle(motif).gridAutoRows)+3)+8)*(motifMedia.matches?2:11)/pattern.length);repeat+=1){pattern.forEach((item)=>{const cell=document.createElement("span");cell.className=`motif-cell${item.cls?` ${item.cls}`:""}`;if(item.col)cell.style.gridColumn=`span ${item.col}`;if(item.row)cell.style.gridRow=`span ${item.row}`;motif.appendChild(cell);});}})}
+    renderMotifs();motifMedia.addEventListener?.("change",renderMotifs);
+
+const quiz=JSON.parse(document.getElementById("quiz-data").textContent);
+const questions=quiz.themes.flatMap(t=>t.questions);
+const storageKey="who-what-when-where-why:"+quiz.id;
+let state={revealed:{},correct:{}};
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||"null");if(saved&&typeof saved==="object")for(const key of ["revealed","correct"])if(saved[key]&&typeof saved[key]==="object")state[key]=saved[key]}catch{}
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(state));document.getElementById("save-status").textContent="Progress saved on this browser."}catch{document.getElementById("save-status").textContent="Browser saving is unavailable. Keep this page open to retain progress."}}
+function update(){const score=questions.filter(q=>q.answer.trim()&&state.correct[q.id]).length;const filled=questions.filter(q=>state.revealed[q.id]).length;const available=questions.filter(q=>q.answer.trim()).length;document.getElementById("score").textContent=score+" / 25";document.getElementById("progress").textContent=filled+" of 25 revealed · "+available+" answers available";quiz.themes.forEach((t,i)=>{document.getElementById("round-score-"+i).textContent=t.questions.filter(q=>q.answer.trim()&&state.correct[q.id]).length+" / 5 correct"});}
+function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node}
+quiz.themes.forEach((theme,index)=>{
+ const link=el("a","",theme.title);link.href="#theme-"+index;document.getElementById("themes").append(link);
+ const section=el("section","round");section.id="theme-"+index;section.setAttribute("aria-labelledby","heading-"+index);
+ const header=el("header","round-header");const heading=el("h2","",theme.title);heading.id="heading-"+index;header.append(heading,el("p","theme-subtitle",theme.subtitle||"Witty subtitle to come."));const meta=el("div","round-meta");meta.append(el("span","","Questions "+(index*5+1)+"–"+(index*5+5)));const rs=el("span","","0 / 5 correct");rs.id="round-score-"+index;meta.append(rs);header.append(meta);section.append(header,el("p","round-description",theme.description));
+ theme.questions.forEach(q=>{
+ const article=el("article","question");const top=el("div","question-top");top.append(el("span","number",q.id));const content=el("div");const prompt=el("p",q.question?"prompt":"prompt placeholder",q.question||theme.title+" question "+((q.id-1)%5+1)+" — coming soon.");prompt.id="question-"+q.id;content.append(prompt);
+  const controls=el("div","answer-controls");const reveal=el("button","dark","Reveal answer");reveal.type="button";reveal.setAttribute("aria-controls","answer-"+q.id);
+ const answer=el("div","answer");answer.id="answer-"+q.id;answer.hidden=!state.revealed[q.id];answer.append(el("strong","",q.answer||"Answer to be added."));if(q.explanation)answer.append(el("p","",q.explanation));
+ const mark=el("button","mark","I got it right");mark.type="button";mark.disabled=!q.answer.trim()||answer.hidden;mark.setAttribute("aria-label","Mark question "+q.id+" correct");mark.setAttribute("aria-pressed",String(Boolean(q.answer.trim()&&state.correct[q.id])));
+ function syncReveal(){reveal.textContent=answer.hidden?"Reveal answer":"Hide answer";reveal.setAttribute("aria-expanded",String(!answer.hidden));mark.disabled=!q.answer.trim()||answer.hidden}syncReveal();
+ reveal.addEventListener("click",()=>{answer.hidden=!answer.hidden;state.revealed[q.id]=!answer.hidden;syncReveal();save();update()});
+ mark.addEventListener("click",()=>{state.correct[q.id]=!state.correct[q.id];mark.setAttribute("aria-pressed",String(state.correct[q.id]));save();update()});controls.append(reveal,mark);content.append(controls,answer);top.append(content);article.append(top);section.append(article);
+ });document.getElementById("rounds").append(section);
+});
+document.getElementById("print").addEventListener("click",()=>window.print());
+document.getElementById("reset").addEventListener("click",()=>{document.getElementById("reset-confirm").hidden=false});
+document.getElementById("cancel-reset").addEventListener("click",()=>{document.getElementById("reset-confirm").hidden=true});
+document.getElementById("confirm-reset").addEventListener("click",()=>{state={revealed:{},correct:{}};save();location.reload()});
+update();
+new ResizeObserver(renderMotifs).observe(document.querySelector("main"));
+</script></body></html>
