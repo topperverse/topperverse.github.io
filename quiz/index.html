@@ -4,23 +4,18 @@
   
 button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(--line);border-radius:0;background:#fff;color:var(--ink);min-height:36px;padding:6px 10px;font:700 14px/1.2 var(--mono);cursor:pointer}button:hover{background:#eee}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}button:disabled{opacity:.55;cursor:default}.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}.dark{background:var(--ink);color:#fff}.dark:hover{background:#222}.theme-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:18px 0}.theme-nav a{border:2px solid var(--line);padding:10px 2px;text-align:center;color:var(--ink);text-decoration:none;font:700 14px var(--mono)}.theme-nav a:hover{background:var(--active)}.edition{font:700 18px var(--mono)}.intro,.round-description{color:var(--muted);font-size:15px}.round{margin:28px 0;scroll-margin-top:16px}.round-header{border:4px solid var(--line);padding:12px 14px;background:#fff}.round:nth-child(3n+1) .round-header{background:rgba(0,87,184,.18)}.round:nth-child(3n+2) .round-header{background:rgba(225,37,27,.16)}.round:nth-child(3n) .round-header{background:rgba(255,217,0,.22)}h2{margin:0;font:700 25px/1.1 var(--mono)}.round-meta{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font:600 13px var(--mono)}.question{padding:20px 0;border-bottom:2px solid var(--line)}.question-top{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}.number{width:34px;height:34px;border:3px solid var(--line);display:grid;place-items:center;font:700 18px var(--mono)}.prompt{margin:3px 0 14px;font-size:17px}.placeholder{color:var(--muted);font-style:italic}.guess{width:100%;border:2px solid var(--line);border-radius:0;padding:10px;background:#fff;color:var(--ink);font-size:16px}.answer-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.answer{padding:12px;border:2px solid var(--line);background:var(--active);margin:10px 0 0}.answer p{margin:5px 0}.mark[aria-pressed=true]{background:var(--ink);color:#fff}.score-panel{border:4px solid var(--line);padding:18px}.score-number{font:700 42px/1.1 var(--mono);margin:10px 0}.status{font:600 13px var(--mono);color:var(--muted);min-height:18px}.footer{margin-top:22px;border-top:2px solid var(--line);padding-top:12px;font:600 13px var(--mono);color:var(--muted)}[hidden]{display:none!important}@media(max-width:480px){h1{font-size:29px}.theme-nav{gap:3px}.theme-nav a{font-size:11px}.question-top{grid-template-columns:28px 1fr;gap:8px}.number{width:28px;height:28px;font-size:14px}.round-header{padding:10px}.prompt{font-size:16px}}@media print{.motif,.toolbar,.theme-nav,.answer-controls,.status,.intro,.footer{display:none!important}.page{display:block}main{border:0;padding:0}.question{break-inside:avoid}.round-header{break-after:avoid}.guess{height:40px}.answer{display:none}.score-panel{break-inside:avoid}h1{font-size:28px}}
 .motif-shell{position:relative;overflow:hidden}.motif{position:absolute;top:0;bottom:0;min-height:0;align-content:start}.motif.left{right:0}.motif.right{left:0}.motif-cell:before{content:none}.prompt{font:500 17px/1.5 var(--mono)}.placeholder{font-style:normal}.theme-subtitle{margin:8px 0 12px;font:600 13px/1.35 var(--mono);color:var(--ink)}@media print{.motif-shell{display:none}.question{min-height:95px}}
-</style></head>
+.prompt{color:var(--ink)}.choices{display:grid;gap:8px}.choice{white-space:normal;text-align:left;justify-content:flex-start;line-height:1.4;padding:10px}.choice:disabled{opacity:1}.choice-correct{background:var(--ink);color:#fff}.choice-incorrect{background:var(--active);text-decoration:line-through}.choices+.answer{font-family:var(--mono)}#reset{margin-top:12px}</style></head>
 <body><div class="page"><aside class="motif-shell" aria-hidden="true"><div class="motif left"></div></aside><main>
-<header class="topbar"><h1>Who What When Where Why</h1><p class="subtitle">Five themes. Twenty-five questions. Set by Harry Topper.</p></header>
-<p class="edition">Quiz 1</p><p class="intro">Five questions each on Who, What, When, Where and Why. Make your guess, reveal the answer, then mark the ones you got right.</p>
-<p class="intro">The first quiz is coming soon. All 25 question slots are ready.</p>
-<nav id="themes" class="theme-nav" aria-label="Jump to a theme"></nav>
-<div class="toolbar"><button id="print" class="dark" type="button">Print</button><button id="reset" type="button">Reset quiz</button></div>
-<div id="reset-confirm" hidden><p>Clear all answers, reveals and scores for this quiz?</p><div class="toolbar"><button id="confirm-reset" type="button">Clear progress</button><button id="cancel-reset" type="button">Keep progress</button></div></div>
-<p id="save-status" class="status" role="status">Reveals and scores are saved on this browser when available.</p>
+<header class="topbar"><h1>Who What When Where Why</h1><p class="subtitle">Let’s get quizzical, quizzical</p></header>
 <div id="rounds"></div>
-<section class="score-panel" aria-labelledby="score-title"><h2 id="score-title">Your score</h2><p id="score" class="score-number" aria-live="polite">0 / 25</p><p id="progress" class="status">0 of 25 revealed</p><p class="intro">One point per correct answer. Score yourself after revealing each answer.</p></section>
+<section class="score-panel" aria-labelledby="score-title"><h2 id="score-title">Your score</h2><p id="score" class="score-number" aria-live="polite">0 / 25</p><p id="progress" class="status">0 of 25 revealed</p><button id="reset" type="button">Reset quiz</button>
+<div id="reset-confirm" hidden><p>Clear all answers and scores?</p><button id="confirm-reset" type="button">Clear progress</button> <button id="cancel-reset" type="button">Keep progress</button></div><p id="save-status" class="status" role="status"></p></section>
 <footer class="footer">Who What When Where Why · Quiz 1 · Offline edition</footer>
 <noscript><p>This quiz needs JavaScript enabled to display its 25 questions.</p></noscript>
 </main><aside class="motif-shell" aria-hidden="true"><div class="motif right"></div></aside></div>
 <!-- AUTHOR: Populate question, answer and explanation in this JSON. Keep the 25 IDs and five groups. Change id for each new edition to give it separate saved progress. -->
 <script id="quiz-data" type="application/json">{
-  "id": "wwwww-001",
+  "id": "wwwww-001-populated",
   "title": "Who What When Where Why",
   "edition": 1,
   "date": "",
@@ -32,32 +27,39 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
       "questions": [
         {
           "id": 1,
-          "question": "",
-          "answer": "",
+          "question": "What name is commonly given to murder mysteries centred on uncovering the identity of the killer?",
+          "answer": "Whodunnit",
           "explanation": ""
         },
         {
           "id": 2,
-          "question": "",
-          "answer": "",
+          "question": "Which actor with a breakout role in Sex Education plays the Fifteenth Doctor Who?",
+          "answer": "Ncuti Gatwa",
           "explanation": ""
         },
         {
           "id": 3,
-          "question": "",
-          "answer": "",
+          "question": "Which fictional fashion mogul in a 2001 film claims to have invented the piano necktie?",
+          "answer": "Mugatu, played by Will Ferrell in Zoolander",
           "explanation": ""
         },
         {
           "id": 4,
-          "question": "",
-          "answer": "",
-          "explanation": ""
+          "question": "Who is not one of the four faces carved into Mount Rushmore?",
+          "answer": "Alexander Hamilton. George Washington was the fourth.",
+          "explanation": "",
+          "options": [
+            "Abraham Lincoln",
+            "Alexander Hamilton",
+            "Thomas Jefferson",
+            "Theodore Roosevelt"
+          ],
+          "correctOption": 1
         },
         {
           "id": 5,
-          "question": "",
-          "answer": "",
+          "question": "Who famously designed the Nazis’ uniforms, and still gives his name to a fashion brand today?",
+          "answer": "HUGO BOSS",
           "explanation": ""
         }
       ]
@@ -69,32 +71,32 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
       "questions": [
         {
           "id": 6,
-          "question": "",
-          "answer": "",
+          "question": "What creature gives its Italian name to both a cocktail and an iconic motor-scooter?",
+          "answer": "Wasp, as in Vespa",
           "explanation": ""
         },
         {
           "id": 7,
-          "question": "",
-          "answer": "",
+          "question": "What antidote does Harry Potter shove down Ron’s throat to save him from poisoning in The Half-Blood Prince?",
+          "answer": "A bezoar",
           "explanation": ""
         },
         {
           "id": 8,
-          "question": "",
-          "answer": "",
+          "question": "What process, involving a particular metal, makes both Mars and Uluru appear red?",
+          "answer": "Oxidisation, or rusting, of iron",
           "explanation": ""
         },
         {
           "id": 9,
-          "question": "",
-          "answer": "",
+          "question": "What is a monotreme?",
+          "answer": "An egg-laying mammal",
           "explanation": ""
         },
         {
           "id": 10,
-          "question": "",
-          "answer": "",
+          "question": "What four notes make up a D Minor 7 chord?",
+          "answer": "D, F, A and C",
           "explanation": ""
         }
       ]
@@ -106,32 +108,32 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
       "questions": [
         {
           "id": 11,
-          "question": "",
-          "answer": "",
+          "question": "To the nearest hundred million years, when did the Jurassic period begin?",
+          "answer": "200 million years ago",
           "explanation": ""
         },
         {
           "id": 12,
-          "question": "",
-          "answer": "",
+          "question": "In what millennium was steel first created by humans?",
+          "answer": "2nd millennium BCE, i.e. 1000–2000 BCE",
           "explanation": ""
         },
         {
           "id": 13,
-          "question": "",
-          "answer": "",
+          "question": "In what century did the Inca Empire reach its peak?",
+          "answer": "16th century, i.e. the 1500s",
           "explanation": ""
         },
         {
           "id": 14,
-          "question": "",
-          "answer": "",
+          "question": "In what decade was the latex condom invented?",
+          "answer": "1920s",
           "explanation": ""
         },
         {
           "id": 15,
-          "question": "",
-          "answer": "",
+          "question": "In what year was The King’s Speech awarded Best Picture at the Oscars; Osama bin Laden killed in a US raid; and the game Minecraft launched?",
+          "answer": "2011",
           "explanation": ""
         }
       ]
@@ -143,32 +145,40 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
       "questions": [
         {
           "id": 16,
-          "question": "",
-          "answer": "",
+          "question": "Where is the largest port by container volume outside of East Asia?",
+          "answer": "Rotterdam, Netherlands — 8th largest in the world. Next largest outside East Asia is Los Angeles, at 10th.",
           "explanation": ""
         },
         {
           "id": 17,
-          "question": "",
-          "answer": "",
-          "explanation": ""
+          "question": "Where would you find a pedicel?",
+          "answer": "On a flower, where it meets the stem.",
+          "explanation": "",
+          "options": [
+            "On a flower, where it meets the stem",
+            "On Amazon, as a Beauty & Personal Care product",
+            "On an offshore oil rig, as part of the wellhead structure",
+            "In the Large Hadron Collider, in an array of over a million micro-sensors"
+          ],
+          "correctOption": 0
         },
         {
           "id": 18,
-          "question": "",
-          "answer": "",
-          "explanation": ""
+          "question": "Australia is one of seven countries who lay claim to a sector of Antarctica. Name four of the six others.",
+          "answer": "Four of: New Zealand, Chile, Argentina, France, UK and Norway. Bonus point: Norway.",
+          "explanation": "",
+          "bonus": "Norway"
         },
         {
           "id": 19,
-          "question": "",
-          "answer": "",
+          "question": "In which city is techno widely thought to have originated?",
+          "answer": "Detroit, Michigan, in the early 1980s",
           "explanation": ""
         },
         {
           "id": 20,
-          "question": "",
-          "answer": "",
+          "question": "Where was the first Apple Store outside of the US opened in 2003?",
+          "answer": "Tokyo, Japan",
           "explanation": ""
         }
       ]
@@ -180,32 +190,32 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
       "questions": [
         {
           "id": 21,
-          "question": "",
-          "answer": "",
+          "question": "Why did French football player Zinedine Zidane get a red card in the 2006 FIFA World Cup Final against Italy?",
+          "answer": "For headbutting an Italian defender",
           "explanation": ""
         },
         {
           "id": 22,
-          "question": "",
-          "answer": "",
+          "question": "Why was European airspace almost entirely shut down for six days during 2010?",
+          "answer": "A volcanic eruption in Iceland",
           "explanation": ""
         },
         {
           "id": 23,
-          "question": "",
-          "answer": "",
+          "question": "Why is the Spartan Queen Helen, from Homer’s Iliad, known as “the face that launched a thousand ships”?",
+          "answer": "Because she ran away with Prince Paris of Troy, prompting the Greeks to launch a seaborne invasion of the rival city",
           "explanation": ""
         },
         {
           "id": 24,
-          "question": "",
-          "answer": "",
+          "question": "Why is Adidas called Adidas?",
+          "answer": "It is a portmanteau of the German creator’s name, Adi Dassler",
           "explanation": ""
         },
         {
           "id": 25,
-          "question": "",
-          "answer": "",
+          "question": "Why did Vietnam ban the Barbie film in 2023? Hint: it has something to do with a contested map.",
+          "answer": "Vietnamese authorities believed the film depicted a map endorsing China’s disputed territorial claims in the South China Sea",
           "explanation": ""
         }
       ]
@@ -221,29 +231,37 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
 const quiz=JSON.parse(document.getElementById("quiz-data").textContent);
 const questions=quiz.themes.flatMap(t=>t.questions);
 const storageKey="who-what-when-where-why:"+quiz.id;
-let state={revealed:{},correct:{}};
-try{const saved=JSON.parse(localStorage.getItem(storageKey)||"null");if(saved&&typeof saved==="object")for(const key of ["revealed","correct"])if(saved[key]&&typeof saved[key]==="object")state[key]=saved[key]}catch{}
+let state={revealed:{},correct:{},choices:{},bonus:{}};
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||"null");if(saved&&typeof saved==="object")for(const key of ["revealed","correct","choices","bonus"])if(saved[key]&&typeof saved[key]==="object")state[key]=saved[key]}catch{}
 function save(){try{localStorage.setItem(storageKey,JSON.stringify(state));document.getElementById("save-status").textContent="Progress saved on this browser."}catch{document.getElementById("save-status").textContent="Browser saving is unavailable. Keep this page open to retain progress."}}
-function update(){const score=questions.filter(q=>q.answer.trim()&&state.correct[q.id]).length;const filled=questions.filter(q=>state.revealed[q.id]).length;const available=questions.filter(q=>q.answer.trim()).length;document.getElementById("score").textContent=score+" / 25";document.getElementById("progress").textContent=filled+" of 25 revealed · "+available+" answers available";quiz.themes.forEach((t,i)=>{document.getElementById("round-score-"+i).textContent=t.questions.filter(q=>q.answer.trim()&&state.correct[q.id]).length+" / 5 correct"});}
+function update(){const score=questions.filter(q=>q.answer.trim()&&state.correct[q.id]).length;const filled=questions.filter(q=>state.revealed[q.id]).length;const available=questions.filter(q=>q.answer.trim()).length;document.getElementById("score").textContent=score+" / 25"+(state.bonus[18]?" + 1 bonus":"");document.getElementById("progress").textContent=filled+" of 25 revealed · "+available+" answers available";quiz.themes.forEach((t,i)=>{document.getElementById("round-score-"+i).textContent=t.questions.filter(q=>q.answer.trim()&&state.correct[q.id]).length+" / 5 correct"});}
 function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node}
 quiz.themes.forEach((theme,index)=>{
- const link=el("a","",theme.title);link.href="#theme-"+index;document.getElementById("themes").append(link);
+
  const section=el("section","round");section.id="theme-"+index;section.setAttribute("aria-labelledby","heading-"+index);
- const header=el("header","round-header");const heading=el("h2","",theme.title);heading.id="heading-"+index;header.append(heading,el("p","theme-subtitle",theme.subtitle||"Witty subtitle to come."));const meta=el("div","round-meta");meta.append(el("span","","Questions "+(index*5+1)+"–"+(index*5+5)));const rs=el("span","","0 / 5 correct");rs.id="round-score-"+index;meta.append(rs);header.append(meta);section.append(header,el("p","round-description",theme.description));
+ const header=el("header","round-header");const heading=el("h2","",theme.title);heading.id="heading-"+index;header.append(heading,el("p","theme-subtitle",theme.subtitle||"Witty subtitle to come."));const meta=el("div","round-meta");meta.append(el("span","","Questions "+(index*5+1)+"–"+(index*5+5)));const rs=el("span","","0 / 5 correct");rs.id="round-score-"+index;meta.append(rs);header.append(meta);section.append(header);
  theme.questions.forEach(q=>{
  const article=el("article","question");const top=el("div","question-top");top.append(el("span","number",q.id));const content=el("div");const prompt=el("p",q.question?"prompt":"prompt placeholder",q.question||theme.title+" question "+((q.id-1)%5+1)+" — coming soon.");prompt.id="question-"+q.id;content.append(prompt);
+
+ if(q.options){
+ const options=el("div","choices");const feedback=el("div","answer");feedback.setAttribute("role","status");feedback.hidden=true;
+ const buttons=q.options.map((option,i)=>{const b=el("button","choice",String.fromCharCode(65+i)+". "+option);b.type="button";b.setAttribute("aria-pressed","false");b.addEventListener("click",()=>{if(Number.isInteger(state.choices[q.id]))return;state.choices[q.id]=i;state.revealed[q.id]=true;state.correct[q.id]=i===q.correctOption;syncChoice();save();update()});options.append(b);return b});
+ function syncChoice(){const choice=state.choices[q.id];if(!Number.isInteger(choice))return;buttons.forEach((b,i)=>{b.disabled=true;b.setAttribute("aria-pressed",String(i===choice));if(i===choice)b.classList.add(choice===q.correctOption?"choice-correct":"choice-incorrect")});feedback.hidden=false;feedback.textContent=(choice===q.correctOption?"Correct. ":"Incorrect. ")+"You chose "+String.fromCharCode(65+choice)+": "+q.options[choice]+". Answer: "+q.answer}
+ syncChoice();content.append(options,feedback);top.append(content);article.append(top);section.append(article);return;
+ }
   const controls=el("div","answer-controls");const reveal=el("button","dark","Reveal answer");reveal.type="button";reveal.setAttribute("aria-controls","answer-"+q.id);
  const answer=el("div","answer");answer.id="answer-"+q.id;answer.hidden=!state.revealed[q.id];answer.append(el("strong","",q.answer||"Answer to be added."));if(q.explanation)answer.append(el("p","",q.explanation));
  const mark=el("button","mark","I got it right");mark.type="button";mark.disabled=!q.answer.trim()||answer.hidden;mark.setAttribute("aria-label","Mark question "+q.id+" correct");mark.setAttribute("aria-pressed",String(Boolean(q.answer.trim()&&state.correct[q.id])));
  function syncReveal(){reveal.textContent=answer.hidden?"Reveal answer":"Hide answer";reveal.setAttribute("aria-expanded",String(!answer.hidden));mark.disabled=!q.answer.trim()||answer.hidden}syncReveal();
  reveal.addEventListener("click",()=>{answer.hidden=!answer.hidden;state.revealed[q.id]=!answer.hidden;syncReveal();save();update()});
- mark.addEventListener("click",()=>{state.correct[q.id]=!state.correct[q.id];mark.setAttribute("aria-pressed",String(state.correct[q.id]));save();update()});controls.append(reveal,mark);content.append(controls,answer);top.append(content);article.append(top);section.append(article);
+ mark.addEventListener("click",()=>{state.correct[q.id]=!state.correct[q.id];mark.setAttribute("aria-pressed",String(state.correct[q.id]));save();update()});controls.append(reveal,mark);content.append(controls,answer);
+ if(q.bonus){const bonus=el("button","mark","Bonus: I named Norway");bonus.type="button";bonus.setAttribute("aria-pressed",String(Boolean(state.bonus[q.id])));bonus.hidden=answer.hidden;reveal.addEventListener("click",()=>{bonus.hidden=answer.hidden});bonus.addEventListener("click",()=>{state.bonus[q.id]=!state.bonus[q.id];bonus.setAttribute("aria-pressed",String(state.bonus[q.id]));save();update()});content.append(bonus)}top.append(content);article.append(top);section.append(article);
  });document.getElementById("rounds").append(section);
 });
-document.getElementById("print").addEventListener("click",()=>window.print());
+
 document.getElementById("reset").addEventListener("click",()=>{document.getElementById("reset-confirm").hidden=false});
 document.getElementById("cancel-reset").addEventListener("click",()=>{document.getElementById("reset-confirm").hidden=true});
-document.getElementById("confirm-reset").addEventListener("click",()=>{state={revealed:{},correct:{}};save();location.reload()});
+document.getElementById("confirm-reset").addEventListener("click",()=>{state={revealed:{},correct:{},choices:{},bonus:{}};save();location.reload()});
 update();
 new ResizeObserver(renderMotifs).observe(document.querySelector("main"));
 </script></body></html>
