@@ -5,29 +5,23 @@
 button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(--line);border-radius:0;background:#fff;color:var(--ink);min-height:36px;padding:6px 10px;font:700 14px/1.2 var(--mono);cursor:pointer}button:hover{background:#eee}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px}button:disabled{opacity:.55;cursor:default}.toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}.dark{background:var(--ink);color:#fff}.dark:hover{background:#222}.theme-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:18px 0}.theme-nav a{border:2px solid var(--line);padding:10px 2px;text-align:center;color:var(--ink);text-decoration:none;font:700 14px var(--mono)}.theme-nav a:hover{background:var(--active)}.edition{font:700 18px var(--mono)}.intro,.round-description{color:var(--muted);font-size:15px}.round{margin:28px 0;scroll-margin-top:16px}.round-header{border:4px solid var(--line);padding:12px 14px;background:#fff}.round:nth-child(3n+1) .round-header{background:rgba(0,87,184,.18)}.round:nth-child(3n+2) .round-header{background:rgba(225,37,27,.16)}.round:nth-child(3n) .round-header{background:rgba(255,217,0,.22)}h2{margin:0;font:700 25px/1.1 var(--mono)}.round-meta{display:flex;justify-content:space-between;gap:8px;margin-top:8px;font:600 13px var(--mono)}.question{padding:20px 0;border-bottom:2px solid var(--line)}.question-top{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}.number{width:34px;height:34px;border:3px solid var(--line);display:grid;place-items:center;font:700 18px var(--mono)}.prompt{margin:3px 0 14px;font-size:17px}.placeholder{color:var(--muted);font-style:italic}.guess{width:100%;border:2px solid var(--line);border-radius:0;padding:10px;background:#fff;color:var(--ink);font-size:16px}.answer-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.answer{padding:12px;border:2px solid var(--line);background:var(--active);margin:10px 0 0}.answer p{margin:5px 0}.mark[aria-pressed=true]{background:var(--ink);color:#fff}.score-panel{border:4px solid var(--line);padding:18px}.score-number{font:700 42px/1.1 var(--mono);margin:10px 0}.status{font:600 13px var(--mono);color:var(--muted);min-height:18px}.footer{margin-top:22px;border-top:2px solid var(--line);padding-top:12px;font:600 13px var(--mono);color:var(--muted)}[hidden]{display:none!important}@media(max-width:480px){h1{font-size:29px}.theme-nav{gap:3px}.theme-nav a{font-size:11px}.question-top{grid-template-columns:28px 1fr;gap:8px}.number{width:28px;height:28px;font-size:14px}.round-header{padding:10px}.prompt{font-size:16px}}@media print{.motif,.toolbar,.theme-nav,.answer-controls,.status,.intro,.footer{display:none!important}.page{display:block}main{border:0;padding:0}.question{break-inside:avoid}.round-header{break-after:avoid}.guess{height:40px}.answer{display:none}.score-panel{break-inside:avoid}h1{font-size:28px}}
 .motif-shell{position:relative;overflow:hidden}.motif{position:absolute;top:0;bottom:0;min-height:0;align-content:start}.motif.left{right:0}.motif.right{left:0}.motif-cell:before{content:none}.prompt{font:500 17px/1.5 var(--mono)}.placeholder{font-style:normal}.theme-subtitle{margin:8px 0 12px;font:600 13px/1.35 var(--mono);color:var(--ink)}@media print{.motif-shell{display:none}.question{min-height:95px}}
 .prompt{color:var(--ink)}.choices{display:grid;gap:8px}.choice{white-space:normal;text-align:left;justify-content:flex-start;line-height:1.4;padding:10px}.choice:disabled{opacity:1}.choice-correct{background:var(--ink);color:#fff}.choice-incorrect{background:var(--active);text-decoration:line-through}.choices+.answer{font-family:var(--mono)}#reset{margin-top:12px}@media(max-width:820px){.prompt{color:#050505;font-weight:700;font-size:17px;line-height:1.55;opacity:1}.placeholder{color:#050505}}@media(max-width:820px){.round-header h2{font-size:28px;font-weight:700;color:#050505}.theme-subtitle{font-size:16px;font-weight:700;line-height:1.5;color:#050505;margin:10px 0 14px}.round-meta{font-size:14px;font-weight:700;line-height:1.45;color:#050505;flex-wrap:wrap;gap:6px 12px}}
-/* Desktop reading layout; preserve the established mobile design. */
+/* Desktop: retain Mondrian identity in narrower framed side strips. */
 @media screen and (min-width:821px){
- body{background:#f6f6f3}
- .page{display:block;overflow:visible;padding:36px 28px 64px}
- .motif-shell{display:none}
- main{max-width:780px;margin:0 auto;padding:36px 42px 44px;border:1px solid #deded8}
- .topbar{position:relative;border-top:0;border-bottom:1px solid #d4d4ce;padding:22px 0 24px;margin-bottom:40px}
- .topbar:before{content:"";position:absolute;top:0;left:0;width:108px;height:5px;background:linear-gradient(to right,var(--blue) 0 33.333%,var(--red) 33.333% 66.666%,var(--yellow) 66.666% 100%)}
- h1{font-size:46px;line-height:1.12}
- .subtitle{margin-top:12px}
- .round{margin:44px 0}
- .round-header{border-width:1px;padding:20px 22px}
- .round:nth-child(3n+1) .round-header{background:#f1f5fa;border-color:#c8d5e5}
- .round:nth-child(3n+2) .round-header{background:#fbf2f0;border-color:#e4ceca}
- .round:nth-child(3n) .round-header{background:#fcf9eb;border-color:#e3dcb9}
- .theme-subtitle{font-size:14px;line-height:1.5;margin-top:10px}
- .round-meta{color:#555;line-height:1.4}
- .question{padding:26px 0;border-bottom:1px solid #deded8}
- .question-top{gap:16px}
- .number{border-width:1px}
- .prompt{font-size:18px;line-height:1.65;font-weight:500}
- .score-panel{border-width:1px;padding:24px}
- .footer{border-top:1px solid #deded8;padding-top:18px}
+ :root{--tile:24px}
+ body{background:var(--paper)}
+ .page{width:min(1040px,calc(100% - 48px));margin:0 auto;grid-template-columns:78px minmax(0,1fr) 78px;column-gap:24px;overflow:hidden}
+ .motif-shell{display:block}
+ .motif{grid-template-columns:repeat(3,var(--tile));width:78px;padding:26px 0}
+ main{padding:26px 28px 44px;border-left:4px solid var(--line);border-right:4px solid var(--line)}
+ h1{font-size:46px;line-height:1.1}
+ .topbar{margin-bottom:34px}
+ .round{margin:36px 0}
+ .round-header{border:4px solid var(--line);padding:16px 18px}
+ .theme-subtitle{font-size:14px;line-height:1.5}
+ .question{padding:24px 0;border-bottom:2px solid var(--line)}
+ .question-top{gap:14px}
+ .prompt{font-size:18px;line-height:1.6}
+ .score-panel{border:4px solid var(--line);padding:22px}
 }
 </style></head>
 <body><div class="page"><aside class="motif-shell" aria-hidden="true"><div class="motif left"></div></aside><main>
@@ -250,7 +244,7 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
 <script>const motifPattern=[{cls:"block-black",col:3,row:2},{},{},{},{},{cls:"block-red",col:3,row:3},{},{},{},{},{cls:"block-yellow",col:4,row:3},{},{},{},{cls:"block-blue",col:2,row:5},{},{},{},{},{cls:"block-black",col:3,row:2},{},{},{},{},{},{},{},{cls:"block-red",col:2,row:3},{},{},{},{},{},{cls:"block-yellow",col:3,row:2},{},{},{},{},{cls:"block-blue",col:4,row:2},{},{},{},{},{},{},{},{},{cls:"block-black",col:2,row:4},{},{},{},{},{},{},{cls:"block-red",col:3,row:2},{},{},{},{},{cls:"block-yellow",col:2,row:3},{},{},{},{},{},{},{},{cls:"block-blue",col:2,row:3},{},{},{cls:"block-black",col:3,row:2},{},{},{},{},{},{},{},{cls:"block-red",col:2,row:2}];
     const mobileMotifPattern=[{cls:"block-blue",row:2},{},{cls:"block-yellow"},{cls:"block-red",row:2},{},{},{cls:"block-black"},{},{},{cls:"block-yellow",row:2},{cls:"block-blue"},{},{},{cls:"block-black",row:2},{cls:"block-red"},{},{},{},{cls:"block-blue",row:2},{cls:"block-yellow"},{},{},{cls:"block-black"},{},{cls:"block-red",row:2},{},{},{cls:"block-yellow"},{cls:"block-blue"},{},{},{}];
     const motifMedia=window.matchMedia("(max-width: 820px)");
-    function renderMotifs(){const pattern=motifMedia.matches?mobileMotifPattern:motifPattern;document.querySelectorAll(".motif").forEach((motif)=>{motif.textContent="";for(let repeat=0;repeat<Math.ceil((document.querySelector("main").getBoundingClientRect().height / (parseFloat(getComputedStyle(motif).gridAutoRows)+3)+8)*(motifMedia.matches?2:11)/pattern.length);repeat+=1){pattern.forEach((item)=>{const cell=document.createElement("span");cell.className=`motif-cell${item.cls?` ${item.cls}`:""}`;if(item.col)cell.style.gridColumn=`span ${item.col}`;if(item.row)cell.style.gridRow=`span ${item.row}`;motif.appendChild(cell);});}})}
+    function renderMotifs(){const pattern=motifMedia.matches?mobileMotifPattern:motifPattern;document.querySelectorAll(".motif").forEach((motif)=>{motif.textContent="";for(let repeat=0;repeat<Math.ceil((document.querySelector("main").getBoundingClientRect().height / (parseFloat(getComputedStyle(motif).gridAutoRows)+3)+8)*(motifMedia.matches?2:3)/pattern.length);repeat+=1){pattern.forEach((item)=>{const cell=document.createElement("span");cell.className=`motif-cell${item.cls?` ${item.cls}`:""}`;if(item.col)cell.style.gridColumn=`span ${Math.min(item.col,3)}`;if(item.row)cell.style.gridRow=`span ${item.row}`;motif.appendChild(cell);});}})}
     renderMotifs();motifMedia.addEventListener?.("change",renderMotifs);
 
 const quiz=JSON.parse(document.getElementById("quiz-data").textContent);
