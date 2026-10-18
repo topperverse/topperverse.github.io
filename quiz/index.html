@@ -25,6 +25,11 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
  .prompt{font-size:18px;line-height:1.6}
  .score-panel{border:4px solid var(--line);padding:22px}
 }
+
+/* Solid grid gutters avoid subpixel seams from tiled gradients. */
+.motif-shell,.motif{background-color:var(--ink)}
+.motif{background-image:none}
+.motif .block-black{box-shadow:0 0 0 1px var(--ink)}
 </style></head>
 <body><div class="page"><aside class="motif-shell" aria-hidden="true"><div class="motif left"></div></aside><main>
 <header class="topbar"><h1>Who What When Where Why</h1><p class="subtitle">Let’s get quizzical, quizzical</p></header>
@@ -274,7 +279,7 @@ quiz.themes.forEach((theme,index)=>{
   const controls=el("div","answer-controls");const reveal=el("button","dark","Reveal answer");reveal.type="button";reveal.setAttribute("aria-controls","answer-"+q.id);
  const answer=el("div","answer");answer.id="answer-"+q.id;answer.hidden=!state.revealed[q.id];answer.append(el("strong","",q.answer||"Answer to be added."));if(q.explanation)answer.append(el("p","",q.explanation));
  const mark=el("button","mark","I got it right");mark.type="button";mark.disabled=!q.answer.trim()||answer.hidden;mark.setAttribute("aria-label","Mark question "+q.id+" correct");mark.setAttribute("aria-pressed",String(Boolean(q.answer.trim()&&state.correct[q.id])));
- function syncReveal(){reveal.textContent=answer.hidden?"Reveal answer":"Hide answer";reveal.setAttribute("aria-expanded",String(!answer.hidden));mark.disabled=!q.answer.trim()||answer.hidden}syncReveal();
+ function syncReveal(){reveal.textContent=answer.hidden?"Reveal answer":"Hide answer";reveal.setAttribute("aria-expanded",String(!answer.hidden));mark.disabled=!q.answer.trim()||answer.hidden;mark.hidden=answer.hidden}syncReveal();
  reveal.addEventListener("click",()=>{answer.hidden=!answer.hidden;state.revealed[q.id]=!answer.hidden;syncReveal();save();update()});
  mark.addEventListener("click",()=>{state.correct[q.id]=!state.correct[q.id];mark.setAttribute("aria-pressed",String(state.correct[q.id]));save();update()});controls.append(reveal,mark);content.append(controls,answer);
  if(q.bonus){const bonus=el("button","mark","Bonus: I named Norway");bonus.type="button";bonus.setAttribute("aria-pressed",String(Boolean(state.bonus[q.id])));bonus.hidden=answer.hidden;reveal.addEventListener("click",()=>{bonus.hidden=answer.hidden});bonus.addEventListener("click",()=>{state.bonus[q.id]=!state.bonus[q.id];bonus.setAttribute("aria-pressed",String(state.bonus[q.id]));save();update()});content.append(bonus)}top.append(content);article.append(top);section.append(article);
