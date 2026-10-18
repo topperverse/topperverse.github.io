@@ -9,9 +9,11 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
 @media screen and (min-width:821px){
  :root{--tile:24px}
  body{background:var(--paper)}
- .page{width:min(1040px,calc(100% - 48px));margin:0 auto;grid-template-columns:78px minmax(0,1fr) 78px;column-gap:24px;overflow:hidden}
+ .page{width:min(1040px,calc(100% - 48px));margin:0 auto;grid-template-columns:82px minmax(0,1fr) 82px;column-gap:0;overflow:hidden}
  .motif-shell{display:block}
- .motif{grid-template-columns:repeat(3,var(--tile));width:78px;padding:26px 0}
+ .motif-shell:first-child{border-left:4px solid var(--line)}
+ .motif-shell:last-child{border-right:4px solid var(--line)}
+ .motif{grid-template-columns:repeat(3,var(--tile));width:78px;padding:0}
  main{padding:26px 28px 44px;border-left:4px solid var(--line);border-right:4px solid var(--line)}
  h1{font-size:46px;line-height:1.1}
  .topbar{margin-bottom:34px}
@@ -243,8 +245,9 @@ button,input,textarea{font:inherit}button{appearance:none;border:2px solid var(-
 }</script>
 <script>const motifPattern=[{cls:"block-black",col:3,row:2},{},{},{},{},{cls:"block-red",col:3,row:3},{},{},{},{},{cls:"block-yellow",col:4,row:3},{},{},{},{cls:"block-blue",col:2,row:5},{},{},{},{},{cls:"block-black",col:3,row:2},{},{},{},{},{},{},{},{cls:"block-red",col:2,row:3},{},{},{},{},{},{cls:"block-yellow",col:3,row:2},{},{},{},{},{cls:"block-blue",col:4,row:2},{},{},{},{},{},{},{},{},{cls:"block-black",col:2,row:4},{},{},{},{},{},{},{cls:"block-red",col:3,row:2},{},{},{},{},{cls:"block-yellow",col:2,row:3},{},{},{},{},{},{},{},{cls:"block-blue",col:2,row:3},{},{},{cls:"block-black",col:3,row:2},{},{},{},{},{},{},{},{cls:"block-red",col:2,row:2}];
     const mobileMotifPattern=[{cls:"block-blue",row:2},{},{cls:"block-yellow"},{cls:"block-red",row:2},{},{},{cls:"block-black"},{},{},{cls:"block-yellow",row:2},{cls:"block-blue"},{},{},{cls:"block-black",row:2},{cls:"block-red"},{},{},{},{cls:"block-blue",row:2},{cls:"block-yellow"},{},{},{cls:"block-black"},{},{cls:"block-red",row:2},{},{},{cls:"block-yellow"},{cls:"block-blue"},{},{},{}];
+    const desktopMotifPattern=[{"cls":"block-blue","col":2,"row":3},{},{"cls":"block-red","row":2},{"cls":"block-yellow","col":2,"row":2},{"cls":"block-black","row":3},{},{"cls":"block-blue","row":3},{},{"cls":"block-red","col":2,"row":2},{},{},{"cls":"block-yellow","row":3},{"cls":"block-black","col":2,"row":2},{},{"cls":"block-blue","col":3,"row":2},{},{"cls":"block-red","row":3},{"cls":"block-yellow","col":2,"row":2},{},{"cls":"block-black","row":2},{},{"cls":"block-blue","col":2,"row":3},{},{"cls":"block-red","col":2,"row":2},{},{"cls":"block-yellow","row":2},{},{"cls":"block-black","col":3,"row":1},{},{"cls":"block-red","row":2},{"cls":"block-blue","row":2},{"cls":"block-yellow","col":2,"row":2},{}];
     const motifMedia=window.matchMedia("(max-width: 820px)");
-    function renderMotifs(){const pattern=motifMedia.matches?mobileMotifPattern:motifPattern;document.querySelectorAll(".motif").forEach((motif)=>{motif.textContent="";for(let repeat=0;repeat<Math.ceil((document.querySelector("main").getBoundingClientRect().height / (parseFloat(getComputedStyle(motif).gridAutoRows)+3)+8)*(motifMedia.matches?2:3)/pattern.length);repeat+=1){pattern.forEach((item)=>{const cell=document.createElement("span");cell.className=`motif-cell${item.cls?` ${item.cls}`:""}`;if(item.col)cell.style.gridColumn=`span ${Math.min(item.col,3)}`;if(item.row)cell.style.gridRow=`span ${item.row}`;motif.appendChild(cell);});}})}
+    function renderMotifs(){const pattern=motifMedia.matches?mobileMotifPattern:desktopMotifPattern;document.querySelectorAll(".motif").forEach((motif)=>{motif.textContent="";for(let repeat=0;repeat<Math.ceil((document.querySelector("main").getBoundingClientRect().height / (parseFloat(getComputedStyle(motif).gridAutoRows)+3)+8)*(motifMedia.matches?2:3)/pattern.length);repeat+=1){pattern.forEach((item)=>{const cell=document.createElement("span");cell.className=`motif-cell${item.cls?` ${item.cls}`:""}`;if(item.col)cell.style.gridColumn=`span ${Math.min(item.col,3)}`;if(item.row)cell.style.gridRow=`span ${item.row}`;motif.appendChild(cell);});}})}
     renderMotifs();motifMedia.addEventListener?.("change",renderMotifs);
 
 const quiz=JSON.parse(document.getElementById("quiz-data").textContent);
