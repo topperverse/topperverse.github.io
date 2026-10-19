@@ -65,9 +65,9 @@ const desktopMotifPattern=[{"cls":"block-blue","col":2,"row":3},{},{"cls":"block
       }
       return tiles;
     }
-    function numberWhiteGroups(tiles,visibleRows){
+    function whiteGroupAnchors(tiles,visibleRows){
       const white=new Map(tiles.filter(t=>!t.item.cls&&t.r<visibleRows).map(t=>[t.r+","+t.c,t]));
-      const seen=new Set();
+      const seen=new Set(),anchors=[];
       for(const [key,tile] of white){
         if(seen.has(key))continue;
         const group=[tile];seen.add(key);
@@ -78,19 +78,31 @@ const desktopMotifPattern=[{"cls":"block-blue","col":2,"row":3},{},{"cls":"block
             if(white.has(k)&&!seen.has(k)){seen.add(k);group.push(white.get(k))}
           }
         }
-        // Use the first square in reading order, like a crossword entry.
         group.sort((a,b)=>a.r-b.r||a.c-b.c);
-        group[0].number=String(1+Math.floor(Math.random()*99));
+        anchors.push(group[0]);
       }
-      return tiles;
+      return anchors;
+    }
+    function assignGroupNumbers(anchors){
+      const numbers=Array.from({length:anchors.length},(_,i)=>i+1);
+      for(let i=numbers.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [numbers[i],numbers[j]]=[numbers[j],numbers[i]];
+      }
+      anchors.forEach((tile,i)=>tile.number=String(numbers[i]));
     }
     function renderMotifs(){
       const mobile=motifMedia.matches,pattern=mobile?mobileMotifPattern:desktopMotifPattern,columns=mobile?2:3;
-      document.querySelectorAll(".motif").forEach(motif=>{
+      const layouts=Array.from(document.querySelectorAll(".motif"),motif=>{
         const style=getComputedStyle(motif),pitch=parseFloat(style.gridAutoRows)+parseFloat(style.rowGap);
         const height=motif.getBoundingClientRect().height-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom);
         const rows=Math.max(1,Math.ceil(height/pitch));
-        const tiles=numberWhiteGroups(layoutMotif(pattern,columns,rows),rows);
+        const tiles=layoutMotif(pattern,columns,rows);
+        return {motif,tiles,anchors:whiteGroupAnchors(tiles,rows)};
+      });
+      // One shuffled sequence for both borders, with no duplicate numbers.
+      assignGroupNumbers(layouts.flatMap(layout=>layout.anchors));
+      for(const {motif,tiles} of layouts){
         const fragment=document.createDocumentFragment();
         for(const t of tiles){
           const cell=document.createElement("span");
@@ -101,7 +113,7 @@ const desktopMotifPattern=[{"cls":"block-blue","col":2,"row":3},{},{"cls":"block
           fragment.appendChild(cell);
         }
         motif.replaceChildren(fragment);
-      });
+      }
     }
 
     renderMotifs();motifMedia.addEventListener?.("change",renderMotifs);
