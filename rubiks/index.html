@@ -83,7 +83,7 @@ function refreshUI(){
  $('hintBtn').hidden=!f.puzzle.hints;updateActionAvailability();selections.set(selectedFace,{ri:selectedRay,dir:direction});draw();
 }
 function renderClues(){clueButtons.clear();const f=model.faces[selectedFace];for(const dir of ['across','down']){const list=$(dir==='across'?'acrossClues':'downClues');list.replaceChildren();for(const entry of entries[selectedFace][dir].values()){const li=document.createElement('li'),button=document.createElement('button'),num=document.createElement('span');li.className='clue-item';li.style.gridColumn=dir==='across'?'1':'2';li.style.gridRow=String([...entries[selectedFace][dir].keys()].indexOf(entry.number)+2);button.className='clue-button';button.dataset.tone=String(entry.toneIndex);num.className='num';num.textContent=entry.number+'.';button.append(num,document.createTextNode(entry.text));button.onclick=()=>activateEntry(entry,true);li.appendChild(button);list.appendChild(li);clueButtons.set(dir+':'+entry.number,button);}}}
-function showFace(fi){selectedFace=fi;selectedRay=-1;direction='across';renderClues();refreshUI();}
+function showFace(fi){selectedFace=fi;selectedRay=-1;renderClues();refreshUI();}
 
 function activateCell(ri,dir=direction,focus=true){
  const r=model.rays[ri];if(!r?.white)return;if(navigationTarget!==null)return;
@@ -91,7 +91,7 @@ function activateCell(ri,dir=direction,focus=true){
  selectedRay=ri;const refs=cellEntries.get(ri)||{};direction=refs[dir]?dir:refs.across?'across':'down';refreshUI();if(focus)focusTyping();
 }
 function activateEntry(entry,focus=true){if(navigationTarget!==null)return;activateCell(entry.cells[0],entry.dir,focus);}
-function setDirection(dir){if(selectedRay<0){status('Select a clue or square first.');return;}const refs=cellEntries.get(selectedRay)||{};if(refs[dir]){direction=dir;refreshUI();}focusTyping();}
+function setDirection(dir){if(navigationTarget!==null)return;const refs=cellEntries.get(selectedRay)||{};if(selectedRay<0||refs[dir]){direction=dir;refreshUI();}focusTyping();}
 function toggleDirection(){const refs=cellEntries.get(selectedRay)||{};if(refs.across&&refs.down)setDirection(direction==='across'?'down':'across');}
 function editLetters(text){if(navigationTarget!==null||!alignedFace())return;let letters=String(text).toUpperCase().replace(/[^A-Z]/g,'');const entry=currentEntry();if(!entry||!letters)return;let start=entry.cells.indexOf(selectedRay),last=selectedRay;for(let i=start;i<entry.cells.length&&letters.length;i++){last=entry.cells[i];writeLetter(last,letters[0]);letters=letters.slice(1);}selectedRay=entry.cells[Math.min(entry.cells.indexOf(last)+1,entry.cells.length-1)];saveProgress();refreshUI();status('');}
 function erase(backwards){if(navigationTarget!==null||!alignedFace())return;const e=currentEntry();if(!e)return;if(backwards&&!values.has(selectedRay))selectedRay=e.cells[Math.max(0,e.cells.indexOf(selectedRay)-1)];writeLetter(selectedRay,'');saveProgress();refreshUI();status('');}
@@ -112,7 +112,7 @@ function keyboard(event){
 function revealWord(){const entry=currentEntry();if(!entry)return;for(const ri of entry.cells)writeLetter(ri,model.rays[ri].letter);saveProgress();refreshUI();status(entry.number+(direction==='across'?' Across':' Down')+' revealed.');focusTyping();}
 function checkPuzzle(){let correct=0,incorrect=0,empty=0;model.rays.forEach((r,ri)=>{if(r.face!==selectedFace||!r.white)return;checks.delete(ri);if(!values.has(ri)){empty++;return;}const ok=values.get(ri)===r.letter;checks.set(ri,ok?'correct':'incorrect');if(ok)correct++;else incorrect++;});refreshUI();status(incorrect===0&&empty===0?'Everything is correct. Puzzle complete!':`${correct} correct, ${incorrect} incorrect, ${empty} empty.`);}
 function clearPuzzle(){const id=model.faces[selectedFace].puzzle.id;if(!confirm(`Clear all letters from Puzzle ${id}? Linked letters on other faces will also clear.`))return;model.rays.forEach((r,ri)=>{if(r.face===selectedFace&&r.white)writeLetter(ri,'')});saveProgress();refreshUI();status('Puzzle '+id+' cleared.');focusTyping();}
-function updateActionAvailability(busy=navigationTarget!==null){const entry=currentEntry(),refs=cellEntries.get(selectedRay)||{};for(const id of ['checkPuzzleBtn','clearBtn'])$(id).disabled=busy;for(const id of ['revealWordBtn','hintBtn'])$(id).disabled=busy||!entry;$('acrossBtn').disabled=busy||!refs.across;$('downBtn').disabled=busy||!refs.down;input.disabled=busy||selectedRay<0;}
+function updateActionAvailability(busy=navigationTarget!==null){const entry=currentEntry(),refs=cellEntries.get(selectedRay)||{};for(const id of ['checkPuzzleBtn','clearBtn'])$(id).disabled=busy;for(const id of ['revealWordBtn','hintBtn'])$(id).disabled=busy||!entry;$('acrossBtn').disabled=busy||(selectedRay>=0&&!refs.across);$('downBtn').disabled=busy||(selectedRay>=0&&!refs.down);input.disabled=busy||selectedRay<0;}
 function setBusy(busy){$('cluePanel').classList.toggle('busy',busy);updateActionAvailability(busy);if(busy)input.blur();}
 
 let hintSlides=[],hintIndex=0,hintKey='',hintHistory=new Map();
