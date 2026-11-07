@@ -20,3 +20,7 @@ Keep both archive pages in the same order. Each Crubik’s Cube follows its set 
 The cube checks for current clues on load and when its tab regains focus or becomes visible, with a 30-second throttle. Reloading the cube checks immediately. Its printed clues use the same updated data. Each puzzle update is validated independently. If the network or a source fails, the last successfully cached clues are used, followed by the embedded snapshot if no valid cache exists. Opening the HTML as a local file does not fetch the website. A disconnected downloaded copy cannot receive future website edits.
 
 The source reader parses data literals only; it does not execute scripts from the classic puzzle pages. Preserve data literal syntax: JSON strings, arrays and objects (bare `across` / `down` object keys are also supported).
+
+For every new standard 11×11 puzzle, keep the Mondrian grid styling. Reuse the black, red, blue and yellow blocked-square sequence from Puzzle 1 and repeat it with modulo indexing across all blocked squares. Check that the rendered grid contains all four block colours before publishing. A reference grid supplies the positions of the blocks.
+
+Colour the selected-clue preview by the clue’s zero-based position within its own direction list. Across repeats red, blue, yellow. Down repeats yellow, red, blue. Clue numbers can skip values, so use the list index rather than the printed number. Apply this rule to standalone puzzles, the Bonus Edition and Crubik’s Cube.

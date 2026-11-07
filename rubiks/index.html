@@ -16,7 +16,7 @@
 /* Pair clue rows so the colour offset also holds at the same visual height. */
 .clue-lists{row-gap:5px;align-items:stretch}.clue-lists>section,.clue-lists ol{display:contents}.clue-lists>section:first-child>h3{grid-column:1;grid-row:1}.clue-lists>section:last-child>h3{grid-column:2;grid-row:1}.clue-lists .clue-item{margin:0}.clue-lists .clue-button{height:100%}
 /* Clue colours are a fixed five-colour cycle; Down is offset by two rows. */
-[data-tone="0"]{--clue-tone:#fbe6e3}[data-tone="1"]{--clue-tone:#e5eef8}[data-tone="2"]{--clue-tone:#fff8cd}[data-tone="3"]{--clue-tone:#e3f3ea}[data-tone="4"]{--clue-tone:#fff0df}
+[data-tone="0"]{--clue-tone:#fbe6e3}[data-tone="1"]{--clue-tone:#e5eef8}[data-tone="2"]{--clue-tone:#fff8cd}
 .selected-clue[data-tone]{background:var(--clue-tone,#fff)}.clue-button{background:#fff}.clue-button:hover{background:#f0f0f0;filter:none}.clue-button.active,.clue-button.active:hover{background:#d2d2d2;color:#050505;filter:none}
 
 @media print{@page{size:A4;margin:10mm}*{print-color-adjust:exact;-webkit-print-color-adjust:exact}body>header,body>.layout,dialog{display:none!important}#printArea{display:block!important}.print-title{font:700 18pt/1.2 var(--mono);border-bottom:2px solid #000;padding-bottom:3mm;margin-bottom:5mm}.print-grid{display:grid;width:95mm;height:95mm;gap:1.4px;border:2px solid #000;background:#000;margin:0 auto 5mm}.print-grid.large{width:87mm;height:87mm}.print-cell{position:relative;min-height:0;min-width:0;background:#fff}.print-cell.block{background:#000}.print-cell span{position:absolute;left:2px;top:1px;font:700 7pt/1 var(--mono)}.print-clues{display:grid;grid-template-columns:1fr 1fr;gap:7mm}.print-clues h3{font-size:13pt;margin-bottom:3mm}.print-clues p{font:500 9pt/1.3 var(--sans);margin:0 0 2mm;break-inside:avoid}.print-clues b{font-family:var(--mono)}}
@@ -55,7 +55,7 @@ for(let fi=0;fi<6;fi++){
   const key=Object.keys(p.numbers).find(k=>String(p.numbers[k])===String(number));if(!key)throw Error('Missing clue number');let [r,c]=key.split(',').map(Number),cells=[];
   while(r>=0&&c>=0&&r<size&&c<size&&p.pattern[r][c]!=='#'){let ri=f.offset+r*size+c;cells.push(ri);let ref=cellEntries.get(ri)||{};ref[dir]=String(number);cellEntries.set(ri,ref);if(dir==='across')c++;else r++;}
   if(cells.length!==p.answers[dir][number].length)throw Error('Clue length mismatch '+p.id+' '+dir+' '+number);
-  entries[fi][dir].set(String(number),{number:String(number),text,cells,dir,face:fi,toneIndex:(order+(dir==='down'?2:0))%5});
+  entries[fi][dir].set(String(number),{number:String(number),text,cells,dir,face:fi,toneIndex:(order+(dir==='down'?2:0))%3});
  }
  selections.set(fi,{ri:-1,dir:'across'});
 }
