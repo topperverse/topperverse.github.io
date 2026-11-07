@@ -11,7 +11,7 @@ The six classic puzzle HTML pages are the source of truth for clue wording:
 | 5 | `cryptic/doms_cryptic_5.html` |
 | 6 | `cryptic/doms_cryptic_6.html` |
 
-For a clue edit, change its text in the source page's `const clueText` literal. Keep the direction and clue number intact. The live cube at `/rubiks/` reads these pages automatically, so the same edit reaches both views after GitHub Pages deploys. Do not manually edit a second copy of the clue in the cube. Puzzle 7's old URL is a redirect to Puzzle 6; the 15x15 Bonus Edition is `cryptic/doms_cryptic_bonus.html` and is not part of the cube.
+For a clue edit, change its text in the source page's `const clueText` literal. Keep the direction and clue number intact. The live cube at `/rubiks/` reads these pages automatically, so the same edit reaches both views after GitHub Pages deploys. Do not manually edit a second copy of the clue in the cube. Puzzle 7 is a separate standalone puzzle at `cryptic/doms_cryptic_7.html`. The 15x15 Bonus Edition is at `cryptic/doms_cryptic_bonus.html`. The cube uses Puzzles 1–6.
 
 `rubiks/clue-sync.js` documents the synchronization code embedded in the standalone `rubiks/index.html`. If changing synchronization behavior, update both the source script and the embedded copy. Keep the cube's occupancy, assignments, orientations, colours, progress storage and letter-sharing data unchanged for clue wording edits. If an instruction also changes the grid, numbering or answer letters, the cube geometry and sharing need a separate rebuild; its runtime rejects that mismatch rather than silently applying inconsistent data.
 
