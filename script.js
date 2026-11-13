@@ -1,52 +1,305 @@
-const demoCards = [
-  { low: "Silent", high: "Loud" },
-  { low: "Ordinary", high: "Legendary" },
-  { low: "Tiny", high: "Huge" },
-  { low: "Casual", high: "Formal" },
-  { low: "Ancient", high: "Futuristic" },
-  { low: "Harmless", high: "Dangerous" },
-  { low: "Simple", high: "Complicated" },
-  { low: "Boring", high: "Thrilling" },
-  { low: "Messy", high: "Neat" },
-  { low: "Cheap", high: "Expensive" },
-  { low: "Private", high: "Public" },
-  { low: "Soft", high: "Hard" },
-  { low: "Unlucky", high: "Lucky" },
-  { low: "Weak", high: "Powerful" },
-  { low: "Temporary", high: "Permanent" },
-  { low: "Natural", high: "Artificial" },
-  { low: "Polite", high: "Rude" },
-  { low: "Cold", high: "Hot" },
-  { low: "Realistic", high: "Absurd" },
-  { low: "Predictable", high: "Surprising" },
-  { low: "Relaxing", high: "Stressful" },
-  { low: "Traditional", high: "Experimental" },
-  { low: "Underrated", high: "Overrated" },
-  { low: "Flexible", high: "Rigid" },
-  { low: "Low effort", high: "High effort" },
-  { low: "Introverted", high: "Extroverted" },
-  { low: "Honest", high: "Deceptive" },
-  { low: "Childish", high: "Mature" },
-  { low: "Mild", high: "Intense" },
-  { low: "Forgettable", high: "Iconic" },
-  { low: "Slow", high: "Fast" },
-  { low: "Practical", high: "Impractical" },
-  { low: "Clean", high: "Dirty" },
-  { low: "Rare", high: "Common" },
-  { low: "Calm", high: "Chaotic" },
-  { low: "Sensible", high: "Ridiculous" }
+const spectrumCards = [
+  {
+    "low": "Fascist",
+    "high": "communist"
+  },
+  {
+    "low": "Ultralight",
+    "high": "glamping"
+  },
+  {
+    "low": "Anaconda",
+    "high": "arcteryx"
+  },
+  {
+    "low": "Nightmare job",
+    "high": "dream job"
+  },
+  {
+    "low": "Loving",
+    "high": "lustful"
+  },
+  {
+    "low": "Daily telegraph",
+    "high": "Saturday paper"
+  },
+  {
+    "low": "Eshay",
+    "high": "Preppy"
+  },
+  {
+    "low": "Light Pop",
+    "high": "Heavy Metal"
+  },
+  {
+    "low": "Religion",
+    "high": "Science"
+  },
+  {
+    "low": "Satan",
+    "high": "God"
+  },
+  {
+    "low": "Vanilla",
+    "high": "Kinky"
+  },
+  {
+    "low": "Prophecy",
+    "high": "Gossip"
+  },
+  {
+    "low": "Gimmick",
+    "high": "Gamechanger"
+  },
+  {
+    "low": "Luck",
+    "high": "Skill"
+  },
+  {
+    "low": "Introverted",
+    "high": "Extroverted"
+  },
+  {
+    "low": "Ultra-processed",
+    "high": "Organic"
+  },
+  {
+    "low": "Domestic",
+    "high": "Wild"
+  },
+  {
+    "low": "Down to earth",
+    "high": "Pompous"
+  },
+  {
+    "low": "Trash TV",
+    "high": "Grammy"
+  },
+  {
+    "low": "Harmless stereotype",
+    "high": "Problematic"
+  },
+  {
+    "low": "Healthy habit",
+    "high": "Addiction"
+  },
+  {
+    "low": "Unlawful good",
+    "high": "Lawful evil"
+  },
+  {
+    "low": "Banter",
+    "high": "bullying"
+  },
+  {
+    "low": "Raving",
+    "high": "Stargazing"
+  },
+  {
+    "low": "Denni Ute muster",
+    "high": "Sydney Writer’s Festival"
+  },
+  {
+    "low": "Public school",
+    "high": "Private school"
+  },
+  {
+    "low": "Old news",
+    "high": "Fresh off the press"
+  },
+  {
+    "low": "Picky eater",
+    "high": "Bin chicken"
+  },
+  {
+    "low": "2 minute noodles",
+    "high": "3 Michelin stars"
+  },
+  {
+    "low": "Conspiracy theory",
+    "high": "Fact"
+  },
+  {
+    "low": "Reactionary",
+    "high": "revolutionary"
+  },
+  {
+    "low": "Stone top",
+    "high": "Power bottom"
+  },
+  {
+    "low": "Layman’s terms",
+    "high": "Verbose wanker"
+  },
+  {
+    "low": "Church",
+    "high": "Casino"
+  },
+  {
+    "low": "Jordan Peterson",
+    "high": "Nelson Mandela"
+  },
+  {
+    "low": "Incel",
+    "high": "Chad"
+  },
+  {
+    "low": "Virtue signalling",
+    "high": "Activism"
+  },
+  {
+    "low": "Keyboard warrior",
+    "high": "Swords and sandals"
+  },
+  {
+    "low": "Snap",
+    "high": "Bridge"
+  },
+  {
+    "low": "Ghost wipe",
+    "high": "Explosive diarrhoea"
+  },
+  {
+    "low": "Cringe",
+    "high": "Profound"
+  },
+  {
+    "low": "Old money",
+    "high": "New money"
+  },
+  {
+    "low": "Chalkboard scratch",
+    "high": "ASMR"
+  },
+  {
+    "low": "Bottom feeder",
+    "high": "Apex predator"
+  },
+  {
+    "low": "Small town",
+    "high": "big city"
+  },
+  {
+    "low": "Raw dog",
+    "high": "Overprepared"
+  },
+  {
+    "low": "Third world",
+    "high": "First world"
+  },
+  {
+    "low": "Hot take",
+    "high": "Safe bet"
+  },
+  {
+    "low": "Urban",
+    "high": "Country"
+  },
+  {
+    "low": "VB",
+    "high": "Negroni"
+  },
+  {
+    "low": "Full bush",
+    "high": "Laser"
+  },
+  {
+    "low": "Hot ugly",
+    "high": "Ugly hot"
+  },
+  {
+    "low": "Mansplain",
+    "high": "Genuine sharing of knowledge"
+  },
+  {
+    "low": "Monogamy",
+    "high": "Non-monogamy"
+  },
+  {
+    "low": "Vape",
+    "high": "Ciggie"
+  },
+  {
+    "low": "Orphanage",
+    "high": "Nuclear family"
+  },
+  {
+    "low": "Soulmate",
+    "high": "Arch enemy"
+  },
+  {
+    "low": "5 star cruise",
+    "high": "Bed bug hostel"
+  },
+  {
+    "low": "One nation",
+    "high": "Greens"
+  },
+  {
+    "low": "Gay",
+    "high": "Lesbian"
+  },
+  {
+    "low": "Meme lord",
+    "high": "Bookworm"
+  },
+  {
+    "low": "Online",
+    "high": "Offline"
+  },
+  {
+    "low": "Mental health",
+    "high": "Physical health"
+  },
+  {
+    "low": "Individualism",
+    "high": "Collectivism"
+  },
+  {
+    "low": "Cave man",
+    "high": "Modern man"
+  },
+  {
+    "low": "Poor",
+    "high": "Rich"
+  },
+  {
+    "low": "Scoot",
+    "high": "Private jet"
+  },
+  {
+    "low": "Graceful",
+    "high": "Abrasive"
+  },
+  {
+    "low": "Dick of the day",
+    "high": "MVP"
+  },
+  {
+    "low": "Bare minimum",
+    "high": "Princess treatment"
+  },
+  {
+    "low": "Paranoid",
+    "high": "Normal fear"
+  },
+  {
+    "low": "Howling at the moon",
+    "high": "Business meeting"
+  }
 ];
 
 const defaultTeams = [
-  { name: "Commies", score: 0, color: "#ff3e49" },
-  { name: "Fascists", score: 0, color: "#ffd33d" },
-  { name: "Libtards", score: 0, color: "#38c8ff" }
+  { name: "Red", score: 0, color: "#ff3e49" },
+  { name: "Yellow", score: 0, color: "#ffd33d" },
+  { name: "Blue", score: 0, color: "#38c8ff" }
 ];
 
 const storageKey = "wavelength-local-game-state-v2";
 const app = document.querySelector("#app");
 
 const freshState = () => ({
+  deckVersion: 1,
   screen: "setup",
   teams: defaultTeams.map((team) => ({ ...team })),
   targetScore: 10,
@@ -73,14 +326,22 @@ function loadState() {
 }
 
 function normalizeState(saved) {
+  const legacyNames = { Commies: "Red", Fascists: "Yellow", Libtards: "Blue" };
   const teams = saved.teams.map((team, index) => ({
-    name: team.name || defaultTeams[index]?.name || `Team ${index + 1}`,
+    name: legacyNames[team.name] || team.name || defaultTeams[index]?.name || `Team ${index + 1}`,
     score: Number(team.score) || 0,
     color: team.color || defaultTeams[index]?.color || "#38c8ff"
   }));
   return {
     ...freshState(),
     ...saved,
+    ...(saved.deckVersion !== 1 ? {
+      deckVersion: 1,
+      usedCardIndexes: [],
+      round: null,
+      screen: ["setup", "game-over"].includes(saved.screen) ? saved.screen : "next-round",
+      message: ""
+    } : {}),
     teams,
     activeTeam: Math.min(saved.activeTeam || 0, teams.length - 1),
     cooperative: teams.length === 1 ? true : Boolean(saved.cooperative)
@@ -102,11 +363,11 @@ function randomInt(min, max) {
 }
 
 function pickCardIndex() {
-  if (state.usedCardIndexes.length >= demoCards.length) {
+  if (state.usedCardIndexes.length >= spectrumCards.length) {
     state.usedCardIndexes = [];
   }
 
-  const available = demoCards
+  const available = spectrumCards
     .map((_, index) => index)
     .filter((index) => !state.usedCardIndexes.includes(index));
   return available[randomInt(0, available.length - 1)];
@@ -389,7 +650,7 @@ function handoffClueScreen() {
 }
 
 function secretScreen() {
-  const card = demoCards[state.round.cardIndex];
+  const card = spectrumCards[state.round.cardIndex];
   const team = state.teams[state.activeTeam];
   return `
     ${topbar()}
@@ -412,7 +673,7 @@ function secretScreen() {
 }
 
 function teamGuessScreen() {
-  const card = demoCards[state.round.cardIndex];
+  const card = spectrumCards[state.round.cardIndex];
   const team = state.teams[state.activeTeam];
   return `
     ${topbar()}
@@ -433,7 +694,7 @@ function teamGuessScreen() {
 }
 
 function opponentScreen() {
-  const card = demoCards[state.round.cardIndex];
+  const card = spectrumCards[state.round.cardIndex];
   const active = state.teams[state.activeTeam];
   const caller = currentCallerTeam();
   const remaining = state.round.callerTeams.length - state.round.callerIndex - 1;
@@ -464,7 +725,7 @@ function opponentScreen() {
 }
 
 function revealScreen() {
-  const card = demoCards[state.round.cardIndex];
+  const card = spectrumCards[state.round.cardIndex];
   const active = state.teams[state.activeTeam];
   const guess = Number(state.round.guess);
   const { teamPoints, callerScores, distance } = state.round.scored;
