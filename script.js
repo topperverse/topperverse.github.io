@@ -317,7 +317,7 @@ function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey));
     if (saved && Array.isArray(saved.teams) && saved.teams.length > 0) {
-      return normalizeState(saved);
+      return { ...normalizeState(saved), screen: "setup" };
     }
   } catch {
     localStorage.removeItem(storageKey);
