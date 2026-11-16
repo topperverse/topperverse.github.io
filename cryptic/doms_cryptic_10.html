@@ -50,9 +50,48 @@
 @media(max-width:480px){.anagram-dialog{padding:14px}.anagram-top h2{font-size:20px}.anagram-circle{width:230px;margin:14px auto}.anagram-controls{gap:5px}#anagramShuffle{padding:0 9px}.anagram-dialog .selected-clue{font-size:14px}}
 @media print{.anagram-dialog{display:none!important}}
 
+.hint-dialog{width:min(580px,calc(100vw - 24px));max-height:calc(100dvh - 32px);padding:0;border:4px solid var(--line);border-radius:0;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+.hint-dialog::backdrop{background:rgba(0,0,0,.55)}
+.hint-dialog[open]{display:flex;flex-direction:column}
+.hint-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:2px solid var(--line)}
+.hint-header h2{margin:0;font:700 22px/1.2 var(--mono)}
+.hint-close{min-width:44px;min-height:44px;font-size:22px}
+.hint-clue{margin:0;padding:16px 18px;font:700 16px/1.5 var(--mono);overflow-wrap:anywhere}
+.hint-tabs{display:flex;gap:0;margin:16px 18px 0;border:2px solid var(--line)}
+.hint-tab{flex:1;min-width:0;min-height:44px;border:0;padding:10px 6px;font-size:13px;white-space:normal}
+.hint-tab+.hint-tab{border-left:2px solid var(--line)}
+.hint-tab[aria-selected=true]{background:var(--ink);color:#fff}
+.hint-slide{padding:20px 18px;min-height:140px}
+.hint-slide h3{margin:0 0 10px;font:700 18px/1.25 var(--mono)}
+.hint-slide p{margin:0;font:500 17px/1.6 var(--sans);overflow-wrap:anywhere}
+.hint-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px 18px}
+.hint-navigation[hidden]{display:none}
+.hint-navigation button{min-height:44px}
+.hint-navigation button:disabled{opacity:.4;cursor:default}
+.hint-count{font:700 13px/1.4 var(--mono);text-align:center}
+.hint-dialog button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+#hintBtn{background:var(--blue);color:#fff}
+#hintBtn:hover{background:#004797}
+#hideHintsBtn{background:#fff;border-color:var(--red);color:var(--red)}
+#hideHintsBtn:hover{background:var(--soft-red)}
+#hideHintsBtn:disabled{border-color:#aaa;color:#777;background:#fff;cursor:default}
+.parse-definition{background:rgba(0,87,184,.19)}
+.parse-indicators{background:rgba(225,37,27,.18)}
+.parse-substitutions{background:rgba(255,217,0,.32)}
+mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+#hintClose span{display:block;position:relative;width:17px;height:17px;margin:auto}
+#hintClose span::before,#hintClose span::after{content:"";position:absolute;left:7px;top:0;width:3px;height:17px;background:var(--ink);transform:rotate(45deg)}
+#hintClose span::after{transform:rotate(-45deg)}
+#revealHint{margin-top:16px;min-height:44px;background:var(--ink);color:#fff}
+#revealHint:hover{background:#222}
+#revealHint[hidden]{display:none!important}
+.hint-tab.is-revealed::after{content:"";display:inline-block;width:7px;height:7px;border:1px solid currentColor;border-radius:50%;background:currentColor;margin-left:7px}
+@media(max-width:480px){.hint-header,.hint-clue,.hint-slide{padding:14px}.hint-tabs{margin:14px 14px 0}.hint-header h2{font-size:20px}.hint-tab{font-size:12px;padding:10px 3px}}
+@media print{.hint-dialog{display:none!important}}
+
 </style>
 </head>
-<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><div class="direction-toggle" aria-label="Typing direction"><button id="acrossBtn" type="button" aria-pressed="true">Across</button><button id="downBtn" type="button" aria-pressed="false">Down</button></div><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn" type="button">Clear</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn" type="button">Clear letters</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
 <dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
   <div class="anagram-top">
     <h2 id="anagramTitle">Anagram helper</h2>
@@ -69,6 +108,13 @@
   <p id="anagramStatus" class="anagram-status" role="status" aria-live="polite"></p>
 </dialog>
 
+<dialog id="hintDialog" class="hint-dialog" aria-labelledby="hintTitle" aria-describedby="hintClue">
+  <header class="hint-header"><h2 id="hintTitle">Clue hint</h2><button id="hintClose" class="hint-close" type="button" aria-label="Close hints"><span aria-hidden="true"></span></button></header>
+  <p id="hintClue" class="hint-clue"></p>
+  <div id="hintTabs" class="hint-tabs" role="tablist" aria-label="Clue hints"></div>
+  <section id="hintSlide" class="hint-slide" role="tabpanel" tabindex="0" aria-live="polite"><h3 id="hintHeading"></h3><p id="hintBody"></p><button id="revealHint" type="button">Reveal</button></section>
+  
+</dialog>
 <script>
 const gridPattern=["...#.......",".#.#.#.#.#.",".....#.....",".#.#.#.#.##","....#......",".###.#.###.","......#....","##.#.#.#.#.",".....#.....",".#.#.#.#.#.",".......#..."];
 const numbers={"0,0":"1","0,2":"2","0,4":"3","0,6":"4","0,8":"5","0,10":"6","2,0":"7","2,6":"8","4,0":"9","4,5":"10","4,10":"11","5,4":"12","6,0":"13","6,2":"14","6,7":"15","6,8":"16","7,6":"17","8,0":"18","8,6":"19","10,0":"20","10,8":"21"};
@@ -87,12 +133,12 @@ function clueNodes(text) {
     return emphasis;
   });
 }
-function getClueText(dir,n){const clue=clueText[dir].find(([num])=>num===n);return clue?clue[1]:""}function setDirection(next){direction=next;acrossBtn.setAttribute("aria-pressed",String(direction==="across"));downBtn.setAttribute("aria-pressed",String(direction==="down"));highlight()}function getEntry(k,dir=direction){const ref=cellEntries.get(k);return ref&&ref[dir]?entries[dir].get(ref[dir]):null}function focusCell(k){const input=inputs.get(k);if(!input)return;currentKey=k;input.focus();input.select();highlight()}function nextCell(k){const e=getEntry(k);if(!e)return k;return e[Math.min(e.indexOf(k)+1,e.length-1)]}function previousCell(k){const e=getEntry(k);if(!e)return k;return e[Math.max(e.indexOf(k)-1,0)]}function moveBy(dr,dc){const [r,c]=currentKey.split(",").map(Number),n=keyOf(r+dr,c+dc);if(inputs.has(n))focusCell(n)}function toggleDirection(k=currentKey){const ref=cellEntries.get(k);if(ref&&ref.across&&ref.down){setDirection(direction==="across"?"down":"across");focusCell(k)}}function updateSelectedClue(dir,n){const text=getClueText(dir,n);if(!text){selectedClue.hidden=true;return}const order=clueText[dir].findIndex(([number])=>number===n);const tone=["red","blue","yellow"][(order+(dir==="down"?2:0))%3],label=document.createElement("span");label.className="selected-clue-label";label.textContent=`${n}${dir==="across"?"A":"D"}.`;selectedClue.className=`selected-clue tone-${tone}`;selectedClue.replaceChildren(label,...clueNodes(text));selectedClue.hidden=false}
+function getClueText(dir,n){const clue=clueText[dir].find(([num])=>num===n);return clue?clue[1]:""}function setDirection(next){direction=next;acrossBtn?.setAttribute("aria-pressed",String(direction==="across"));downBtn?.setAttribute("aria-pressed",String(direction==="down"));highlight()}function getEntry(k,dir=direction){const ref=cellEntries.get(k);return ref&&ref[dir]?entries[dir].get(ref[dir]):null}function focusCell(k){const input=inputs.get(k);if(!input)return;currentKey=k;input.focus();input.select();highlight()}function nextCell(k){const e=getEntry(k);if(!e)return k;return e[Math.min(e.indexOf(k)+1,e.length-1)]}function previousCell(k){const e=getEntry(k);if(!e)return k;return e[Math.max(e.indexOf(k)-1,0)]}function moveBy(dr,dc){const [r,c]=currentKey.split(",").map(Number),n=keyOf(r+dr,c+dc);if(inputs.has(n))focusCell(n)}function toggleDirection(k=currentKey){const ref=cellEntries.get(k);if(ref&&ref.across&&ref.down){setDirection(direction==="across"?"down":"across");focusCell(k)}}function updateSelectedClue(dir,n){const text=getClueText(dir,n);if(!text){selectedClue.hidden=true;return}const order=clueText[dir].findIndex(([number])=>number===n);const tone=["red","blue","yellow"][(order+(dir==="down"?2:0))%3],label=document.createElement("span");label.className="selected-clue-label";label.textContent=`${n}${dir==="across"?"A":"D"}.`;selectedClue.className=`selected-clue tone-${tone}`;selectedClue.replaceChildren(label,...clueNodes(text));selectedClue.hidden=false}
 function highlight(){cells.forEach(c=>c.classList.remove("in-entry","is-current"));document.querySelectorAll(".active-clue").forEach(el=>el.classList.remove("active-clue"));const ref=cellEntries.get(currentKey);let dir=direction;if(ref&&!ref[dir]){setDirection(ref.across?"across":"down");return}const e=getEntry(currentKey,dir)||[currentKey];e.forEach(k=>cells.get(k)?.classList.add("in-entry"));cells.get(currentKey)?.classList.add("is-current");if(ref&&ref[dir]){document.querySelector(`[data-clue="${dir}-${ref[dir]}"]`)?.classList.add("active-clue");updateSelectedClue(dir,ref[dir])}else{selectedClue.hidden=true}}
 function checkCell(k,announce=true){const input=inputs.get(k),cell=cells.get(k),expected=solution.get(k);if(!input||!cell||!expected)return null;cell.classList.remove("is-correct","is-incorrect");input.removeAttribute("aria-invalid");if(!input.value){if(announce)setStatus("That square is empty.");return null}const ok=input.value.toUpperCase()===expected;cell.classList.add(ok?"is-correct":"is-incorrect");if(!ok)input.setAttribute("aria-invalid","true");if(announce)setStatus(ok?"Current square is correct.":"Current square is incorrect.");return ok}function revealWord(){const e=getEntry(currentKey);if(!e){setStatus("No word is selected.");return}e.forEach(k=>{const input=inputs.get(k),expected=solution.get(k);if(input&&expected){clearCheck(k);input.value=expected}});saveLetters();setStatus("Word revealed.");focusCell(currentKey)}function checkPuzzle(){let correct=0,incorrect=0,empty=0;inputs.forEach((_,k)=>{const r=checkCell(k,false);if(r===true)correct++;else if(r===false)incorrect++;else empty++});if(!incorrect&&!empty){localStorage.setItem(statusKey,"completed");setStatus("Everything is correct. Puzzle complete.")}else{localStorage.setItem(statusKey,Object.values(saved()).filter(Boolean).length?"started":"unattempted");setStatus(`${correct} correct, ${incorrect} incorrect, ${empty} empty.`)}}
 function renderGrid(){const s=saved();let blockIndex=0;gridPattern.forEach((rowText,r)=>[...rowText].forEach((ch,c)=>{const k=keyOf(r,c),cell=document.createElement("div");if(ch==="#"){cell.className=`cell block-${blockColors[blockIndex++%blockColors.length]}`;grid.appendChild(cell);return}cell.className="cell";if(numbers[k]){const num=document.createElement("span");num.className="num";num.textContent=numbers[k];cell.appendChild(num)}const input=document.createElement("input");input.type="text";input.inputMode="text";input.maxLength=1;input.autocomplete="off";input.spellcheck=false;input.autocapitalize="characters";input.setAttribute("aria-label",`Row ${r+1}, column ${c+1}`);input.value=(s[k]||"").slice(0,1).toUpperCase();input.addEventListener("focus",()=>{currentKey=k;const ref=cellEntries.get(k);if(ref&&!ref[direction])setDirection(ref.across?"across":"down");highlight()});input.addEventListener("pointerdown",event=>{if(event.button===0&&currentKey===k)toggleDirection(k)});input.addEventListener("keydown",event=>{if(/^[a-zA-Z]$/.test(event.key)){event.preventDefault();clearCheck(k);input.value=event.key.toUpperCase();saveLetters();setStatus("");focusCell(nextCell(k));return}if(event.key==="Backspace"){event.preventDefault();if(input.value){clearCheck(k);input.value="";saveLetters()}else{const p=previousCell(k);focusCell(p);const pi=inputs.get(p);if(pi){clearCheck(p);pi.value=""}saveLetters()}setStatus("");return}if(event.key==="Delete"){event.preventDefault();clearCheck(k);input.value="";saveLetters();setStatus("");return}if(event.key===" "||event.key==="Enter"){event.preventDefault();toggleDirection(k);return}if(event.key==="ArrowRight"){event.preventDefault();setDirection("across");moveBy(0,1)}else if(event.key==="ArrowLeft"){event.preventDefault();setDirection("across");moveBy(0,-1)}else if(event.key==="ArrowDown"){event.preventDefault();setDirection("down");moveBy(1,0)}else if(event.key==="ArrowUp"){event.preventDefault();setDirection("down");moveBy(-1,0)}});input.addEventListener("input",()=>{const letters=input.value.toUpperCase().replace(/[^A-Z]/g,"");clearCheck(k);if(!letters){input.value="";saveLetters();setStatus("");return}input.value=letters[0];saveLetters();setStatus("");requestAnimationFrame(()=>focusCell(nextCell(k)))});input.addEventListener("paste",event=>{event.preventDefault();const letters=(event.clipboardData||window.clipboardData).getData("text").toUpperCase().replace(/[^A-Z]/g,"").split(""),e=getEntry(k);if(!e||!letters.length)return;let last=k;for(let i=e.indexOf(k);i<e.length&&letters.length;i++){const target=inputs.get(e[i]);clearCheck(e[i]);target.value=letters.shift();last=e[i]}saveLetters();setStatus("");focusCell(last)});cell.appendChild(input);inputs.set(k,input);cells.set(k,cell);grid.appendChild(cell)}))}
 function renderClues(){Object.entries(clueText).forEach(([dir,clues])=>{const list=document.getElementById(dir==="across"?"acrossClues":"downClues");clues.forEach(([n,text])=>{const item=document.createElement("li");item.dataset.clue=`${dir}-${n}`;const number=document.createElement("span");number.className="clue-num";number.textContent=n+".";item.append(number,document.createTextNode(" "),...clueNodes(text));item.addEventListener("click",()=>{const e=entries[dir].get(n);if(!e)return;currentKey=e[0];setDirection(dir);focusCell(e[0])});list.appendChild(item)})})}
-acrossBtn.addEventListener("click",()=>{setDirection("across");focusCell(currentKey)});downBtn.addEventListener("click",()=>{setDirection("down");focusCell(currentKey)});revealWordBtn.addEventListener("click",revealWord);checkPuzzleBtn.addEventListener("click",checkPuzzle);clearBtn.addEventListener("click",()=>{if(!confirm("Clear all letters from the grid?"))return;inputs.forEach(input=>input.value="");clearChecks();saveLetters();setStatus("Grid cleared.");focusCell("0,0")});printBtn.addEventListener("click",()=>window.print());discoverEntries();buildSolution();renderGrid();renderClues();setDirection("across");focusCell("0,0");
+acrossBtn?.addEventListener("click",()=>{setDirection("across");focusCell(currentKey)});downBtn?.addEventListener("click",()=>{setDirection("down");focusCell(currentKey)});revealWordBtn.addEventListener("click",revealWord);checkPuzzleBtn.addEventListener("click",checkPuzzle);clearBtn.addEventListener("click",()=>{if(!confirm("Clear all letters from the grid?"))return;inputs.forEach(input=>input.value="");clearChecks();saveLetters();setStatus("Grid cleared.");focusCell("0,0")});printBtn.addEventListener("click",()=>window.print());discoverEntries();buildSolution();renderGrid();renderClues();setDirection("across");focusCell("0,0");
 
 function anagramClueNodes(text) {
   return text.split(/\*([^*]+)\*/).map((part, index) => {
@@ -227,6 +273,184 @@ anagramDialog.addEventListener('close', () => { if (anagramSession) focusCell(an
 anagramFodder.addEventListener('input', updateAnagramFodder);
 anagramFodder.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); shuffleAnagram(); } });
 anagramShuffle.addEventListener('click', shuffleAnagram);
+
+const parsingHints={"across":{"1":{"definition":[{"text":"roofing tool","range":[23,35]}],"indicators":[],"substitutions":[{"text":"Zulu","range":[0,4]},{"text":"hatchet","range":[5,12]}],"special":null},"3":{"definition":[{"text":"Livening","range":[0,8]}],"indicators":[{"text":"alongside","range":[21,30],"operation":"charade"},{"text":"cocktail","range":[35,43],"operation":"anagram"}],"substitutions":[{"text":"swing music","range":[9,20]}],"special":null},"7":{"definition":[{"text":"Quickly leave scene","range":[0,19]}],"indicators":[{"text":"disturbing","range":[23,33],"operation":"anagram"},{"text":"last","range":[47,51],"operation":"selection"},{"text":"already destroyed","range":[61,78],"operation":"deletion"}],"substitutions":[],"special":null},"8":{"definition":[{"text":"with poor form","range":[36,50]}],"indicators":[{"text":"is mistaken","range":[24,35],"operation":"anagram"}],"substitutions":[{"text":"Multiple Sclerosis","range":[5,23]}],"special":null},"9":{"definition":[{"text":"Attractive","range":[0,10]}],"indicators":[{"text":"brushes against","range":[17,32],"operation":"charade"}],"substitutions":[{"text":"vixen","range":[11,16]},{"text":"yankee","range":[33,39]}],"special":null},"10":{"definition":[{"text":"flows","range":[31,36]}],"indicators":[{"text":"Re-emphasised sound of","range":[0,22],"operation":"homophone, requiring some lateral thinking"}],"substitutions":[],"special":null},"13":{"definition":[{"text":"state between two others","range":[21,45]}],"indicators":[{"text":"Central","range":[0,7],"operation":"selection"}],"substitutions":[{"text":"pound","range":[15,20]}],"special":null},"15":{"definition":[{"text":"Star Wars species provides the local spelling of this island?","range":[0,61]}],"indicators":[],"substitutions":[],"special":"cryptic definition"},"18":{"definition":[{"text":"Farewell","range":[0,8]}],"indicators":[{"text":"development of","range":[9,23],"operation":"anagram"},{"text":"by","range":[28,30],"operation":"charade"}],"substitutions":[{"text":"Europe","range":[31,37]}],"special":null},"19":{"definition":[{"text":"come together","range":[18,31]}],"indicators":[{"text":"Tangles","range":[0,7],"operation":"anagram"}],"substitutions":[],"special":null},"20":{"definition":[{"text":"Embarrassed","range":[0,11]}],"indicators":[{"text":"the bungling of","range":[15,30],"operation":"anagram"},{"text":"which has eviscerated","range":[41,62],"operation":"deletion"},{"text":"caps","range":[83,87],"operation":"selection"},{"text":"in favour of","range":[88,100],"operation":"replacement"},{"text":"primarily","range":[101,110],"operation":"selection"}],"substitutions":[],"special":null},"21":{"definition":[{"text":"Original posters","range":[0,16]}],"indicators":[{"text":"regular","range":[18,25],"operation":"selection"}],"substitutions":[],"special":null}},"down":{"1":{"definition":[{"text":"with gusto","range":[39,49]}],"indicators":[{"text":"before","range":[7,13],"operation":"charade"},{"text":"fell away","range":[29,38],"operation":"deletion"}],"substitutions":[{"text":"Energy","range":[0,6]},{"text":"customs","range":[21,28]}],"special":null},"2":{"definition":[{"text":"copy","range":[34,38]}],"indicators":[{"text":"semi","range":[9,13],"operation":"deletion"}],"substitutions":[{"text":"Unknown","range":[0,7]},{"text":"adult-rated","range":[22,33]}],"special":null},"3":{"definition":[{"text":"Recoil","range":[0,6]}],"indicators":[{"text":"upon encountering","range":[19,36],"operation":"charade"},{"text":"dead","range":[52,56],"operation":"deletion"}],"substitutions":[{"text":"Juliet","range":[12,18]},{"text":"Romeo","range":[44,49]}],"special":null},"4":{"definition":[{"text":"Half-dead","range":[0,9]}],"indicators":[{"text":"with","range":[21,25],"operation":"charade"},{"text":"buzzing","range":[26,33],"operation":"anagram"},{"text":"off","range":[46,49],"operation":"deletion"}],"substitutions":[{"text":"sleeping","range":[11,19]},{"text":"left","range":[41,45]}],"special":null},"5":{"definition":[{"text":"Perhaps one’s only child","range":[0,24]}],"indicators":[{"text":"bound to","range":[28,36],"operation":"charade"}],"substitutions":[{"text":"initiate legal action","range":[37,58]}],"special":null},"6":{"definition":[{"text":"Simple dude behind explosive plot?","range":[0,34]}],"indicators":[],"substitutions":[],"special":"cryptic definition"},"11":{"definition":[{"text":"Instruments","range":[0,11]}],"indicators":[{"text":"enters into","range":[32,43],"operation":"insertion"}],"substitutions":[{"text":"King","range":[27,31]},{"text":"tremors","range":[44,51]}],"special":null},"12":{"definition":[{"text":"bone","range":[38,42]}],"indicators":[{"text":"Sounds like","range":[0,11],"operation":"homophone"},{"text":"around","range":[31,37],"operation":"anagram"}],"substitutions":[],"special":null},"14":{"definition":[{"text":"sensitive inside","range":[43,59]}],"indicators":[{"text":"First","range":[0,5],"operation":"selection"},{"text":"given away","range":[12,22],"operation":"deletion"},{"text":"after","range":[23,28],"operation":"charade"}],"substitutions":[{"text":"Queen","range":[29,34]}],"special":null},"16":{"definition":[{"text":"Mate","range":[0,4]}],"indicators":[{"text":"misguidedly","range":[13,24],"operation":"anagram"},{"text":"to win","range":[25,31],"operation":"charade"},{"text":"first","range":[32,37],"operation":"selection"}],"substitutions":[{"text":"love","range":[45,49]}],"special":null},"17":{"definition":[{"text":"pounds","range":[22,28]}],"indicators":[{"text":"Nearly","range":[0,6],"operation":"deletion"}],"substitutions":[{"text":"gave up on","range":[7,17]},{"text":"500","range":[18,21]}],"special":null},"18":{"definition":[{"text":"Eureka moment","range":[29,42]}],"indicators":[{"text":"occasionally","range":[7,19],"operation":"selection"}],"substitutions":[],"special":null}}};
+
+const hintDialog = document.getElementById('hintDialog');
+const hintTabs = document.getElementById('hintTabs');
+const hintBody = document.getElementById('hintBody');
+const revealHint = document.getElementById('revealHint');
+const hintCategories = ['definition', 'indicators', 'substitutions'];
+const hintLabels = { definition: 'Definition', indicators: 'Indicators', substitutions: 'Substitutions' };
+const hintStorageKey = 'cryptic-puzzle10-parsing-hints-v1';
+let revealedParsing = {};
+try { revealedParsing = JSON.parse(localStorage.getItem(hintStorageKey) || '{}') || {}; } catch {}
+let activeParsing = null;
+let activeCategory = 'definition';
+
+function availableHintCategories(parsing) {
+  return hintCategories.filter(category => category === 'definition' || parsing[category].length > 0);
+}
+
+function isHintRevealed(id, category) {
+  return revealedParsing[id]?.[category] === true;
+}
+
+function parsingNodes(text, dir, number) {
+  const italicRanges = [];
+  let clean = '';
+  for (const [index, part] of text.split(/\*([^*]+)\*/).entries()) {
+    if (index % 2) italicRanges.push([clean.length, clean.length + part.length]);
+    clean += part;
+  }
+  text = clean;
+  const parsing = parsingHints[dir]?.[number];
+  const id = `${dir}-${number}`;
+  const spans = [];
+  for (const category of hintCategories) {
+    if (!isHintRevealed(id, category)) continue;
+    for (const item of parsing?.[category] || []) spans.push({ start: item.range[0], end: item.range[1], category });
+  }
+  const boundaries = [...new Set([0, text.length, ...spans.flatMap(s => [s.start, s.end]), ...italicRanges.flat()])].sort((a,b) => a-b);
+  const nodes = [];
+  for (let i = 0; i < boundaries.length - 1; i++) {
+    const start = boundaries[i], end = boundaries[i + 1];
+    const span = spans.find(s => start >= s.start && end <= s.end);
+    const node = span ? document.createElement('mark') : document.createTextNode(text.slice(start, end));
+    if (span) { node.className = `parse-${span.category}`; node.textContent = text.slice(start, end); }
+    if (italicRanges.some(([a,b]) => start >= a && end <= b)) {
+      const em = document.createElement('em'); em.textContent = text.slice(start, end);
+      if (span) { node.replaceChildren(em); nodes.push(node); } else { nodes.push(em); }
+    } else { nodes.push(node); }
+  }
+  return nodes;
+}
+
+function updateParsingHighlights() {
+  for (const dir of ['across', 'down']) {
+    for (const [number, text] of clueText[dir]) {
+      const item = document.querySelector(`[data-clue="${dir}-${number}"]`);
+      if (!item) continue;
+      const label = document.createElement('span');
+      label.className = 'clue-num'; label.textContent = number + '.';
+      item.replaceChildren(label, document.createTextNode(' '), ...parsingNodes(text, dir, number));
+    }
+  }
+  highlight();
+  document.getElementById('hideHintsBtn').disabled = !Object.values(revealedParsing).some(categories => hintCategories.some(category => categories?.[category] === true));
+}
+
+// Keep the selected-clue banner in sync with the same exact source ranges.
+const originalSelectedClue = updateSelectedClue;
+updateSelectedClue = function(dir, number) {
+  originalSelectedClue(dir, number);
+  const text = getClueText(dir, number);
+  if (!text) return;
+  const label = document.createElement('span');
+  label.className = 'selected-clue-label'; label.textContent = `${number}${dir === 'across' ? 'A' : 'D'}.`;
+  selectedClue.replaceChildren(label, ...parsingNodes(text, dir, number));
+};
+
+function englishList(items) {
+  if (items.length < 2) return items[0] || '';
+  if (items.length === 2) return items.join(' and ');
+  return items.slice(0, -1).join(', ') + ', and ' + items.at(-1);
+}
+
+function hintExplanation(parsing, category) {
+  const items = parsing[category];
+  const quoted = englishList(items.map(item => `“${item.text}”`));
+  if (category === 'definition') {
+    if (parsing.special === '&lit') return 'The whole clue acts as the definition. Its wording also supplies the wordplay, so read it in both ways.';
+    if (parsing.special === 'cryptic definition') return `This clue's cryptic definition is ${quoted}. Read the wording as a playful description rather than a literal one.`;
+    return `This clue's definition is ${quoted}. Look for a word or phrase with that meaning.`;
+  }
+  if (category === 'substitutions') {
+    if (!items.length) return 'Your parsing notes identify no fodder requiring substitution in this clue. Use the wording already present when applying the wordplay instructions.';
+    return `The ${items.length === 1 ? 'expression requiring substitution in this clue is' : 'expressions requiring substitution in this clue are'} ${quoted}. Replace ${items.length === 1 ? 'this expression' : 'these expressions'} with a suitable synonym, abbreviation or equivalent before following the other instructions.`;
+  }
+  if (!items.length) return 'Your parsing notes identify no separate indicators in this clue. Read the wording as a whole for the intended cryptic meaning.';
+  const instructions = {
+    'homophone, requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
+    anagram: 'rearrange letters', containment: 'put one piece around another', reversal: 'reverse the order of letters',
+    deletion: 'remove letters', selection: 'select particular letters', combination: 'combine pieces',
+    charade: 'put pieces in the stated order', 'hidden word': 'find consecutive letters hidden in the wording',
+    insertion: 'put one piece inside another', replacement: 'replace one piece with another',
+    'homophone indicator requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
+    cycling: 'move letters from one end to the other while retaining their order', homophone: 'use a soundalike'
+  };
+  const actions = englishList(items.map(item => instructions[item.operation] || item.operation));
+  return `The ${items.length === 1 ? 'indicator for this clue is' : 'indicators for this clue are'} ${quoted}. ${items.length === 1 ? 'It asks you to' : 'Respectively, they ask you to'} ${actions}.`;
+}
+
+function showParsingCategory(category, focus = false) {
+  activeCategory = category;
+  const revealed = isHintRevealed(activeParsing.id, category);
+  for (const tab of hintTabs.children) {
+    const name = tab.dataset.category;
+    tab.setAttribute('aria-selected', String(name === category));
+    tab.classList.toggle('is-revealed', isHintRevealed(activeParsing.id, name));
+    tab.tabIndex = name === category ? 0 : -1;
+    if (focus && name === category) tab.focus();
+  }
+  document.getElementById('hintSlide').setAttribute('aria-labelledby', 'parsing-tab-' + category);
+  document.getElementById('hintHeading').textContent = hintLabels[category];
+  hintBody.textContent = revealed ? hintExplanation(activeParsing.parsing, category) : '';
+  revealHint.hidden = revealed;
+  revealHint.textContent = 'Reveal';
+  document.getElementById('hintClue').replaceChildren(...parsingNodes(activeParsing.text, activeParsing.dir, activeParsing.number));
+}
+
+function openParsingHints() {
+  const number = cellEntries.get(currentKey)?.[direction];
+  const parsing = parsingHints[direction]?.[number];
+  if (!parsing) { setStatus('Select a clue to see its hints.'); return; }
+  activeParsing = { id: `${direction}-${number}`, dir: direction, number, parsing, text: getClueText(direction, number) };
+  document.getElementById('hintTitle').textContent = `${number} ${direction === 'across' ? 'Across' : 'Down'} · Hints`;
+  document.getElementById('hintClue').className = 'hint-clue';
+  hintTabs.replaceChildren();
+  for (const category of availableHintCategories(parsing)) {
+    const tab = document.createElement('button');
+    tab.type = 'button'; tab.className = 'hint-tab'; tab.id = 'parsing-tab-' + category;
+    tab.dataset.category = category;
+    tab.setAttribute('role', 'tab'); tab.setAttribute('aria-controls', 'hintSlide');
+    tab.textContent = hintLabels[category];
+    tab.addEventListener('click', () => showParsingCategory(category));
+    hintTabs.appendChild(tab);
+  }
+  showParsingCategory('definition');
+  hintDialog.showModal();
+  document.getElementById('hintClose').focus();
+}
+
+document.getElementById('hintBtn').addEventListener('click', openParsingHints);
+document.getElementById('hideHintsBtn').addEventListener('click', () => {
+  revealedParsing = {};
+  try { localStorage.setItem(hintStorageKey, '{}'); } catch {}
+  updateParsingHighlights();
+  if (activeParsing) showParsingCategory(activeCategory);
+  setStatus('All hints hidden and reset. Your letters are unchanged.');
+});
+document.getElementById('hintClose').addEventListener('click', () => hintDialog.close());
+hintDialog.addEventListener('close', () => { updateParsingHighlights(); document.getElementById('hintBtn').focus(); });
+revealHint.addEventListener('click', () => {
+  revealedParsing[activeParsing.id] ||= {};
+  revealedParsing[activeParsing.id][activeCategory] = true;
+  try { localStorage.setItem(hintStorageKey, JSON.stringify(revealedParsing)); } catch {}
+  showParsingCategory(activeCategory);
+  updateParsingHighlights();
+});
+hintTabs.addEventListener('keydown', event => {
+  const categories = availableHintCategories(activeParsing.parsing);
+  let index = categories.indexOf(activeCategory);
+  if (event.key === 'ArrowRight') index = (index + 1) % categories.length;
+  else if (event.key === 'ArrowLeft') index = (index + categories.length - 1) % categories.length;
+  else if (event.key === 'Home') index = 0;
+  else if (event.key === 'End') index = categories.length - 1;
+  else return;
+  event.preventDefault(); showParsingCategory(categories[index], true);
+});
+updateParsingHighlights();
 
 </script></body></html>
 
