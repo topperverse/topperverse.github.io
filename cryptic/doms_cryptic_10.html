@@ -12,7 +12,7 @@
 .topbar,.toolbar{flex-wrap:wrap}
 #checkPuzzleBtn{background:var(--current);color:var(--ink);border-color:var(--ink)}
 
-#anagramBtn{background:var(--yellow)}
+#anagramBtn{background:var(--ink);color:#fff}
 .anagram-dialog{width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;padding:22px;border:4px solid var(--ink);color:var(--ink);background:var(--paper)}
 .anagram-dialog::backdrop{background:rgba(0,0,0,.65)}
 .anagram-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;border-bottom:3px solid var(--ink);padding-bottom:12px}
@@ -72,8 +72,8 @@
 .hint-dialog button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 #hintBtn{background:var(--ink);color:#fff}
 #hintBtn:hover{background:#222}
-#hideHintsBtn{background:#fff;border-color:var(--red);color:var(--red)}
-#hideHintsBtn:hover{background:var(--soft-red)}
+#hideHintsBtn{background:#fff;border-color:var(--ink);color:var(--ink)}
+#hideHintsBtn:hover{background:#eee}
 #hideHintsBtn:disabled{border-color:#aaa;color:#777;background:#fff;cursor:default}
 .parse-definition{background:rgba(0,87,184,.19)}
 .parse-indicators{background:rgba(225,37,27,.18)}
@@ -89,9 +89,14 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 @media(max-width:480px){.hint-header,.hint-clue,.hint-slide{padding:14px}.hint-tabs{margin:14px 14px 0}.hint-header h2{font-size:20px}.hint-tab{font-size:12px;padding:10px 3px}}
 @media print{.hint-dialog{display:none!important}}
 
+
+.toolbar .home-link{background:var(--ink);color:#fff}
+.toolbar .home-link:hover,#anagramBtn:hover{background:#222;color:#fff}
+#printBtn{background:var(--current);color:var(--ink);border-color:var(--ink)}
+#printBtn:hover{background:#bdbdbd;color:var(--ink)}
 </style>
 </head>
-<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Hint</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn" type="button">Clear letters</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Back to archive</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
 <dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
   <div class="anagram-top">
     <h2 id="anagramTitle">Anagram helper</h2>
