@@ -70,8 +70,8 @@
 .hint-navigation button:disabled{opacity:.4;cursor:default}
 .hint-count{font:700 13px/1.4 var(--mono);text-align:center}
 .hint-dialog button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
-#hintBtn{background:var(--blue);color:#fff}
-#hintBtn:hover{background:#004797}
+#hintBtn{background:var(--ink);color:#fff}
+#hintBtn:hover{background:#222}
 #hideHintsBtn{background:#fff;border-color:var(--red);color:var(--red)}
 #hideHintsBtn:hover{background:var(--soft-red)}
 #hideHintsBtn:disabled{border-color:#aaa;color:#777;background:#fff;cursor:default}
@@ -91,7 +91,7 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 
 </style>
 </head>
-<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn" type="button">Clear letters</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Hint</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn" type="button">Clear letters</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
 <dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
   <div class="anagram-top">
     <h2 id="anagramTitle">Anagram helper</h2>
