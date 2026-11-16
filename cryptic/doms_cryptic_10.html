@@ -156,6 +156,23 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
   .toolbar{flex:1;width:auto}
 }
 
+
+@media screen and (max-width:860px){
+  .toolbar button,.toolbar .button-link{font-size:14px;min-height:44px;line-height:1.2;padding:5px 3px}
+  .topbar h1{font-size:22px}
+  .subtitle{font-size:13px;line-height:1.35}
+  .selected-clue{font-size:16px;height:76px;min-height:76px;padding:7px 9px}
+  .mobile-keyboard-nav button{font-size:14px;min-height:32px;height:32px}
+  .mobile-keyboard .key-direction{font-size:14px}
+  .clues li{font-size:17px;line-height:1.45}
+}
+@media screen and (max-width:860px) and (max-height:500px) and (orientation:landscape){
+  .topbar h1{font-size:18px}
+  .subtitle{font-size:12px}
+  .toolbar button,.toolbar .button-link{font-size:12px;min-height:38px}
+  .selected-clue{font-size:14px;height:60px;min-height:60px}
+}
+
 </style>
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (10)</h1><p class="subtitle">Saturday 14 November 2026. Double pangram puzzle! Set by Harry Topper.</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Back to archive</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><div id="status" class="status" aria-live="polite"></div></section><section id="mobileClueList" class="clues" aria-label="Crossword clues"><div class="mobile-clue-header">Clues<button id="mobileCloseClues" type="button">Back to grid</button></div><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div><section id="mobileKeyboard" class="mobile-keyboard" aria-label="Crossword keyboard"><div class="mobile-keyboard-row mobile-keyboard-nav"><button id="mobilePreviousClue" type="button" aria-label="Previous clue">Previous</button><button id="mobileCluesButton" type="button" aria-expanded="false" aria-controls="mobileClueList">Clues</button><button id="mobileNextClue" type="button" aria-label="Next clue">Next</button></div><button id="mobileDirectionKey" type="button" class="key-direction">Across</button></section></main>
@@ -602,8 +619,9 @@ function configureMobilePuzzle() {
 const mobileOriginalHighlight = highlight;
 highlight = function() {
   mobileOriginalHighlight();
-  mobileDirectionKey.textContent = direction === 'across' ? 'Across' : 'Down';
-  mobileDirectionKey.setAttribute('aria-label', 'Change direction, currently ' + direction);
+  const nextDirection = direction === 'across' ? 'Down' : 'Across';
+  mobileDirectionKey.textContent = nextDirection;
+  mobileDirectionKey.setAttribute('aria-label', 'Switch to ' + nextDirection);
 };
 mobilePuzzleMedia.addEventListener('change', configureMobilePuzzle);
 window.addEventListener('resize', sizeMobilePuzzle);

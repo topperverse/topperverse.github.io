@@ -348,8 +348,9 @@ function configureMobilePuzzle() {
 const mobileOriginalHighlight = highlight;
 highlight = function() {
   mobileOriginalHighlight();
-  mobileDirectionKey.textContent = direction === 'across' ? 'Across' : 'Down';
-  mobileDirectionKey.setAttribute('aria-label', 'Change direction, currently ' + direction);
+  const nextDirection = direction === 'across' ? 'Down' : 'Across';
+  mobileDirectionKey.textContent = nextDirection;
+  mobileDirectionKey.setAttribute('aria-label', 'Switch to ' + nextDirection);
 };
 mobilePuzzleMedia.addEventListener('change', configureMobilePuzzle);
 window.addEventListener('resize', sizeMobilePuzzle);
