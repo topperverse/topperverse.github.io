@@ -50,9 +50,62 @@
 @media(max-width:480px){.anagram-dialog{padding:14px}.anagram-top h2{font-size:20px}.anagram-circle{width:230px;margin:14px auto}.anagram-controls{gap:5px}#anagramShuffle{padding:0 9px}.anagram-dialog .selected-clue{font-size:14px}}
 @media print{.anagram-dialog{display:none!important}}
 
+.hint-dialog{width:min(580px,calc(100vw - 24px));max-height:calc(100dvh - 32px);padding:0;border:4px solid var(--line);border-radius:0;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+.hint-dialog::backdrop{background:rgba(0,0,0,.55)}
+.hint-dialog[open]{display:flex;flex-direction:column}
+.hint-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:2px solid var(--line)}
+.hint-header h2{margin:0;font:700 22px/1.2 var(--mono)}
+.hint-close{min-width:44px;min-height:44px;font-size:22px}
+.hint-clue{margin:0;padding:16px 18px;font:700 16px/1.5 var(--mono);overflow-wrap:anywhere}
+.hint-tabs{display:flex;gap:0;margin:16px 18px 0;border:2px solid var(--line)}
+.hint-tab{flex:1;min-width:0;min-height:44px;border:0;padding:10px 6px;font-size:13px;white-space:normal}
+.hint-tab+.hint-tab{border-left:2px solid var(--line)}
+.hint-tab[aria-selected=true]{background:var(--ink);color:#fff}
+.hint-slide{padding:20px 18px;min-height:140px}
+.hint-slide h3{margin:0 0 10px;font:700 18px/1.25 var(--mono)}
+.hint-slide p{margin:0;font:500 17px/1.6 var(--sans);overflow-wrap:anywhere}
+.hint-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px 18px}
+.hint-navigation[hidden]{display:none}
+.hint-navigation button{min-height:44px}
+.hint-navigation button:disabled{opacity:.4;cursor:default}
+.hint-count{font:700 13px/1.4 var(--mono);text-align:center}
+.hint-dialog button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+#hintBtn{background:var(--ink);color:#fff}
+#hintBtn:hover{background:#222}
+#hideHintsBtn{background:#fff;border-color:var(--ink);color:var(--ink)}
+#hideHintsBtn:hover{background:#eee}
+#hideHintsBtn:disabled{border-color:#aaa;color:#777;background:#fff;cursor:default}
+.parse-definition{background:rgba(0,87,184,.19)}
+.parse-indicators{background:rgba(225,37,27,.18)}
+.parse-substitutions{background:rgba(255,217,0,.32)}
+mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+#hintClose span{display:block;position:relative;width:17px;height:17px;margin:auto}
+#hintClose span::before,#hintClose span::after{content:"";position:absolute;left:7px;top:0;width:3px;height:17px;background:var(--ink);transform:rotate(45deg)}
+#hintClose span::after{transform:rotate(-45deg)}
+#revealHint{margin-top:16px;min-height:44px;background:var(--ink);color:#fff}
+#revealHint:hover{background:#222}
+#revealHint[hidden]{display:none!important}
+.hint-tab.is-revealed::after{content:"";display:inline-block;width:7px;height:7px;border:1px solid currentColor;border-radius:50%;background:currentColor;margin-left:7px}
+@media(max-width:480px){.hint-header,.hint-clue,.hint-slide{padding:14px}.hint-tabs{margin:14px 14px 0}.hint-header h2{font-size:20px}.hint-tab{font-size:12px;padding:10px 3px}}
+@media print{.hint-dialog{display:none!important}}
+
+
+.toolbar .home-link{background:var(--ink);color:#fff}
+.toolbar .home-link:hover,#anagramBtn:hover{background:#222;color:#fff}
+#printBtn{background:var(--current);color:var(--ink);border-color:var(--ink)}
+#printBtn:hover{background:#bdbdbd;color:var(--ink)}
+
+.subtitle{margin-top:8px}
+.topbar{row-gap:16px}
+
+.parse-definition.parse-indicators{background:linear-gradient(to bottom,rgba(0,87,184,.19) 50%,rgba(225,37,27,.18) 50%)}
+.parse-indicators.parse-substitutions{background:linear-gradient(to bottom,rgba(225,37,27,.18) 50%,rgba(255,217,0,.32) 50%)}
+
+#anagramBtn{background:var(--ink);color:#fff}
+
 </style>
 </head>
-<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (8)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><div class="direction-toggle" aria-label="Typing direction"><button id="acrossBtn" type="button" aria-pressed="true">Across</button><button id="downBtn" type="button" aria-pressed="false">Down</button></div><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn" type="button">Clear</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (8)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Back to archive</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
 <dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
   <div class="anagram-top">
     <h2 id="anagramTitle">Anagram helper</h2>
@@ -69,10 +122,17 @@
   <p id="anagramStatus" class="anagram-status" role="status" aria-live="polite"></p>
 </dialog>
 
+<dialog id="hintDialog" class="hint-dialog" aria-labelledby="hintTitle" aria-describedby="hintClue">
+  <header class="hint-header"><h2 id="hintTitle">Clue hint</h2><button id="hintClose" class="hint-close" type="button" aria-label="Close hints"><span aria-hidden="true"></span></button></header>
+  <p id="hintClue" class="hint-clue"></p>
+  <div id="hintTabs" class="hint-tabs" role="tablist" aria-label="Clue hints"></div>
+  <section id="hintSlide" class="hint-slide" role="tabpanel" tabindex="0" aria-live="polite"><h3 id="hintHeading"></h3><p id="hintBody"></p><button id="revealHint" type="button">Reveal</button></section>
+  
+</dialog>
 <script>
 const gridPattern=["....#......",".#.#.#.#.#.",".......#...",".###.#.#.#.","##.........",".#.#.#.#.#.",".........##",".#.#.#.###.","...#.......",".#.#.#.#.#.","......#...."];
 const numbers={"0,0":"1","0,2":"2","0,5":"3","0,6":"4","0,8":"5","0,10":"6","1,4":"7","2,0":"8","2,8":"9","4,2":"10","5,0":"11","6,0":"12","7,10":"13","8,0":"14","8,4":"15","8,8":"16","10,0":"17","10,7":"18"};
-const clueText={"across":[["1","Staple treatment for ankle sprains (4)"],["3","Botanic species discovered by academician, nearly half-forgotten (6)"],["8","House o’Whiskey (7)"],["9","“Freelance subcontractor?” It’s giving snake vibes… (3)"],["10","Soviet council’s mostly civil office announcement (9)"],["12","Dystopia doesn't need stated reasons; invest in the opening to Orwell's world, where animals play human roles? (9)"],["14","Branded pen’s nib-tip has broken off, upsetting first customer (3)"],["15","Meatloaf drops temperature while baking, becoming edible slop (7)"],["17","Thinly spread sepia brushes every now and then (6)"],["18","Malaria isn't so bad, according to French song? (4)"]],"down":[["1","Arise reborn, having stripped outer garment (4)"],["2","Regularly visit Cyprus to obtain tech component (3)"],["4","Archdeacon’s tip at ecclesiastical housing block (10)"],["5","Break the centre of crouton in Caesar salad (7)"],["6","Thriving, half-shorn Ba-Ba is hauled up on wool-weaver (6)"],["7","Anti-slavery campaigner is losing it at the far-right’s cancellations (10)"],["10","Throws up canape before head hits the floor, first-class… What could solve everything? (7)"],["11","Bricks to rebuild abodes (6)"],["13","Napoleon was exiled here (and able to rise again) (4)"],["16","Harvest from grain-bearing plants (3)"]]};
+const clueText={"across":[["1","Staple treatment for ankle sprains (4)"],["3","Botanic species discovered by academician, nearly half-forgotten (6)"],["8","House o’Whiskey (7)"],["9","“Subcontracted freelancer?” It’s giving snake vibes… (3)"],["10","Soviet council’s mostly civil office announcement (9)"],["12","Dystopia doesn't need stated reasons; invest in the opening to Orwell's world, where animals play human roles? (9)"],["14","Branded pen’s nib-tip has broken off, upsetting first customer (3)"],["15","Meatloaf drops temperature while baking, becoming edible slop (7)"],["17","Thinly spread sepia brushes every now and then (6)"],["18","Malaria isn't so bad, according to French song? (4)"]],"down":[["1","Arise reborn, having stripped outer garment (4)"],["2","Regularly visit Cyprus to obtain tech component (3)"],["4","Archdeacon’s tip at ecclesiastical housing block (10)"],["5","Break the centre of crouton in Caesar salad (7)"],["6","Thriving, half-shorn Ba-Ba is hauled up on wool-weaver (6)"],["7","Anti-slavery campaigner is losing it at the far-right’s cancellations (10)"],["10","Throws up canape before head hits the floor, first-class… What could solve everything? (7)"],["11","Bricks to rebuild abodes (6)"],["13","Napoleon was exiled here (and able to rise again) (4)"],["16","Harvest from grain-bearing plants (3)"]]};
 const answers={"across":{"1":"RICE","3":"ACACIA","8":"BOURBON","9":"EEL","10":"POLITBURO","12":"DINOTOPIA","14":"BIC","15":"OATMEAL","17":"SPARSE","18":"ARIA"},"down":{"1":"ROBE","2":"CPU","4":"CONSTIPATE","5":"CAESURA","6":"ABLOOM","7":"ABOLITIONS","10":"PANACEA","11":"ADOBES","13":"ELBA","16":"EAR"}};
 const blockColors=["black","blue","black","yellow","red","black","black","blue","yellow","black","red","black","blue","black","yellow","black","red","black","black","yellow","blue","black","red","black","black","blue","yellow","black","red","black","blue","black","black"];
 const storageKey="doms-cryptic-8-letters",statusKey="doms-cryptic-8-status",grid=document.getElementById("grid"),acrossBtn=document.getElementById("acrossBtn"),downBtn=document.getElementById("downBtn"),revealWordBtn=document.getElementById("revealWordBtn"),checkPuzzleBtn=document.getElementById("checkPuzzleBtn"),clearBtn=document.getElementById("clearBtn"),printBtn=document.getElementById("printBtn"),selectedClue=document.getElementById("selectedClue"),status=document.getElementById("status"),inputs=new Map(),cells=new Map(),entries={across:new Map(),down:new Map()},cellEntries=new Map(),solution=new Map();let direction="across",currentKey="0,0";
@@ -87,12 +147,12 @@ function clueNodes(text) {
     return emphasis;
   });
 }
-function getClueText(dir,n){const clue=clueText[dir].find(([num])=>num===n);return clue?clue[1]:""}function setDirection(next){direction=next;acrossBtn.setAttribute("aria-pressed",String(direction==="across"));downBtn.setAttribute("aria-pressed",String(direction==="down"));highlight()}function getEntry(k,dir=direction){const ref=cellEntries.get(k);return ref&&ref[dir]?entries[dir].get(ref[dir]):null}function focusCell(k){const input=inputs.get(k);if(!input)return;currentKey=k;input.focus();input.select();highlight()}function nextCell(k){const e=getEntry(k);if(!e)return k;return e[Math.min(e.indexOf(k)+1,e.length-1)]}function previousCell(k){const e=getEntry(k);if(!e)return k;return e[Math.max(e.indexOf(k)-1,0)]}function moveBy(dr,dc){const [r,c]=currentKey.split(",").map(Number),n=keyOf(r+dr,c+dc);if(inputs.has(n))focusCell(n)}function toggleDirection(k=currentKey){const ref=cellEntries.get(k);if(ref&&ref.across&&ref.down){setDirection(direction==="across"?"down":"across");focusCell(k)}}function updateSelectedClue(dir,n){const text=getClueText(dir,n);if(!text){selectedClue.hidden=true;return}const order=clueText[dir].findIndex(([number])=>number===n);const tone=["red","blue","yellow"][(order+(dir==="down"?2:0))%3],label=document.createElement("span");label.className="selected-clue-label";label.textContent=`${n}${dir==="across"?"A":"D"}.`;selectedClue.className=`selected-clue tone-${tone}`;selectedClue.replaceChildren(label,...clueNodes(text));selectedClue.hidden=false}
+function getClueText(dir,n){const clue=clueText[dir].find(([num])=>num===n);return clue?clue[1]:""}function setDirection(next){direction=next;acrossBtn?.setAttribute("aria-pressed",String(direction==="across"));downBtn?.setAttribute("aria-pressed",String(direction==="down"));highlight()}function getEntry(k,dir=direction){const ref=cellEntries.get(k);return ref&&ref[dir]?entries[dir].get(ref[dir]):null}function focusCell(k){const input=inputs.get(k);if(!input)return;currentKey=k;input.focus();input.select();highlight()}function nextCell(k){const e=getEntry(k);if(!e)return k;return e[Math.min(e.indexOf(k)+1,e.length-1)]}function previousCell(k){const e=getEntry(k);if(!e)return k;return e[Math.max(e.indexOf(k)-1,0)]}function moveBy(dr,dc){const [r,c]=currentKey.split(",").map(Number),n=keyOf(r+dr,c+dc);if(inputs.has(n))focusCell(n)}function toggleDirection(k=currentKey){const ref=cellEntries.get(k);if(ref&&ref.across&&ref.down){setDirection(direction==="across"?"down":"across");focusCell(k)}}function updateSelectedClue(dir,n){const text=getClueText(dir,n);if(!text){selectedClue.hidden=true;return}const order=clueText[dir].findIndex(([number])=>number===n);const tone=["red","blue","yellow"][(order+(dir==="down"?2:0))%3],label=document.createElement("span");label.className="selected-clue-label";label.textContent=`${n}${dir==="across"?"A":"D"}.`;selectedClue.className=`selected-clue tone-${tone}`;selectedClue.replaceChildren(label,...clueNodes(text));selectedClue.hidden=false}
 function highlight(){cells.forEach(c=>c.classList.remove("in-entry","is-current"));document.querySelectorAll(".active-clue").forEach(el=>el.classList.remove("active-clue"));const ref=cellEntries.get(currentKey);let dir=direction;if(ref&&!ref[dir]){setDirection(ref.across?"across":"down");return}const e=getEntry(currentKey,dir)||[currentKey];e.forEach(k=>cells.get(k)?.classList.add("in-entry"));cells.get(currentKey)?.classList.add("is-current");if(ref&&ref[dir]){document.querySelector(`[data-clue="${dir}-${ref[dir]}"]`)?.classList.add("active-clue");updateSelectedClue(dir,ref[dir])}else{selectedClue.hidden=true}}
 function checkCell(k,announce=true){const input=inputs.get(k),cell=cells.get(k),expected=solution.get(k);if(!input||!cell||!expected)return null;cell.classList.remove("is-correct","is-incorrect");input.removeAttribute("aria-invalid");if(!input.value){if(announce)setStatus("That square is empty.");return null}const ok=input.value.toUpperCase()===expected;cell.classList.add(ok?"is-correct":"is-incorrect");if(!ok)input.setAttribute("aria-invalid","true");if(announce)setStatus(ok?"Current square is correct.":"Current square is incorrect.");return ok}function revealWord(){const e=getEntry(currentKey);if(!e){setStatus("No word is selected.");return}e.forEach(k=>{const input=inputs.get(k),expected=solution.get(k);if(input&&expected){clearCheck(k);input.value=expected}});saveLetters();setStatus("Word revealed.");focusCell(currentKey)}function checkPuzzle(){let correct=0,incorrect=0,empty=0;inputs.forEach((_,k)=>{const r=checkCell(k,false);if(r===true)correct++;else if(r===false)incorrect++;else empty++});if(!incorrect&&!empty){localStorage.setItem(statusKey,"completed");setStatus("Everything is correct. Puzzle complete.")}else{localStorage.setItem(statusKey,Object.values(saved()).filter(Boolean).length?"started":"unattempted");setStatus(`${correct} correct, ${incorrect} incorrect, ${empty} empty.`)}}
 function renderGrid(){const s=saved();let blockIndex=0;gridPattern.forEach((rowText,r)=>[...rowText].forEach((ch,c)=>{const k=keyOf(r,c),cell=document.createElement("div");if(ch==="#"){cell.className=`cell block-${blockColors[blockIndex++%blockColors.length]}`;grid.appendChild(cell);return}cell.className="cell";if(numbers[k]){const num=document.createElement("span");num.className="num";num.textContent=numbers[k];cell.appendChild(num)}const input=document.createElement("input");input.type="text";input.inputMode="text";input.maxLength=1;input.autocomplete="off";input.spellcheck=false;input.autocapitalize="characters";input.setAttribute("aria-label",`Row ${r+1}, column ${c+1}`);input.value=(s[k]||"").slice(0,1).toUpperCase();input.addEventListener("focus",()=>{currentKey=k;const ref=cellEntries.get(k);if(ref&&!ref[direction])setDirection(ref.across?"across":"down");highlight()});input.addEventListener("pointerdown",event=>{if(event.button===0&&currentKey===k)toggleDirection(k)});input.addEventListener("keydown",event=>{if(/^[a-zA-Z]$/.test(event.key)){event.preventDefault();clearCheck(k);input.value=event.key.toUpperCase();saveLetters();setStatus("");focusCell(nextCell(k));return}if(event.key==="Backspace"){event.preventDefault();if(input.value){clearCheck(k);input.value="";saveLetters()}else{const p=previousCell(k);focusCell(p);const pi=inputs.get(p);if(pi){clearCheck(p);pi.value=""}saveLetters()}setStatus("");return}if(event.key==="Delete"){event.preventDefault();clearCheck(k);input.value="";saveLetters();setStatus("");return}if(event.key===" "||event.key==="Enter"){event.preventDefault();toggleDirection(k);return}if(event.key==="ArrowRight"){event.preventDefault();setDirection("across");moveBy(0,1)}else if(event.key==="ArrowLeft"){event.preventDefault();setDirection("across");moveBy(0,-1)}else if(event.key==="ArrowDown"){event.preventDefault();setDirection("down");moveBy(1,0)}else if(event.key==="ArrowUp"){event.preventDefault();setDirection("down");moveBy(-1,0)}});input.addEventListener("input",()=>{const letters=input.value.toUpperCase().replace(/[^A-Z]/g,"");clearCheck(k);if(!letters){input.value="";saveLetters();setStatus("");return}input.value=letters[0];saveLetters();setStatus("");requestAnimationFrame(()=>focusCell(nextCell(k)))});input.addEventListener("paste",event=>{event.preventDefault();const letters=(event.clipboardData||window.clipboardData).getData("text").toUpperCase().replace(/[^A-Z]/g,"").split(""),e=getEntry(k);if(!e||!letters.length)return;let last=k;for(let i=e.indexOf(k);i<e.length&&letters.length;i++){const target=inputs.get(e[i]);clearCheck(e[i]);target.value=letters.shift();last=e[i]}saveLetters();setStatus("");focusCell(last)});cell.appendChild(input);inputs.set(k,input);cells.set(k,cell);grid.appendChild(cell)}))}
 function renderClues(){Object.entries(clueText).forEach(([dir,clues])=>{const list=document.getElementById(dir==="across"?"acrossClues":"downClues");clues.forEach(([n,text])=>{const item=document.createElement("li");item.dataset.clue=`${dir}-${n}`;const number=document.createElement("span");number.className="clue-num";number.textContent=n+".";item.append(number,document.createTextNode(" "),...clueNodes(text));item.addEventListener("click",()=>{const e=entries[dir].get(n);if(!e)return;currentKey=e[0];setDirection(dir);focusCell(e[0])});list.appendChild(item)})})}
-acrossBtn.addEventListener("click",()=>{setDirection("across");focusCell(currentKey)});downBtn.addEventListener("click",()=>{setDirection("down");focusCell(currentKey)});revealWordBtn.addEventListener("click",revealWord);checkPuzzleBtn.addEventListener("click",checkPuzzle);clearBtn.addEventListener("click",()=>{if(!confirm("Clear all letters from the grid?"))return;inputs.forEach(input=>input.value="");clearChecks();saveLetters();setStatus("Grid cleared.");focusCell("0,0")});printBtn.addEventListener("click",()=>window.print());discoverEntries();buildSolution();renderGrid();renderClues();setDirection("across");focusCell("0,0");
+acrossBtn?.addEventListener("click",()=>{setDirection("across");focusCell(currentKey)});downBtn?.addEventListener("click",()=>{setDirection("down");focusCell(currentKey)});revealWordBtn.addEventListener("click",revealWord);checkPuzzleBtn.addEventListener("click",checkPuzzle);clearBtn.addEventListener("click",()=>{if(!confirm("Clear all letters from the grid?"))return;inputs.forEach(input=>input.value="");clearChecks();saveLetters();setStatus("Grid cleared.");focusCell("0,0")});printBtn.addEventListener("click",()=>window.print());discoverEntries();buildSolution();renderGrid();renderClues();setDirection("across");focusCell("0,0");
 
 function anagramClueNodes(text) {
   return text.split(/\*([^*]+)\*/).map((part, index) => {
@@ -227,5 +287,202 @@ anagramDialog.addEventListener('close', () => { if (anagramSession) focusCell(an
 anagramFodder.addEventListener('input', updateAnagramFodder);
 anagramFodder.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); shuffleAnagram(); } });
 anagramShuffle.addEventListener('click', shuffleAnagram);
+
+const parsingHints={"across":{"1":{"definition":[{"text":"Staple","range":[0,6]},{"text":"treatment for ankle sprains","range":[7,34]}],"indicators":[],"substitutions":[],"special":null},"3":{"definition":[{"text":"Botanic species","range":[0,15]}],"indicators":[{"text":"nearly","range":[43,49],"operation":"deletion"},{"text":"forgotten","range":[55,64],"operation":"deletion"}],"substitutions":[{"text":"half","range":[50,54],"replacement":"DEMI"}],"special":null},"8":{"definition":[{"text":"House o’","range":[0,8]},{"text":"Whiskey","range":[8,15]}],"indicators":[],"substitutions":[],"special":null},"9":{"definition":[{"text":"It’s giving snake vibes…","range":[28,52]}],"indicators":[{"text":"Subcontracted","range":[1,14],"operation":"hidden word"}],"substitutions":[],"special":null},"10":{"definition":[{"text":"Soviet council","range":[0,14]}],"indicators":[{"text":"mostly","range":[17,23],"operation":"deletion"},{"text":"announcement","range":[37,49],"operation":"homophone"}],"substitutions":[{"text":"civil","range":[24,29],"replacement":"POLITE"},{"text":"office","range":[30,36],"replacement":"BUREAU"}],"special":null},"12":{"definition":[{"text":"world, where animals play human roles?","range":[72,110]}],"indicators":[{"text":"doesn't need","range":[9,21],"operation":"deletion"},{"text":"stated","range":[22,28],"operation":"homophones"},{"text":"invest","range":[38,44],"operation":"insertion"},{"text":"the opening to","range":[48,62],"operation":"selection"}],"substitutions":[{"text":"reasons","range":[29,36],"replacement":"WHYS"}],"special":null},"14":{"definition":[{"text":"Branded pen","range":[0,11]}],"indicators":[{"text":"tip","range":[18,21],"operation":"selection"},{"text":"has broken off","range":[22,36],"operation":"deletion"},{"text":"upsetting","range":[38,47],"operation":"anagram"},{"text":"first","range":[48,53],"operation":"selection"}],"substitutions":[],"special":null},"15":{"definition":[{"text":"edible slop","range":[50,61]}],"indicators":[{"text":"drops","range":[9,14],"operation":"deletion"},{"text":"while baking","range":[27,39],"operation":"anagram"}],"substitutions":[{"text":"temperature","range":[15,26],"replacement":"F"}],"special":null},"17":{"definition":[{"text":"Thinly spread","range":[0,13]}],"indicators":[{"text":"every now and then","range":[28,46],"operation":"selection"}],"substitutions":[],"special":null},"18":{"definition":[{"text":"song","range":[42,46]}],"indicators":[{"text":"isn't so","range":[8,16],"operation":"deletion"},{"text":"according to French","range":[22,41],"operation":"translation"}],"substitutions":[],"special":null}},"down":{"1":{"definition":[{"text":"outer garment","range":[30,43]}],"indicators":[{"text":"Arise","range":[0,5],"operation":"down-clue reversal"},{"text":"having stripped","range":[14,29],"operation":"deletion"}],"substitutions":[],"special":null},"2":{"definition":[{"text":"tech component","range":[33,47]}],"indicators":[{"text":"Regularly visit","range":[0,15],"operation":"selection"}],"substitutions":[],"special":null},"4":{"definition":[{"text":"block","range":[43,48]}],"indicators":[{"text":"housing","range":[35,42],"operation":"hidden word"}],"substitutions":[],"special":null},"5":{"definition":[{"text":"Break","range":[0,5]}],"indicators":[{"text":"the centre of","range":[6,19],"operation":"selection"},{"text":"in","range":[28,30],"operation":"insertion"},{"text":"salad","range":[38,43],"operation":"anagram"}],"substitutions":[],"special":null},"6":{"definition":[{"text":"Thriving","range":[0,8]}],"indicators":[{"text":"half","range":[10,14],"operation":"selection"},{"text":"shorn","range":[15,20],"operation":"deletion"},{"text":"is hauled up","range":[27,39],"operation":"down-clue reversal"},{"text":"on","range":[40,42],"operation":"charade"}],"substitutions":[{"text":"wool-weaver","range":[43,54],"replacement":"LOOM"}],"special":null},"7":{"definition":[{"text":"cancellations","range":[56,69]}],"indicators":[{"text":"is losing","range":[24,33],"operation":"deletion"},{"text":"at the far-right","range":[37,53],"operation":"selection"}],"substitutions":[{"text":"Anti-slavery campaigner","range":[0,23],"replacement":"ABOLITIONIST"}],"special":null},"10":{"definition":[{"text":"What could solve everything?","range":[58,86]}],"indicators":[{"text":"Throws up","range":[0,9],"operation":"down-clue reversal"},{"text":"before","range":[17,23],"operation":"order of operations"},{"text":"head hits the floor","range":[24,43],"operation":"down-clue cycling"}],"substitutions":[{"text":"first-class","range":[45,56],"replacement":"A"}],"special":null},"11":{"definition":[{"text":"Bricks","range":[0,6]}],"indicators":[{"text":"to rebuild","range":[7,17],"operation":"anagram"}],"substitutions":[],"special":null},"13":{"definition":[{"text":"Napoleon was exiled here","range":[0,24]}],"indicators":[{"text":"to rise again","range":[35,48],"operation":"down-clue reversal"}],"substitutions":[],"special":null},"16":{"definition":[{"text":"Harvest","range":[0,7]}],"indicators":[{"text":"plants","range":[27,33],"operation":"hidden word"}],"substitutions":[],"special":null}}};
+const hintDialog = document.getElementById('hintDialog');
+const hintTabs = document.getElementById('hintTabs');
+const hintBody = document.getElementById('hintBody');
+const revealHint = document.getElementById('revealHint');
+const hintCategories = ['definition', 'indicators', 'substitutions'];
+const hintLabels = { definition: 'Definition', indicators: 'Indicators', substitutions: 'Substitutions' };
+const hintStorageKey = 'cryptic-puzzle8-parsing-hints-v1';
+let revealedParsing = {};
+try { revealedParsing = JSON.parse(localStorage.getItem(hintStorageKey) || '{}') || {}; } catch {}
+let activeParsing = null;
+let activeCategory = 'definition';
+
+function availableHintCategories(parsing) {
+  return hintCategories.filter(category => category === 'definition' || parsing[category].length > 0);
+}
+
+function isHintRevealed(id, category) {
+  return revealedParsing[id]?.[category] === true;
+}
+
+function parsingNodes(text, dir, number) {
+  const italicRanges = [];
+  let clean = '';
+  for (const [index, part] of text.split(/\*([^*]+)\*/).entries()) {
+    if (index % 2) italicRanges.push([clean.length, clean.length + part.length]);
+    clean += part;
+  }
+  text = clean;
+  const parsing = parsingHints[dir]?.[number];
+  const id = `${dir}-${number}`;
+  const spans = [];
+  for (const category of hintCategories) {
+    if (!isHintRevealed(id, category)) continue;
+    for (const item of parsing?.[category] || []) spans.push({ start: item.range[0], end: item.range[1], category });
+  }
+  const boundaries = [...new Set([0, text.length, ...spans.flatMap(s => [s.start, s.end]), ...italicRanges.flat()])].sort((a,b) => a-b);
+  const nodes = [];
+  for (let i = 0; i < boundaries.length - 1; i++) {
+    const start = boundaries[i], end = boundaries[i + 1];
+    const matching = spans.filter(s => start >= s.start && end <= s.end);
+    const span = matching[0];
+    const node = span ? document.createElement('mark') : document.createTextNode(text.slice(start, end));
+    if (span) { node.className = [...new Set(matching.map(s => `parse-${s.category}`))].join(" "); node.textContent = text.slice(start, end); }
+    if (italicRanges.some(([a,b]) => start >= a && end <= b)) {
+      const em = document.createElement('em'); em.textContent = text.slice(start, end);
+      if (span) { node.replaceChildren(em); nodes.push(node); } else { nodes.push(em); }
+    } else { nodes.push(node); }
+  }
+  return nodes;
+}
+
+function updateParsingHighlights() {
+  for (const dir of ['across', 'down']) {
+    for (const [number, text] of clueText[dir]) {
+      const item = document.querySelector(`[data-clue="${dir}-${number}"]`);
+      if (!item) continue;
+      const label = document.createElement('span');
+      label.className = 'clue-num'; label.textContent = number + '.';
+      item.replaceChildren(label, document.createTextNode(' '), ...parsingNodes(text, dir, number));
+    }
+  }
+  highlight();
+  document.getElementById('hideHintsBtn').disabled = !Object.values(revealedParsing).some(categories => hintCategories.some(category => categories?.[category] === true));
+}
+
+// Keep the selected-clue banner in sync with the same exact source ranges.
+const originalSelectedClue = updateSelectedClue;
+updateSelectedClue = function(dir, number) {
+  originalSelectedClue(dir, number);
+  const text = getClueText(dir, number);
+  if (!text) return;
+  const label = document.createElement('span');
+  label.className = 'selected-clue-label'; label.textContent = `${number}${dir === 'across' ? 'A' : 'D'}.`;
+  selectedClue.replaceChildren(label, ...parsingNodes(text, dir, number));
+};
+
+function englishList(items) {
+  if (items.length < 2) return items[0] || '';
+  if (items.length === 2) return items.join(' and ');
+  return items.slice(0, -1).join(', ') + ', and ' + items.at(-1);
+}
+
+function hintExplanation(parsing, category) {
+  const items = parsing[category];
+  const quoted = englishList(items.map(item => `“${item.text}”`));
+  if (category === 'definition') {
+    if (parsing.special === '&lit') return 'The whole clue acts as the definition. Its wording also supplies the wordplay, so read it in both ways.';
+    if (parsing.special === 'cryptic definition') return `This clue's cryptic definition is ${quoted}. Read the wording as a playful description rather than a literal one.`;
+    if (items.length > 1) return `This clue has two definitions: ${quoted}. Look for one answer that fits both meanings.`;
+    return `This clue's definition is ${quoted}. Look for a word or phrase with that meaning.`;
+  }
+  if (category === 'substitutions') {
+    if (!items.length) return 'Your parsing notes identify no fodder requiring substitution in this clue. Use the wording already present when applying the wordplay instructions.';
+    const replacements = englishList(items.map(item => `“${item.text}” → “${item.replacement}”`));
+    return `The ${items.length === 1 ? 'substitution for this clue is' : 'substitutions for this clue are'} ${replacements}. Use ${items.length === 1 ? 'this replacement' : 'these replacements'} when following the wordplay instructions.`;
+  }
+  if (!items.length) return 'Your parsing notes identify no separate indicators in this clue. Read the wording as a whole for the intended cryptic meaning.';
+  const instructions = {
+    'homophone, requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
+    translation: 'translate the nearby wording into the indicated language',
+    'deletion, requiring lateral thinking': 'remove part of the wording, with some lateral thinking about what to remove',
+    'accent-specific homophone': 'use a soundalike in a Cockney accent',
+    'accent-specific homophone, with reversal': 'use a soundalike in a Cockney accent and reverse it',
+    'down-clue reversal': 'reverse the letters so they run upwards in this down answer',
+    'insertion, based on the meaning of eye as a hole': 'insert letters into the middle, reading eye as a hole',
+    "selection indicator requiring some lateral thinking": "select letters, with some lateral thinking about which ones",
+    "remainders": "use what remains after the indicated deletion",
+    "lateral hint as to which half of BACK is used": "use this as a lateral hint about which half of BACK to retain",
+    "deletes": "remove letters",
+    "selections": "select particular letters",
+    "centre-letter selection, based on the scientific sense of kernel as a nucleus": "select the central letter, taking kernel in its scientific sense of nucleus",
+    "homophones": "use soundalikes",
+    "order of operations": "apply the operations in the specified order",
+    "down-clue cycling": "move the opening letter to the bottom of the down answer",
+    "down-clue charade": "put the pieces underneath one another in the stated order",
+    anagram: 'rearrange letters', containment: 'put one piece around another', reversal: 'reverse the order of letters',
+    deletion: 'remove letters', selection: 'select particular letters', combination: 'combine pieces',
+    charade: 'put pieces in the stated order', 'hidden word': 'find consecutive letters hidden in the wording',
+    insertion: 'put one piece inside another', replacement: 'replace one piece with another',
+    'homophone indicator requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
+    cycling: 'move letters from one end to the other while retaining their order', homophone: 'use a soundalike'
+  };
+  const actions = englishList(items.map(item => instructions[item.operation] || item.operation));
+  return `The ${items.length === 1 ? 'indicator for this clue is' : 'indicators for this clue are'} ${quoted}. ${items.length === 1 ? 'It asks you to' : 'Respectively, they ask you to'} ${actions}.`;
+}
+
+function showParsingCategory(category, focus = false) {
+  activeCategory = category;
+  const revealed = isHintRevealed(activeParsing.id, category);
+  for (const tab of hintTabs.children) {
+    const name = tab.dataset.category;
+    tab.setAttribute('aria-selected', String(name === category));
+    tab.classList.toggle('is-revealed', isHintRevealed(activeParsing.id, name));
+    tab.tabIndex = name === category ? 0 : -1;
+    if (focus && name === category) tab.focus();
+  }
+  document.getElementById('hintSlide').setAttribute('aria-labelledby', 'parsing-tab-' + category);
+  document.getElementById('hintHeading').textContent = hintLabels[category];
+  hintBody.textContent = revealed ? hintExplanation(activeParsing.parsing, category) : '';
+  revealHint.hidden = revealed;
+  revealHint.textContent = 'Reveal';
+  document.getElementById('hintClue').replaceChildren(...parsingNodes(activeParsing.text, activeParsing.dir, activeParsing.number));
+}
+
+function openParsingHints() {
+  const number = cellEntries.get(currentKey)?.[direction];
+  const parsing = parsingHints[direction]?.[number];
+  if (!parsing) { setStatus('Select a clue to see its hints.'); return; }
+  activeParsing = { id: `${direction}-${number}`, dir: direction, number, parsing, text: getClueText(direction, number) };
+  document.getElementById('hintTitle').textContent = `${number} ${direction === 'across' ? 'Across' : 'Down'} · Hints`;
+  document.getElementById('hintClue').className = 'hint-clue';
+  hintTabs.replaceChildren();
+  for (const category of availableHintCategories(parsing)) {
+    const tab = document.createElement('button');
+    tab.type = 'button'; tab.className = 'hint-tab'; tab.id = 'parsing-tab-' + category;
+    tab.dataset.category = category;
+    tab.setAttribute('role', 'tab'); tab.setAttribute('aria-controls', 'hintSlide');
+    tab.textContent = hintLabels[category];
+    tab.addEventListener('click', () => showParsingCategory(category));
+    hintTabs.appendChild(tab);
+  }
+  showParsingCategory('definition');
+  hintDialog.showModal();
+  document.getElementById('hintClose').focus();
+}
+
+document.getElementById('hintBtn').addEventListener('click', openParsingHints);
+document.getElementById('hideHintsBtn').addEventListener('click', () => {
+  revealedParsing = {};
+  try { localStorage.setItem(hintStorageKey, '{}'); } catch {}
+  updateParsingHighlights();
+  if (activeParsing) showParsingCategory(activeCategory);
+  setStatus('All hints hidden and reset. Your letters are unchanged.');
+});
+document.getElementById('hintClose').addEventListener('click', () => hintDialog.close());
+hintDialog.addEventListener('close', () => { updateParsingHighlights(); document.getElementById('hintBtn').focus(); });
+revealHint.addEventListener('click', () => {
+  revealedParsing[activeParsing.id] ||= {};
+  revealedParsing[activeParsing.id][activeCategory] = true;
+  try { localStorage.setItem(hintStorageKey, JSON.stringify(revealedParsing)); } catch {}
+  showParsingCategory(activeCategory);
+  updateParsingHighlights();
+});
+hintTabs.addEventListener('keydown', event => {
+  const categories = availableHintCategories(activeParsing.parsing);
+  let index = categories.indexOf(activeCategory);
+  if (event.key === 'ArrowRight') index = (index + 1) % categories.length;
+  else if (event.key === 'ArrowLeft') index = (index + categories.length - 1) % categories.length;
+  else if (event.key === 'Home') index = 0;
+  else if (event.key === 'End') index = categories.length - 1;
+  else return;
+  event.preventDefault(); showParsingCategory(categories[index], true);
+});
+updateParsingHighlights();
+
 
 </script></body></html>
