@@ -221,6 +221,49 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 }
 @media print{.compact-mobile-bar,.mobile-keyboard{display:none!important}}
 
+/* Shared, deliberate hierarchy for helper dialogs and action menus. */
+:root{--muted:#333;--active:#bcbcbc;--current:#999;--correct:#bcbcbc;--incorrect:#999}
+.hint-dialog .hint-clue,.hint-dialog #hintBody{font-family:var(--sans);font-size:18px;font-weight:500;line-height:1.55}
+.hint-dialog .hint-clue{font-weight:600}
+.hint-dialog .hint-header h2,.hint-dialog .hint-slide h3{font-family:var(--mono);font-weight:800}
+.hint-dialog .hint-tab,.hint-dialog #revealHint{font-family:var(--sans);font-size:15px;font-weight:700}
+.hint-dialog .hint-tabs{border-width:3px}
+.hint-dialog .hint-tab+.hint-tab{border-left-width:1px}
+.hint-dialog button:disabled{color:#555;border-color:#777;opacity:1}
+.action-menu{padding:6px;background:#fff;border:3px solid var(--ink);box-shadow:0 4px 0 #0002}
+.action-menu button,.action-menu a{display:flex;width:100%;min-height:46px;align-items:center;justify-content:flex-start;text-align:left;text-decoration:none;padding:11px 13px;margin:0;border:0!important;border-radius:0;background:#fff!important;color:var(--ink)!important;font:600 15px/1.3 var(--sans)}
+.action-menu button:hover,.action-menu a:hover{background:#e4e4e4!important}
+.action-menu>*+*{border-top:.5px solid #888!important}
+.action-menu #hintBtn,.action-menu #anagramBtn{background:var(--ink)!important;color:#fff!important;font:750 17px/1.3 var(--sans)}
+.action-menu #hintBtn:hover,.action-menu #anagramBtn:hover{background:#252525!important}
+.action-menu button:disabled{color:#555!important;background:#d4d4d4!important;opacity:1;cursor:default}
+.action-menu #hintBtn:disabled,.action-menu #anagramBtn:disabled{background:#333!important;color:#ddd!important}
+.action-menu #clearBtn{color:#91150f!important}
+@media screen and (max-width:860px){
+  .topbar h1{font-weight:900;-webkit-text-stroke:.22px currentColor}
+  .compact-mobile-bar{width:min(100%,var(--mobile-grid-size,260px));margin:0 auto;gap:5px}
+  .compact-clue-control{gap:4px}
+  .compact-clue-control>button{width:32px;min-width:32px;border-width:3px;font-weight:800}
+  .compact-tools{width:42px}
+  .compact-dropdown summary{border-width:3px;padding:6px;font-family:var(--sans);font-size:15px;font-weight:750;gap:5px}
+  #compactClueLabel{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .compact-tools summary{font-size:26px}
+  .compact-tool-options.action-menu{display:block;padding:6px}
+  .compact-tool-options .direction-toggle{display:none}
+  .compact-tool-options.action-menu button,.compact-tool-options.action-menu a{padding:11px 13px;margin:0}
+  .selected-clue{font-family:var(--sans);font-weight:750;line-height:1.3}
+  .selected-clue-label,.selected-clue .label{font-family:var(--mono);font-weight:800}
+  .selected-clue,.crossword{border-width:4px}
+  .crossword{gap:3px}
+  .cell input{font-size:clamp(18px,5.4vw,32px);font-weight:800}
+  .num{font-size:10px;font-weight:800;color:#050505}
+  .mobile-keyboard{border-top-width:3px}
+  .mobile-keyboard button{border:2px solid #333;background:#dedede;font-size:20px;font-weight:800}
+  .mobile-keyboard .key-delete{background:#aaa}
+  .compact-clue-options button{font-size:16px;font-weight:600;border-bottom:.5px solid #888}
+  .status{color:#333;font-weight:700}
+}
+
 </style>
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (7)</h1><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Back to archive</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
@@ -234,7 +277,7 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
   </div>
   <details id="compactTools" class="compact-dropdown compact-tools">
     <summary aria-label="Puzzle menu"><span aria-hidden="true">&#8943;</span></summary>
-    <div id="compactToolOptions" class="compact-menu compact-tool-options"></div>
+    <div id="compactToolOptions" class="compact-menu compact-tool-options action-menu"></div>
   </details>
 </nav>
 </div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section id="mobileClueList" class="clues" aria-label="Crossword clues"><div class="mobile-clue-header">Clues<button id="mobileCloseClues" type="button">Back to grid</button></div><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div><section id="mobileKeyboard" class="mobile-keyboard" aria-label="Crossword keyboard"><div class="mobile-keyboard-row mobile-keyboard-nav"><button id="mobilePreviousClue" type="button" aria-label="Previous clue">Previous</button><button id="mobileCluesButton" type="button" aria-expanded="false" aria-controls="mobileClueList">Clues</button><button id="mobileNextClue" type="button" aria-label="Next clue">Next</button></div><button id="mobileDirectionKey" type="button" class="key-direction">Across</button></section></main>
@@ -788,7 +831,7 @@ function fitMobileClue(){
   let width,boxHeight,base;
   if(mobileClueLayout?.signature===signature){({width,boxHeight,base}=mobileClueLayout);}
   else{
-  base=landscape?12:14;
+  base=landscape?13:15;
   const probe=document.createElement('div');
   probe.className='selected-clue';
   probe.setAttribute('aria-hidden','true');
@@ -822,7 +865,7 @@ function fitMobileClue(){
   selectedClue.style.setProperty('--clue-box-height',boxHeight+'px');
   let content=selectedClue.querySelector('.clue-fit-text');
   if(!content){content=document.createElement('span');content.className='clue-fit-text';content.append(...selectedClue.childNodes);selectedClue.append(content);}
-  const max=landscape?18:22;
+  const max=landscape?20:24;
   for(let font=max;font>=base;font--){
     selectedClue.style.fontSize=font+'px';
     if(content.getBoundingClientRect().height<=selectedClue.clientHeight-parseFloat(getComputedStyle(selectedClue).paddingTop)-parseFloat(getComputedStyle(selectedClue).paddingBottom))break;
