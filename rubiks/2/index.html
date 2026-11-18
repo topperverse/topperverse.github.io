@@ -132,6 +132,8 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 .action-menu button,.action-menu a{display:flex;width:100%;min-height:46px;align-items:center;justify-content:flex-start;text-align:left;text-decoration:none;padding:11px 13px;margin:0;border:0!important;border-radius:0;background:#fff!important;color:var(--ink)!important;font:600 15px/1.3 var(--sans)}
 .action-menu button:hover,.action-menu a:hover{background:#e4e4e4!important}
 .action-menu>*+*{border-top:.5px solid #888!important}
+.action-menu button+button,.action-menu button+a,.action-menu a+button{border-top:.5px solid #888!important}
+.anagram-dialog{--current:#999}
 .action-menu #hintBtn,.action-menu #anagramBtn{background:var(--ink)!important;color:#fff!important;font:750 17px/1.3 var(--sans)}
 .action-menu #hintBtn:hover,.action-menu #anagramBtn:hover{background:#252525!important}
 .action-menu button:disabled{color:#555!important;background:#d4d4d4!important;opacity:1;cursor:default}
@@ -166,7 +168,8 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
 .clue-button.active{background:#bcbcbc}
 .progress,.subtitle,.help,.save-note{color:#333}
 #faceButtons,.play-toolbar{display:none}
-.face-nav{position:relative;z-index:5;flex-wrap:nowrap;gap:5px;align-items:stretch;padding:12px}
+.face-nav{display:flex;position:relative;z-index:5;flex-wrap:nowrap;gap:5px;align-items:stretch;padding:12px}
+.face-nav #nextPuzzle,.face-nav #previousPuzzle{width:44px;min-width:44px;margin:0;padding:0;font-size:23px;min-height:44px}
 .face-nav>button{min-width:44px;background:#fff!important;border:3px solid var(--ink);font-size:23px;padding:0 8px}
 .cube-dropdown{min-width:0;position:static}
 #cubeClues{flex:1}
@@ -179,6 +182,7 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
 #cubeActions{left:auto;width:min(310px,calc(100% - 24px));padding:6px}
 #cubeClueMenu .clue-lists{display:block}
 #cubeClueMenu section+section{margin-top:18px}
+#cubeClueMenu h3:not(:first-child){margin-top:18px}
 #cubeClueMenu .clue-button{padding:11px 7px;border-bottom:.5px solid #888}
 .selected-clue{font:700 20px/1.35 var(--sans)}
 .selected-clue .label{font-family:var(--mono)}
@@ -194,6 +198,7 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
   .puzzle-panel{display:flex;flex:1;flex-direction:column;align-items:center;gap:6px;min-height:0;width:100%;border:0}
   .face-nav{width:var(--cube-width,300px);max-width:100%;padding:0;flex:none;border:0}
   .face-nav>button{min-width:32px;width:32px;min-height:44px;font-size:21px;padding:0}
+  .face-nav #nextPuzzle,.face-nav #previousPuzzle{width:32px;min-width:32px;font-size:21px}
   #cubeMenu{width:42px}
   .cube-popup{left:0;right:0}
   #cubeActions{width:min(310px,100%)}
@@ -358,7 +363,7 @@ ctx.fillStyle='#000';ctx.fillRect(0,0,lastW,lastH);
 if(aligned){const edge=Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*11;ctx.fillStyle='#000';ctx.fillRect((lastW-edge)/2,(lastH-edge)/2,edge,edge)}
 polygons=[];const activeCells=new Set(currentEntry()?.cells||[]),visible=i=>i>=0&&i<V&&occ[i];
 for(let i=0;i<V;i++){if(!visible(i))continue;let p=xyz(i).map(x=>x-5);model.faces.forEach((f,fi)=>{if(dot(f.n,view.n)<1e-7)return;let adj=add(xyz(i),f.n),adjacentInside=inside(adj);if(adjacentInside&&visible(idx(...adj)))return;let center=add(p,mul(f.n,.5)),corners=[[-.5,.5],[.5,.5],[.5,-.5],[-.5,-.5]].map(([a,b])=>projection(add(center,add(mul(f.u,a),mul(f.v,b)))));polygons.push({i,fi,corners,z:dot(center,view.n),label:labels.get(i+','+fi)});});}
-polygons.sort((a,b)=>a.z-b.z);for(const p of polygons){path(p.corners);let selected=p.label&&p.label.ri===selectedRay;const inWord=p.label&&p.label.face===selectedFace&&activeCells.has(p.label.ri);ctx.fillStyle=p.label?(selected?'#999':inWord?'#bcbcbc':checks.get(p.label.ri)==='correct'?'#bcbcbc':'#fff'):sideColour(p.i,p.fi).hex;ctx.fill();ctx.strokeStyle='#050505';const border=Math.max(1.8,Math.min(3.5,Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*.075));ctx.lineWidth=border;ctx.stroke();if(p.label){let q=p.corners,a=q[0],b=q[1],d=q[3];ctx.save();ctx.transform((b[0]-a[0])/100,(b[1]-a[1])/100,(d[0]-a[0])/100,(d[1]-a[1])/100,a[0],a[1]);ctx.fillStyle='#07111a';if(values.has(p.label.ri)){ctx.font='800 69px Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(values.get(p.label.ri),50,57)}if(links.has(p.label.ri)){ctx.fillStyle='#e1251b';ctx.beginPath();ctx.arc(88,12,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#07111a'}const checked=checks.get(p.label.ri);if(checked){ctx.strokeStyle='#050505';ctx.lineWidth=3;if(checked==='correct')ctx.strokeRect(5,5,90,90);else{ctx.beginPath();ctx.moveTo(15,15);ctx.lineTo(85,85);ctx.moveTo(85,15);ctx.lineTo(15,85);ctx.stroke();}}if(p.label.number){ctx.font='800 25px Arial, sans-serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(p.label.number,5,3)}ctx.restore();}}
+polygons.sort((a,b)=>a.z-b.z);for(const p of polygons){path(p.corners);let selected=p.label&&p.label.ri===selectedRay;const inWord=p.label&&p.label.face===selectedFace&&activeCells.has(p.label.ri);ctx.fillStyle=p.label?(selected?'#999':inWord?'#bcbcbc':checks.get(p.label.ri)==='correct'?'#bcbcbc':'#fff'):sideColour(p.i,p.fi).hex;ctx.fill();ctx.strokeStyle='#050505';const border=Math.max(2.5,Math.min(4.5,Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*.12));ctx.lineWidth=border;ctx.stroke();if(p.label){let q=p.corners,a=q[0],b=q[1],d=q[3];ctx.save();ctx.transform((b[0]-a[0])/100,(b[1]-a[1])/100,(d[0]-a[0])/100,(d[1]-a[1])/100,a[0],a[1]);ctx.fillStyle='#07111a';if(values.has(p.label.ri)){ctx.font='800 69px Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(values.get(p.label.ri),50,57)}if(links.has(p.label.ri)){ctx.fillStyle='#e1251b';ctx.beginPath();ctx.arc(88,12,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#07111a'}const checked=checks.get(p.label.ri);if(checked){ctx.strokeStyle='#050505';ctx.lineWidth=3;if(checked==='correct')ctx.strokeRect(5,5,90,90);else{ctx.beginPath();ctx.moveTo(15,15);ctx.lineTo(85,85);ctx.moveTo(85,15);ctx.lineTo(15,85);ctx.stroke();}}if(p.label.number){ctx.font='800 25px Arial, sans-serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(p.label.number,5,3)}ctx.restore();}}
 }
 
 function snap(fi){animationId++;navigationTarget=null;navigationZoom=null;const f=model.faces[fi];view={n:f.n.slice(),u:f.u.slice(),v:f.v.slice()};setBusy(false);showFace(fi);$('tag').textContent='Side '+(f.puzzle.id-6);document.querySelectorAll('#faceButtons button').forEach(b=>{b.classList.toggle('active',+b.dataset.face===fi);b.classList.remove('travelling')});draw();}
@@ -825,7 +830,7 @@ $('previousPuzzle').onclick=()=>turnCube(-1);$('nextPuzzle').onclick=()=>turnCub
 function refreshCubeChooser(){
   const menu=$('cubeClueMenu');menu.replaceChildren();
   const current=currentEntry();
-  $('cubeClueLabel').textContent='Side '+(model.faces[selectedFace].puzzle.id-6)+' Â· '+(current?current.number+(direction==='across'?'A':'D'):'Clues');
+  $('cubeClueLabel').textContent='Side '+(model.faces[selectedFace].puzzle.id-6)+' · '+(current?current.number+(direction==='across'?'A':'D'):'Clues');
   for(const dir of ['across','down']){
     const heading=document.createElement('h3');heading.textContent=dir==='across'?'Across':'Down';menu.appendChild(heading);
     for(const entry of entries[selectedFace][dir].values()){
