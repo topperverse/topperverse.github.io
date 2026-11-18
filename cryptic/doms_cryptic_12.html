@@ -263,9 +263,38 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
   .status{color:#333;font-weight:700}
 }
 
+.setter-credit{display:none}
+.selected-clue,.clue-button,.clues li{font-family:var(--sans);font-weight:400}
+.selected-clue-label,.selected-clue .label{font-weight:700}
+.action-menu #anagramBtn{background:#aaa!important;color:var(--ink)!important}
+.action-menu #anagramBtn:hover{background:#999!important;color:var(--ink)!important}
+.action-menu #anagramBtn:disabled{background:#aaa!important;color:#444!important}
+.action-menu a{background:var(--ink)!important;color:#fff!important}
+.action-menu a:hover{background:#252525!important;color:#fff!important}
+@media screen and (max-width:860px){
+  .topbar{border-top:0;position:relative;padding-top:13px;gap:11px;align-items:stretch}
+  .topbar::before{content:"";position:absolute;top:0;left:calc((100% - min(100%,var(--mobile-grid-size,260px)))/2);width:min(100%,var(--mobile-grid-size,260px));border-top:3px solid var(--ink)}
+  .topbar>div:first-child{margin-left:calc((100% - min(100%,var(--mobile-grid-size,260px)))/2);text-align:left}
+  .topbar h1{text-align:left;font-size:clamp(19px,5.1vw,26px)}
+  .setter-credit{display:block;margin:5px 0 0;font:400 10px/1.2 var(--sans);color:var(--ink);text-align:left}
+  .selected-clue{font-weight:400}
+  .selected-clue,.crossword{border-width:3px}
+  .crossword{gap:2.5px}
+  .compact-clue-options button{font-weight:400}
+  body>header{position:relative;border-top:0;border-bottom:2px solid var(--ink);display:block}
+  body>header::before{content:"";position:absolute;top:0;left:calc((100% - min(100%,var(--cube-width,300px)))/2);width:min(100%,var(--cube-width,300px));border-top:3px solid var(--ink)}
+  body>header .brand-title{margin-left:calc((100% - min(100%,var(--cube-width,300px)))/2);text-align:left}
+  body>header h1{text-align:left;font-size:clamp(19px,5.1vw,26px)}
+  .stage{border-width:3px}
+}
+@media screen and (max-width:860px) and (max-height:500px) and (orientation:landscape){
+  .topbar>div:first-child{margin-left:0}
+  .topbar h1,body>header h1{font-size:19px}
+}
+
 </style>
 </head>
-<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (12)</h1><p class="subtitle">Wednesday 18 November 2026. Set by Harry Topper.</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Back to archive</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (12)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Wednesday 18 November 2026. Set by Harry Topper.</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
   <div class="compact-clue-control">
     <button id="compactPrevious" type="button" aria-label="Previous clue">&lt;</button>
     <details id="compactClues" class="compact-dropdown">
@@ -796,7 +825,7 @@ arrangeCompactControls=function(){
   if(mobilePuzzleMedia.matches){
     for(const id of menuOrder){const control=document.getElementById(id);if(control){control.textContent=mobileMenuLabels[id];compactToolOptions.appendChild(control);}}
     const archive=compactOriginalControls.find(control=>control.tagName==='A');
-    if(archive){archive.classList.add('home-link');archive.textContent='Back to archive';compactToolOptions.appendChild(archive);}
+    if(archive){archive.classList.add('home-link');archive.textContent='Return home';compactToolOptions.appendChild(archive);}
   }else for(const [control,label]of desktopLabels)control.textContent=label;
 };
 mobilePuzzleMedia.removeEventListener('change',originalArrangeCompact);
