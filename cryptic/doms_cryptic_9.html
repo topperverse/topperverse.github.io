@@ -295,6 +295,23 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
   .topbar h1,body>header h1{font-size:19px}
 }
 
+.selected-clue{font-family:var(--mono);font-weight:400;line-height:1.35}
+@media screen and (max-width:860px){
+  main{gap:10px}
+  .topbar{border-bottom:0;padding-bottom:2px;gap:10px}
+  .selected-clue{font-family:var(--mono);font-weight:400;line-height:1.35;padding-top:12px;padding-bottom:12px}
+  .compact-clue-control>button{background:#dedede}
+  .compact-clue-control>button:hover{background:#ccc}
+  body{gap:10px}
+  body>header{border-bottom:0;padding-bottom:8px}
+  .face-nav #previousPuzzle,.face-nav #nextPuzzle{background:#dedede!important}
+  .face-nav #previousPuzzle:hover,.face-nav #nextPuzzle:hover{background:#ccc!important}
+}
+@media screen and (max-width:860px) and (max-height:500px) and (orientation:landscape){
+  .selected-clue{padding-top:8px;padding-bottom:8px}
+  body{gap:6px 12px}
+}
+
 </style>
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (9)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
@@ -896,7 +913,7 @@ function fitMobileClue(){
   selectedClue.style.setProperty('--clue-box-height',boxHeight+'px');
   let content=selectedClue.querySelector('.clue-fit-text');
   if(!content){content=document.createElement('span');content.className='clue-fit-text';content.append(...selectedClue.childNodes);selectedClue.append(content);}
-  const max=landscape?20:24;
+  const max=Math.min(base+4,landscape?17:19);
   for(let font=max;font>=base;font--){
     selectedClue.style.fontSize=font+'px';
     if(content.getBoundingClientRect().height<=selectedClue.clientHeight-parseFloat(getComputedStyle(selectedClue).paddingTop)-parseFloat(getComputedStyle(selectedClue).paddingBottom))break;
