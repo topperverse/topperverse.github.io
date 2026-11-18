@@ -192,7 +192,7 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 
 @media screen and (max-width:860px){
   .topbar{padding:17px 0 13px;gap:14px}
-  .topbar h1{font-size:clamp(21px,5.8vw,28px);line-height:1.15;letter-spacing:-.5px}
+  .topbar h1{font-size:clamp(21px,5.8vw,28px);line-height:1.15;letter-spacing:-.5px;font-weight:800;-webkit-text-stroke:.15px currentColor}
   .compact-tools{width:48px}
   .compact-tools summary{padding:0;font:700 26px/1 var(--sans);letter-spacing:2px}
   .compact-tool-options{width:min(310px,100%);display:block;padding:6px}
@@ -206,11 +206,15 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
   .clue-fit-text{display:block;width:100%;overflow-wrap:anywhere}
   .selected-clue-label{margin-right:7px}
   .compact-mobile-bar{display:flex}
+  .selected-clue,.crossword{width:min(100%,var(--mobile-grid-size,260px));border-width:3px}
+  .mobile-keyboard{border-top:2px solid var(--ink);padding-top:8px}
+  .mobile-keyboard button{border-width:1.5px;border-color:#777}
 }
 @media screen and (max-width:860px) and (max-height:500px) and (orientation:landscape){
   .topbar{padding:5px 0;gap:12px}.topbar h1{font-size:19px}
   .compact-dropdown summary,.compact-clue-control>button{min-height:36px}
   .selected-clue{padding:7px 9px}
+  .mobile-keyboard{border-top:2px solid var(--ink);padding-top:8px}
 }
 @media print{.compact-mobile-bar,.mobile-keyboard{display:none!important}}
 
@@ -660,6 +664,7 @@ document.querySelector('.clues').addEventListener('click', event => {
 });
 
 function sizeMobilePuzzle() {
+  if(alignedMobileReady){scheduleClueFit();return;}
   if (!mobilePuzzleMedia.matches) return;
   const wrapper = document.querySelector('.grid-wrap');
   const gap = parseFloat(getComputedStyle(wrapper).gap) || 0;
@@ -756,26 +761,50 @@ arrangeCompactControls();
 // Reserve the same banner space for every clue, measured using the longest
 // rendered clue. Short clues can use a larger font without moving the grid.
 let clueFitFrame=0;
+var alignedMobileReady=true;
+let mobileClueLayout=null;
 function fitMobileClue(){
   if(!mobilePuzzleMedia.matches)return;
   const wrapper=document.querySelector('.grid-wrap');
-  const width=selectedClue.clientWidth;
-  if(width<1)return;
+  if(wrapper.clientWidth<1)return;
   const landscape=window.innerHeight<500&&window.innerWidth>window.innerHeight;
-  const base=landscape?12:14;
+  const gap=parseFloat(getComputedStyle(wrapper).gap)||0;
+  const budget=wrapper.clientHeight-status.getBoundingClientRect().height-2*gap;
+  const signature=[wrapper.clientWidth,budget,landscape].join(':');
+  let width,boxHeight,base;
+  if(mobileClueLayout?.signature===signature){({width,boxHeight,base}=mobileClueLayout);}
+  else{
+  base=landscape?12:14;
   const probe=document.createElement('div');
   probe.className='selected-clue';
   probe.setAttribute('aria-hidden','true');
-  Object.assign(probe.style,{position:'fixed',left:'-10000px',top:'0',width:width+'px',height:'auto',minHeight:'0',display:'block',visibility:'hidden',fontSize:base+'px',pointerEvents:'none'});
+  Object.assign(probe.style,{position:'fixed',left:'-10000px',top:'0',height:'auto',minHeight:'0',display:'block',visibility:'hidden',fontSize:base+'px',pointerEvents:'none'});
   document.body.appendChild(probe);
-  let longest=0;
-  for(const dir of ['across','down'])for(const [n,text]of clueText[dir]){
-    probe.textContent=n+(dir==='across'?'A. ':'D. ')+text.replace(/\*/g,'');
-    longest=Math.max(longest,probe.getBoundingClientRect().height);
-  }
-  probe.remove();
   const minimum=landscape?62:104;
-  const boxHeight=Math.ceil(Math.max(minimum,longest+4));
+  function heightAt(width){
+    probe.style.width=width+'px';let longest=0;
+    for(const dir of ['across','down'])for(const [n,text]of clueText[dir]){
+      probe.textContent=n+(dir==='across'?'A. ':'D. ')+text.replace(/\*/g,'');
+      longest=Math.max(longest,probe.getBoundingClientRect().height);
+    }
+    return Math.ceil(Math.max(minimum,longest+4));
+  }
+  // The clue and grid share a width. Search all practical whole-pixel widths:
+  // wrapping makes their combined height non-monotonic at line breaks.
+  width=0;boxHeight=minimum;
+  for(;base>=10&&!width;base--){
+    probe.style.fontSize=base+'px';
+    for(let candidate=Math.floor(Math.min(wrapper.clientWidth,budget-minimum));candidate>=80;candidate--){
+      const height=heightAt(candidate);
+      if(candidate+height<=budget){width=candidate;boxHeight=height;break;}
+    }
+  }
+  base++;
+  if(!width){width=80;boxHeight=heightAt(width);}
+  probe.remove();
+  mobileClueLayout={signature,width,boxHeight,base};
+  }
+  document.documentElement.style.setProperty('--mobile-grid-size',width+'px');
   selectedClue.style.setProperty('--clue-box-height',boxHeight+'px');
   let content=selectedClue.querySelector('.clue-fit-text');
   if(!content){content=document.createElement('span');content.className='clue-fit-text';content.append(...selectedClue.childNodes);selectedClue.append(content);}
@@ -784,7 +813,8 @@ function fitMobileClue(){
     selectedClue.style.fontSize=font+'px';
     if(content.getBoundingClientRect().height<=selectedClue.clientHeight-parseFloat(getComputedStyle(selectedClue).paddingTop)-parseFloat(getComputedStyle(selectedClue).paddingBottom))break;
   }
-  sizeMobilePuzzle();
+  document.documentElement.style.setProperty('--mobile-header-size',document.querySelector('.topbar').getBoundingClientRect().bottom+5+'px');
+  document.documentElement.style.setProperty('--mobile-keyboard-size',mobileKeyboard.getBoundingClientRect().height+12+'px');
 }
 function scheduleClueFit(){cancelAnimationFrame(clueFitFrame);clueFitFrame=requestAnimationFrame(fitMobileClue);}
 const fitOriginalHighlight=highlight;
