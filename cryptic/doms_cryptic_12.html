@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cryptic's Only Fans (12)</title>
+<link rel="icon" type="image/png" sizes="48x48" href="/cryptic/favicon-48.png">
+<link rel="icon" type="image/svg+xml" sizes="any" href="/cryptic/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/cryptic/apple-touch-icon.png">
+
+<style>
+:root{--paper:#fff;--panel:#fff;--ink:#050505;--muted:#555;--line:#050505;--active:#e4e4e4;--current:#d0d0d0;--correct:#e4e4e4;--incorrect:#c8c8c8;--blue:#0057b8;--red:#e1251b;--yellow:#ffd900;--soft-blue:rgba(0,87,184,.18);--soft-red:rgba(225,37,27,.16);--soft-yellow:rgba(255,217,0,.22);--mono:"Cascadia Mono",Consolas,"Lucida Console","Courier New",monospace;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;color-scheme:light}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:500;line-height:1.35}main{width:min(1180px,calc(100vw - 32px));margin:0 auto;padding:26px 0 36px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;padding:18px 0 16px;border-top:4px solid var(--line);border-bottom:2px solid var(--line)}h1{margin:0;font:700 32px/1.1 var(--mono)}.subtitle{margin:4px 0 0;color:var(--muted);font:600 14px/1.35 var(--mono)}.toolbar{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;justify-content:flex-end}.direction-toggle{display:inline-grid;grid-template-columns:1fr 1fr;border:2px solid var(--line);background:#fff;overflow:hidden}button,.button-link{appearance:none;border:2px solid var(--line);border-radius:0;background:#fff;color:var(--ink);min-height:32px;padding:0 10px;font:700 14px/1 var(--mono);cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}button:hover,.button-link:hover{background:#eee}#printBtn{background:var(--line);color:#fff}#revealWordBtn{background:#fff;color:var(--ink)}#printBtn:hover{background:#222;color:#fff}#revealWordBtn:hover{background:#eee;color:var(--ink)}.direction-toggle button{border:0;min-width:78px}.direction-toggle button+button{border-left:2px solid var(--line)}.direction-toggle button[aria-pressed=true]{background:var(--ink);color:var(--paper)}#clearBtn{background:var(--current)}.layout{display:grid;grid-template-columns:minmax(320px,560px) minmax(320px,1fr);gap:38px;align-items:start}.selected-clue{width:min(100%,560px);margin:0 0 10px;padding:12px 14px;border:4px solid var(--line);font:700 clamp(15px,2.6vw,18px)/1.35 var(--mono)}.selected-clue[hidden]{display:none}.tone-blue{background:var(--soft-blue)}.tone-yellow{background:var(--soft-yellow)}.tone-red{background:var(--soft-red)}.selected-clue-label{display:inline-block;margin-right:8px}.crossword{display:grid;grid-template-columns:repeat(11,1fr);width:min(100%,560px);aspect-ratio:1/1;border:4px solid var(--line);background:var(--line);gap:3px;font-family:var(--mono);overflow:hidden}.cell{position:relative;min-width:0;min-height:0;background:#fff}.block-blue{background:var(--blue)}.block-red{background:var(--red)}.block-yellow{background:var(--yellow)}.block-black{background:var(--ink)}.in-entry{background:var(--active)}.is-current{background:var(--current)}.is-correct{background:var(--correct)}.is-incorrect{background:var(--incorrect)}.is-correct input{outline:3px solid var(--line);outline-offset:-3px}.is-incorrect:before,.is-incorrect:after{content:"";position:absolute;left:16%;right:16%;top:50%;height:1px;background:var(--line);pointer-events:none;z-index:2}.is-incorrect:before{transform:rotate(45deg)}.is-incorrect:after{transform:rotate(-45deg)}.num{position:absolute;top:3px;left:4px;font-size:clamp(9px,1.5vw,13px);line-height:1;z-index:3;pointer-events:none}.cell input{position:relative;z-index:1;width:100%;height:100%;border:0;padding:18% 4% 0;background:transparent;color:var(--ink);text-align:center;text-transform:uppercase;font:700 clamp(20px,4.6vw,38px)/1 var(--mono);caret-color:transparent}.cell input:focus{outline:3px solid var(--line);outline-offset:-3px}.is-incorrect input:focus{outline:none}.clues{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}h2{margin:0 0 10px;font:700 22px/1.1 var(--mono)}ol{margin:0;padding:0;list-style:none}li{margin:0 0 7px;padding:4px 7px 5px 10px;border-left:4px solid transparent;font-size:15px;cursor:pointer}.active-clue{background:var(--active);border-left-color:var(--line)}.clue-num{font-family:var(--mono);font-weight:700}.hint,.status{margin-top:10px;color:var(--muted);font:600 13px/1.35 var(--mono)}.status{min-height:20px;font-size:14px}@media(max-width:860px){main{width:min(100vw - 20px,620px);padding-top:16px}.topbar{align-items:flex-start;flex-direction:column}.toolbar{flex-wrap:wrap;justify-content:flex-start}.layout,.clues{grid-template-columns:1fr}.crossword{width:100%}}@media print{@page{size:A4;margin:10mm}*{print-color-adjust:exact;-webkit-print-color-adjust:exact}body{font-size:9.5pt}main{width:100%;padding:0}.toolbar,.subtitle,.hint,.status,.selected-clue{display:none!important}.topbar{display:block;margin:0 0 5mm;padding:0 0 3mm;border-top:0;border-bottom:2px solid var(--line)}h1{font-size:18pt}.grid-wrap{width:86mm;margin:0 auto 6mm}.layout{display:block}.crossword{width:86mm;border-width:3px;gap:2px}.cell input{color:transparent}.num{font-size:7.5pt}.clues{display:grid;grid-template-columns:1fr 1fr;gap:8mm;break-inside:avoid}h2{font-size:14pt;margin-bottom:3mm}li{margin-bottom:2mm;padding:0 0 0 3mm;border-left-width:2px;font-size:9pt;break-inside:avoid}}
+
+.topbar,.toolbar{flex-wrap:wrap}
+#checkPuzzleBtn{background:var(--current);color:var(--ink);border-color:var(--ink)}
+
+#anagramBtn{background:var(--ink);color:#fff}
+.anagram-dialog{width:min(620px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;padding:22px;border:4px solid var(--ink);color:var(--ink);background:var(--paper)}
+.anagram-dialog::backdrop{background:rgba(0,0,0,.65)}
+.anagram-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;border-bottom:3px solid var(--ink);padding-bottom:12px}
+.anagram-top h2{margin:0;font-size:24px}
+#anagramClose{font:700 28px/1 var(--mono);width:36px;height:36px;padding:0;flex-shrink:0}
+#anagramClose span{position:relative;display:block;width:17px;height:17px}
+#anagramClose span::before,#anagramClose span::after{content:"";position:absolute;left:7px;top:0;width:3px;height:17px;background:var(--ink);transform:rotate(45deg)}
+#anagramClose span::after{transform:rotate(-45deg)}
+.anagram-dialog{--current:#d0d0d0;--soft-blue:rgba(0,87,184,.18);--soft-red:rgba(225,37,27,.16);--soft-yellow:rgba(255,217,0,.22)}
+.anagram-dialog .tone-red{background:var(--soft-red)}.anagram-dialog .tone-blue{background:var(--soft-blue)}.anagram-dialog .tone-yellow{background:var(--soft-yellow)}
+.anagram-dialog .selected-clue{display:block;border:3px solid var(--ink);min-height:0}
+.anagram-dialog .selected-clue{width:100%;font-size:16px;margin-bottom:10px;padding:10px 12px}
+.anagram-help,.anagram-note{font-size:14px;margin:8px 0 14px}
+.anagram-note{color:var(--muted);font-size:12px;margin:8px 0 0}
+.anagram-label{display:block;font:700 14px var(--mono);margin-bottom:6px}
+.anagram-controls{display:flex;gap:8px}
+#anagramFodder{min-width:0;flex:1;width:100%;border:2px solid var(--ink);border-radius:0;padding:10px;font:700 18px var(--mono);text-transform:uppercase;background:#fff;color:var(--ink)}
+#anagramFodder::placeholder{font-size:13px;text-transform:none;font-weight:400}
+#anagramShuffle{background:var(--yellow);padding:0 15px;min-height:44px}
+#anagramShuffle:disabled{background:#eee;color:#777;cursor:default}
+.anagram-dialog :focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.anagram-circle{position:relative;width:min(100%,280px);aspect-ratio:1;margin:16px auto;border:2px solid var(--ink);border-radius:50%;background:#fff}
+.anagram-circle::before{content:"";position:absolute;inset:28%;border:2px solid var(--ink);background:var(--yellow);transform:rotate(8deg)}
+.anagram-empty{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font:700 12px/1.4 var(--mono);z-index:1}
+.anagram-letter{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:var(--letter-size,30px);height:var(--letter-size,30px);font:700 var(--letter-size,30px)/1 var(--mono);transform:translate(-50%,-50%) translate(var(--x),var(--y));background:#fff}
+.anagram-answer-scroll{overflow-x:auto;padding:4px 0 10px}
+.anagram-squares{display:flex;justify-content:center;gap:3px;min-width:max-content}
+.anagram-square{position:relative;width:clamp(27px,6.2vw,44px);height:clamp(33px,7vw,48px);border:3px solid var(--ink);background:#fff;display:grid;place-items:center;font:700 clamp(17px,4.5vw,27px)/1 var(--mono)}
+.anagram-square.is-locked{background:var(--current)}
+.anagram-square.is-locked::after{content:"";position:absolute;bottom:3px;width:10px;height:3px;background:var(--ink)}
+.anagram-square.word-end{margin-right:9px}
+.anagram-key{display:flex;align-items:center;justify-content:center;gap:7px;font:600 11px var(--mono);margin-top:4px}
+.anagram-lock-key{width:13px;height:13px;background:var(--current);border:2px solid var(--ink)}
+.anagram-status{font-size:13px;text-align:center;min-height:36px;margin:12px 0 0;color:var(--muted)}
+@media(max-width:480px){.anagram-dialog{padding:14px}.anagram-top h2{font-size:20px}.anagram-circle{width:230px;margin:14px auto}.anagram-controls{gap:5px}#anagramShuffle{padding:0 9px}.anagram-dialog .selected-clue{font-size:14px}}
+@media print{.anagram-dialog{display:none!important}}
+
+.hint-dialog{width:min(580px,calc(100vw - 24px));max-height:calc(100dvh - 32px);padding:0;border:4px solid var(--line);border-radius:0;background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+.hint-dialog::backdrop{background:rgba(0,0,0,.55)}
+.hint-dialog[open]{display:flex;flex-direction:column}
+.hint-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:2px solid var(--line)}
+.hint-header h2{margin:0;font:700 22px/1.2 var(--mono)}
+.hint-close{min-width:44px;min-height:44px;font-size:22px}
+.hint-clue{margin:0;padding:16px 18px;font:700 16px/1.5 var(--mono);overflow-wrap:anywhere}
+.hint-tabs{display:flex;gap:0;margin:16px 18px 0;border:2px solid var(--line)}
+.hint-tab{flex:1;min-width:0;min-height:44px;border:0;padding:10px 6px;font-size:13px;white-space:normal}
+.hint-tab+.hint-tab{border-left:2px solid var(--line)}
+.hint-tab[aria-selected=true]{background:var(--ink);color:#fff}
+.hint-slide{padding:20px 18px;min-height:140px}
+.hint-slide h3{margin:0 0 10px;font:700 18px/1.25 var(--mono)}
+.hint-slide p{margin:0;font:500 17px/1.6 var(--sans);overflow-wrap:anywhere}
+.hint-navigation{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px 18px}
+.hint-navigation[hidden]{display:none}
+.hint-navigation button{min-height:44px}
+.hint-navigation button:disabled{opacity:.4;cursor:default}
+.hint-count{font:700 13px/1.4 var(--mono);text-align:center}
+.hint-dialog button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+#hintBtn{background:var(--ink);color:#fff}
+#hintBtn:hover{background:#222}
+#hideHintsBtn{background:#fff;border-color:var(--ink);color:var(--ink)}
+#hideHintsBtn:hover{background:#eee}
+#hideHintsBtn:disabled{border-color:#aaa;color:#777;background:#fff;cursor:default}
+.parse-definition{background:rgba(0,87,184,.19)}
+.parse-indicators{background:rgba(225,37,27,.18)}
+.parse-substitutions{background:rgba(255,217,0,.32)}
+mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+#hintClose span{display:block;position:relative;width:17px;height:17px;margin:auto}
+#hintClose span::before,#hintClose span::after{content:"";position:absolute;left:7px;top:0;width:3px;height:17px;background:var(--ink);transform:rotate(45deg)}
+#hintClose span::after{transform:rotate(-45deg)}
+#revealHint{margin-top:16px;min-height:44px;background:var(--ink);color:#fff}
+#revealHint:hover{background:#222}
+#revealHint[hidden]{display:none!important}
+.hint-tab.is-revealed::after{content:"";display:inline-block;width:7px;height:7px;border:1px solid currentColor;border-radius:50%;background:currentColor;margin-left:7px}
+@media(max-width:480px){.hint-header,.hint-clue,.hint-slide{padding:14px}.hint-tabs{margin:14px 14px 0}.hint-header h2{font-size:20px}.hint-tab{font-size:12px;padding:10px 3px}}
+@media print{.hint-dialog{display:none!important}}
+
+
+.toolbar .home-link{background:var(--ink);color:#fff}
+.toolbar .home-link:hover,#anagramBtn:hover{background:#222;color:#fff}
+#printBtn{background:var(--current);color:var(--ink);border-color:var(--ink)}
+#printBtn:hover{background:#bdbdbd;color:var(--ink)}
+
+.subtitle{margin-top:8px}
+.topbar{row-gap:16px}
+
+.parse-definition.parse-indicators{background:linear-gradient(to bottom,rgba(0,87,184,.19) 50%,rgba(225,37,27,.18) 50%)}
+.parse-indicators.parse-substitutions{background:linear-gradient(to bottom,rgba(225,37,27,.18) 50%,rgba(255,217,0,.32) 50%)}
+</style>
+</head>
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (12)</h1><p class="subtitle">Wednesday 18 November 2026. Set by Harry Topper.</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Back to archive</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div></div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><div id="status" class="status" aria-live="polite"></div></section><section class="clues" aria-label="Crossword clues"><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div></main>
+<dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
+  <div class="anagram-top">
+    <h2 id="anagramTitle">Anagram helper</h2>
+    <button id="anagramClose" type="button" aria-label="Close anagram helper"><span aria-hidden="true"></span></button>
+  </div>
+  <div id="anagramClue" class="selected-clue"></div>
+  <label class="anagram-label" for="anagramFodder">Letters to shuffle</label>
+  <div class="anagram-controls">
+    <input id="anagramFodder" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <button id="anagramShuffle" type="button" disabled>Shuffle</button>
+  </div>
+  <div id="anagramCircle" class="anagram-circle" role="img" aria-label="Your letters will appear in a circle"></div>
+  <div class="anagram-answer-scroll"><div id="anagramSquares" class="anagram-squares" role="group" aria-label="Trial answer, with existing grid letters locked"></div></div>
+  <p id="anagramStatus" class="anagram-status" role="status" aria-live="polite"></p>
+</dialog>
+
+<dialog id="hintDialog" class="hint-dialog" aria-labelledby="hintTitle" aria-describedby="hintClue">
+  <header class="hint-header"><h2 id="hintTitle">Clue hint</h2><button id="hintClose" class="hint-close" type="button" aria-label="Close hints"><span aria-hidden="true"></span></button></header>
+  <p id="hintClue" class="hint-clue"></p>
+  <div id="hintTabs" class="hint-tabs" role="tablist" aria-label="Clue hints"></div>
+  <section id="hintSlide" class="hint-slide" role="tabpanel" tabindex="0" aria-live="polite"><h3 id="hintHeading"></h3><p id="hintBody"></p><button id="revealHint" type="button">Reveal</button></section>
+  
+</dialog>
+<script>
+const gridPattern=["......#....",".#.#.#.#.#.",".....#.....",".#.#.#.#.#.","........###",".#.#.#.#.#.","###........",".#.#.#.#.#.",".....#.....",".#.#.#.#.#.","....#......"];
+const numbers={"0,0":"1","0,2":"2","0,4":"3","0,7":"4","0,8":"5","0,10":"6","1,6":"7","2,0":"8","2,6":"9","4,0":"10","5,8":"11","5,10":"12","6,3":"13","7,0":"14","7,2":"15","8,0":"16","8,6":"17","10,0":"18","10,5":"19"};
+const clueText={"across":[["1","Extremely dark number of years in a mostly high-flying era? (3,3)"],["4","LAPD gets over firing lead detective for flipping precious stone (4)"],["8","Cockney knew her to be relatively fresh (5)"],["9","Did not remotely enjoy disastrous hotel date (5)"],["10","See crying Lego fan’s broken, miserable look (4,4)"],["13","Barely perceptible difference in cat’s surroundings (4,4)"],["16","Interrupt disorderly c*** with insulting opener (3,2)"],["17","Loss of first and second appeal has left ill-conceived suit folding (5)"],["18","Turning spam into charts (4)"],["19","Two grand gone sorting out Christmas special (6)"]],"down":[["1","Jack lunges abruptly, confused in wilderness (6)"],["2","Pulling to one side (6)"],["3","Other half of bird-shot fired around noon (10)"],["5","Spit out stomach insides (4)"],["6","Left sad, angry, immature men (4)"],["7","Girl plays the first-half nearly legendarily, getting *Best Drumstick* (7,3)"],["11","Sty discovered by clumsy, mostly inept doctor in middle of eye (6)"],["12","Odd hours fly with delay (3,3)"],["14","Apple computers seeing increase in fraud (4)"],["15","Not beneath Cockney to reverse-call the boy who lived? (4)"]]};
+const answers={"across":{"1":"JETAGE","4":"OPAL","8":"NEWER","9":"HATED","10":"LONGFACE","13":"FINELINE","16":"CUTIN","17":"LAPEL","18":"MAPS","19":"EGGNOG"},"down":{"1":"JUNGLE","2":"TOWING","3":"GIRLFRIEND","5":"PITS","6":"LADS","7":"CHICKENLEG","11":"PIGPEN","12":"JETLAG","14":"SCAM","15":"ATOP"}};
+const blockColors=["black","blue","black","yellow","red","black","black","blue","yellow","black","red","black","blue","black","yellow","black","red","black","black","yellow","blue","black","red","black","black","blue","yellow","black","red","black","blue","black","black"];
+const storageKey="doms-cryptic-12-letters",statusKey="doms-cryptic-12-status",grid=document.getElementById("grid"),acrossBtn=document.getElementById("acrossBtn"),downBtn=document.getElementById("downBtn"),revealWordBtn=document.getElementById("revealWordBtn"),checkPuzzleBtn=document.getElementById("checkPuzzleBtn"),clearBtn=document.getElementById("clearBtn"),printBtn=document.getElementById("printBtn"),selectedClue=document.getElementById("selectedClue"),status=document.getElementById("status"),inputs=new Map(),cells=new Map(),entries={across:new Map(),down:new Map()},cellEntries=new Map(),solution=new Map();let direction="across",currentKey="0,0";
+function keyOf(r,c){return `${r},${c}`}function isWhite(r,c){return r>=0&&r<11&&c>=0&&c<11&&gridPattern[r][c]!=="#"}function saved(){try{return JSON.parse(localStorage.getItem(storageKey)||"{}")}catch{return {}}}function saveLetters(){const v={};inputs.forEach((input,k)=>{if(input.value)v[k]=input.value});localStorage.setItem(storageKey,JSON.stringify(v));localStorage.setItem(statusKey,Object.keys(v).length?"started":"unattempted")}function setStatus(m){status.textContent=m}function clearCheck(k){const c=cells.get(k),i=inputs.get(k);if(c)c.classList.remove("is-correct","is-incorrect");if(i)i.removeAttribute("aria-invalid")}function clearChecks(){cells.forEach((_,k)=>clearCheck(k))}
+function entryCellsFrom(r,c,dir){const d=dir==="across"?[0,1]:[1,0],out=[];while(isWhite(r,c)){out.push(keyOf(r,c));r+=d[0];c+=d[1]}return out}function discoverEntries(){Object.keys(numbers).forEach(k=>{const [r,c]=k.split(",").map(Number),n=numbers[k];if(!isWhite(r,c))return;const startsAcross=!isWhite(r,c-1)&&isWhite(r,c+1),startsDown=!isWhite(r-1,c)&&isWhite(r+1,c);if(startsAcross){const e=entryCellsFrom(r,c,"across");entries.across.set(n,e);e.forEach(ck=>{const ref=cellEntries.get(ck)||{};ref.across=n;cellEntries.set(ck,ref)})}if(startsDown){const e=entryCellsFrom(r,c,"down");entries.down.set(n,e);e.forEach(ck=>{const ref=cellEntries.get(ck)||{};ref.down=n;cellEntries.set(ck,ref)})}})}function buildSolution(){Object.entries(answers).forEach(([dir,set])=>Object.entries(set).forEach(([n,answer])=>{const e=entries[dir].get(n);if(!e||e.length!==answer.length)return;e.forEach((ck,i)=>solution.set(ck,answer[i]))}))}
+
+function clueNodes(text) {
+  return text.split(/\*([^*]+)\*/).map((part, index) => {
+    if (index % 2 === 0) return document.createTextNode(part);
+    const emphasis = document.createElement("em");
+    emphasis.textContent = part;
+    return emphasis;
+  });
+}
+function getClueText(dir,n){const clue=clueText[dir].find(([num])=>num===n);return clue?clue[1]:""}function setDirection(next){direction=next;acrossBtn?.setAttribute("aria-pressed",String(direction==="across"));downBtn?.setAttribute("aria-pressed",String(direction==="down"));highlight()}function getEntry(k,dir=direction){const ref=cellEntries.get(k);return ref&&ref[dir]?entries[dir].get(ref[dir]):null}function focusCell(k){const input=inputs.get(k);if(!input)return;currentKey=k;input.focus();input.select();highlight()}function nextCell(k){const e=getEntry(k);if(!e)return k;return e[Math.min(e.indexOf(k)+1,e.length-1)]}function previousCell(k){const e=getEntry(k);if(!e)return k;return e[Math.max(e.indexOf(k)-1,0)]}function moveBy(dr,dc){const [r,c]=currentKey.split(",").map(Number),n=keyOf(r+dr,c+dc);if(inputs.has(n))focusCell(n)}function toggleDirection(k=currentKey){const ref=cellEntries.get(k);if(ref&&ref.across&&ref.down){setDirection(direction==="across"?"down":"across");focusCell(k)}}function updateSelectedClue(dir,n){const text=getClueText(dir,n);if(!text){selectedClue.hidden=true;return}const order=clueText[dir].findIndex(([number])=>number===n);const tone=["red","blue","yellow"][(order+(dir==="down"?2:0))%3],label=document.createElement("span");label.className="selected-clue-label";label.textContent=`${n}${dir==="across"?"A":"D"}.`;selectedClue.className=`selected-clue tone-${tone}`;selectedClue.replaceChildren(label,...clueNodes(text));selectedClue.hidden=false}
+function highlight(){cells.forEach(c=>c.classList.remove("in-entry","is-current"));document.querySelectorAll(".active-clue").forEach(el=>el.classList.remove("active-clue"));const ref=cellEntries.get(currentKey);let dir=direction;if(ref&&!ref[dir]){setDirection(ref.across?"across":"down");return}const e=getEntry(currentKey,dir)||[currentKey];e.forEach(k=>cells.get(k)?.classList.add("in-entry"));cells.get(currentKey)?.classList.add("is-current");if(ref&&ref[dir]){document.querySelector(`[data-clue="${dir}-${ref[dir]}"]`)?.classList.add("active-clue");updateSelectedClue(dir,ref[dir])}else{selectedClue.hidden=true}}
+function checkCell(k,announce=true){const input=inputs.get(k),cell=cells.get(k),expected=solution.get(k);if(!input||!cell||!expected)return null;cell.classList.remove("is-correct","is-incorrect");input.removeAttribute("aria-invalid");if(!input.value){if(announce)setStatus("That square is empty.");return null}const ok=input.value.toUpperCase()===expected;cell.classList.add(ok?"is-correct":"is-incorrect");if(!ok)input.setAttribute("aria-invalid","true");if(announce)setStatus(ok?"Current square is correct.":"Current square is incorrect.");return ok}function revealWord(){const e=getEntry(currentKey);if(!e){setStatus("No word is selected.");return}e.forEach(k=>{const input=inputs.get(k),expected=solution.get(k);if(input&&expected){clearCheck(k);input.value=expected}});saveLetters();setStatus("Word revealed.");focusCell(currentKey)}function checkPuzzle(){let correct=0,incorrect=0,empty=0;inputs.forEach((_,k)=>{const r=checkCell(k,false);if(r===true)correct++;else if(r===false)incorrect++;else empty++});if(!incorrect&&!empty){localStorage.setItem(statusKey,"completed");setStatus("Everything is correct. Puzzle complete.")}else{localStorage.setItem(statusKey,Object.values(saved()).filter(Boolean).length?"started":"unattempted");setStatus(`${correct} correct, ${incorrect} incorrect, ${empty} empty.`)}}
+function renderGrid(){const s=saved();let blockIndex=0;gridPattern.forEach((rowText,r)=>[...rowText].forEach((ch,c)=>{const k=keyOf(r,c),cell=document.createElement("div");if(ch==="#"){cell.className=`cell block-${blockColors[blockIndex++%blockColors.length]}`;grid.appendChild(cell);return}cell.className="cell";if(numbers[k]){const num=document.createElement("span");num.className="num";num.textContent=numbers[k];cell.appendChild(num)}const input=document.createElement("input");input.type="text";input.inputMode="text";input.maxLength=1;input.autocomplete="off";input.spellcheck=false;input.autocapitalize="characters";input.setAttribute("aria-label",`Row ${r+1}, column ${c+1}`);input.value=(s[k]||"").slice(0,1).toUpperCase();input.addEventListener("focus",()=>{currentKey=k;const ref=cellEntries.get(k);if(ref&&!ref[direction])setDirection(ref.across?"across":"down");highlight()});input.addEventListener("pointerdown",event=>{if(event.button===0&&currentKey===k)toggleDirection(k)});input.addEventListener("keydown",event=>{if(/^[a-zA-Z]$/.test(event.key)){event.preventDefault();clearCheck(k);input.value=event.key.toUpperCase();saveLetters();setStatus("");focusCell(nextCell(k));return}if(event.key==="Backspace"){event.preventDefault();if(input.value){clearCheck(k);input.value="";saveLetters()}else{const p=previousCell(k);focusCell(p);const pi=inputs.get(p);if(pi){clearCheck(p);pi.value=""}saveLetters()}setStatus("");return}if(event.key==="Delete"){event.preventDefault();clearCheck(k);input.value="";saveLetters();setStatus("");return}if(event.key===" "||event.key==="Enter"){event.preventDefault();toggleDirection(k);return}if(event.key==="ArrowRight"){event.preventDefault();setDirection("across");moveBy(0,1)}else if(event.key==="ArrowLeft"){event.preventDefault();setDirection("across");moveBy(0,-1)}else if(event.key==="ArrowDown"){event.preventDefault();setDirection("down");moveBy(1,0)}else if(event.key==="ArrowUp"){event.preventDefault();setDirection("down");moveBy(-1,0)}});input.addEventListener("input",()=>{const letters=input.value.toUpperCase().replace(/[^A-Z]/g,"");clearCheck(k);if(!letters){input.value="";saveLetters();setStatus("");return}input.value=letters[0];saveLetters();setStatus("");requestAnimationFrame(()=>focusCell(nextCell(k)))});input.addEventListener("paste",event=>{event.preventDefault();const letters=(event.clipboardData||window.clipboardData).getData("text").toUpperCase().replace(/[^A-Z]/g,"").split(""),e=getEntry(k);if(!e||!letters.length)return;let last=k;for(let i=e.indexOf(k);i<e.length&&letters.length;i++){const target=inputs.get(e[i]);clearCheck(e[i]);target.value=letters.shift();last=e[i]}saveLetters();setStatus("");focusCell(last)});cell.appendChild(input);inputs.set(k,input);cells.set(k,cell);grid.appendChild(cell)}))}
+function renderClues(){Object.entries(clueText).forEach(([dir,clues])=>{const list=document.getElementById(dir==="across"?"acrossClues":"downClues");clues.forEach(([n,text])=>{const item=document.createElement("li");item.dataset.clue=`${dir}-${n}`;const number=document.createElement("span");number.className="clue-num";number.textContent=n+".";item.append(number,document.createTextNode(" "),...clueNodes(text));item.addEventListener("click",()=>{const e=entries[dir].get(n);if(!e)return;currentKey=e[0];setDirection(dir);focusCell(e[0])});list.appendChild(item)})})}
+acrossBtn?.addEventListener("click",()=>{setDirection("across");focusCell(currentKey)});downBtn?.addEventListener("click",()=>{setDirection("down");focusCell(currentKey)});revealWordBtn.addEventListener("click",revealWord);checkPuzzleBtn.addEventListener("click",checkPuzzle);clearBtn.addEventListener("click",()=>{if(!confirm("Clear all letters from the grid?"))return;inputs.forEach(input=>input.value="");clearChecks();saveLetters();setStatus("Grid cleared.");focusCell("0,0")});printBtn.addEventListener("click",()=>window.print());discoverEntries();buildSolution();renderGrid();renderClues();setDirection("across");focusCell("0,0");
+
+function anagramClueNodes(text) {
+  return text.split(/\*([^*]+)\*/).map((part, index) => {
+    if (index % 2 === 0) return document.createTextNode(part);
+    const em = document.createElement('em');
+    em.textContent = part;
+    return em;
+  });
+}
+
+// The helper reads only clue metadata and the user's grid entries, never answers.
+const anagramDialog = document.getElementById('anagramDialog');
+const anagramFodder = document.getElementById('anagramFodder');
+const anagramCircle = document.getElementById('anagramCircle');
+const anagramSquares = document.getElementById('anagramSquares');
+const anagramShuffle = document.getElementById('anagramShuffle');
+const anagramStatus = document.getElementById('anagramStatus');
+let anagramSession = null;
+const anagramDrafts = new Map();
+
+function shuffleAnagramLetters(letters) {
+  const shuffled = [...letters];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+function trialAnagramLetters(fodder, locked) {
+  const available = [...fodder];
+  // Reserve matching copies for the fixed cells; never create extra letters.
+  for (const letter of locked) {
+    if (!letter) continue;
+    const index = available.indexOf(letter);
+    if (index !== -1) available.splice(index, 1);
+  }
+  const freePositions = shuffleAnagramLetters(locked.map((letter, i) => letter ? null : i).filter(i => i !== null));
+  const trial = [...locked];
+  const shuffled = shuffleAnagramLetters(available);
+  freePositions.forEach((position, i) => { trial[position] = shuffled[i] || ''; });
+  return { trial, extra: Math.max(0, available.length - freePositions.length) };
+}
+
+function drawAnagramCircle(letters) {
+  anagramCircle.replaceChildren();
+  anagramCircle.setAttribute('aria-label', letters.length ? `Fodder letters: ${letters.join(' ')}` : 'Your letters will appear in a circle');
+  if (!letters.length) {
+    const empty = document.createElement('span');
+    empty.className = 'anagram-empty';
+    empty.textContent = '';
+    anagramCircle.append(empty);
+    return;
+  }
+  const size = Math.min(30, Math.max(10, 590 / letters.length));
+  letters.forEach((letter, index) => {
+    const angle = index * 2 * Math.PI / letters.length - Math.PI / 2;
+    const tile = document.createElement('span');
+    tile.className = 'anagram-letter';
+    tile.textContent = letter;
+    tile.setAttribute('aria-hidden', 'true');
+    // Container-relative units keep the ring equally spaced at every viewport.
+    tile.style.left = `${50 + 40 * Math.cos(angle)}%`;
+    tile.style.top = `${50 + 40 * Math.sin(angle)}%`;
+    tile.style.setProperty('--x', '0px');
+    tile.style.setProperty('--y', '0px');
+    tile.style.setProperty('--letter-size', `${size}px`);
+    anagramCircle.append(tile);
+  });
+}
+
+function drawAnagramSquares(letters) {
+  anagramSquares.replaceChildren();
+  letters.forEach((letter, index) => {
+    const square = document.createElement('span');
+    const locked = Boolean(anagramSession.locked[index]);
+    square.className = 'anagram-square' + (locked ? ' is-locked' : '') + (anagramSession.breaks.includes(index + 1) ? ' word-end' : '');
+    square.textContent = letter;
+    square.setAttribute('aria-label', `Position ${index + 1}: ${letter || 'empty'}${locked ? ', locked from grid' : ', trial'}`);
+    anagramSquares.append(square);
+  });
+}
+
+function updateAnagramFodder() {
+  const fodder = anagramFodder.value.toUpperCase().replace(/[^A-Z]/g, '');
+  anagramDrafts.set(anagramSession.id, anagramFodder.value);
+  anagramSession.fodder = [...fodder];
+  drawAnagramCircle(anagramSession.fodder);
+  drawAnagramSquares(anagramSession.locked);
+  anagramShuffle.disabled = !fodder;
+  anagramStatus.textContent = '';
+}
+
+function openAnagramHelper() {
+  const entry = getEntry(currentKey);
+  const number = cellEntries.get(currentKey)?.[direction];
+  if (!entry || !number) { setStatus('Select a clue first.'); return; }
+  const text = getClueText(direction, number);
+  const lengths = text.match(/\((\d+(?:[,-]\d+)*)\)$/)?.[1].split(/[,-]/).map(Number) || [];
+  let end = 0;
+  const breaks = lengths.slice(0, -1).map(length => (end += length));
+  anagramSession = {
+    id: `${direction}-${number}`,
+    key: currentKey,
+    locked: entry.map(key => inputs.get(key).value.toUpperCase()),
+    breaks,
+    fodder: []
+  };
+  const label = document.createElement('span');
+  label.className = 'selected-clue-label';
+  label.textContent = `${number}${direction === 'across' ? 'A' : 'D'}.`;
+  const clue = document.getElementById('anagramClue');
+  clue.className = selectedClue.className;
+  clue.replaceChildren(label, ...anagramClueNodes(text));
+  anagramFodder.value = anagramDrafts.get(anagramSession.id) || '';
+  updateAnagramFodder();
+  anagramDialog.showModal();
+  anagramFodder.focus();
+}
+
+function shuffleAnagram() {
+  if (!anagramSession?.fodder.length) return;
+  drawAnagramCircle(shuffleAnagramLetters(anagramSession.fodder));
+  const result = trialAnagramLetters(anagramSession.fodder, anagramSession.locked);
+  drawAnagramSquares(result.trial);
+  anagramStatus.textContent = result.extra ? `${result.extra} extra ${result.extra === 1 ? 'letter' : 'letters'}` : '';
+}
+
+document.getElementById('anagramBtn').addEventListener('click', openAnagramHelper);
+document.getElementById('anagramClose').addEventListener('click', () => anagramDialog.close());
+anagramDialog.addEventListener('close', () => { if (anagramSession) focusCell(anagramSession.key); });
+anagramFodder.addEventListener('input', updateAnagramFodder);
+anagramFodder.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); shuffleAnagram(); } });
+anagramShuffle.addEventListener('click', shuffleAnagram);
+
+const parsingHints={"across":{"1":{"definition":[{"text":"a mostly high-flying era?","range":[34,59]}],"indicators":[],"substitutions":[{"text":"Extremely dark","range":[0,14],"replacement":"JET"},{"text":"number of years","range":[15,30],"replacement":"AGE"}],"special":null},"4":{"definition":[{"text":"precious stone","range":[50,64]}],"indicators":[{"text":"gets","range":[5,9],"operation":"charade"},{"text":"firing","range":[15,21],"operation":"deletion"},{"text":"lead","range":[22,26],"operation":"selection"},{"text":"for flipping","range":[37,49],"operation":"reversal"}],"substitutions":[{"text":"over","range":[10,14],"replacement":"O"}],"special":null},"8":{"definition":[{"text":"relatively fresh","range":[23,39]}],"indicators":[{"text":"Cockney","range":[0,7],"operation":"accent-specific homophone"}],"substitutions":[],"special":null},"9":{"definition":[{"text":"Did not remotely enjoy","range":[0,22]}],"indicators":[{"text":"disastrous","range":[23,33],"operation":"anagram"}],"substitutions":[{"text":"hotel","range":[34,39],"replacement":"H"}],"special":null},"10":{"definition":[{"text":"miserable look","range":[30,44]}],"indicators":[{"text":"crying","range":[4,10],"operation":"homophone"},{"text":"broken","range":[22,28],"operation":"anagram"}],"substitutions":[],"special":null},"13":{"definition":[{"text":"Barely perceptible difference","range":[0,29]}],"indicators":[{"text":"surroundings","range":[39,51],"operation":"containment"}],"substitutions":[{"text":"cat","range":[33,36],"replacement":"FELINE"}],"special":null},"16":{"definition":[{"text":"Interrupt","range":[0,9]}],"indicators":[{"text":"disorderly","range":[10,20],"operation":"anagram"},{"text":"with","range":[26,30],"operation":"charade"},{"text":"opener","range":[41,47],"operation":"selection"}],"substitutions":[{"text":"c***","range":[21,25],"replacement":"CUNT"}],"special":null},"17":{"definition":[{"text":"suit folding","range":[55,67]}],"indicators":[{"text":"Loss of","range":[0,7],"operation":"deletion"},{"text":"first and second","range":[8,24],"operation":"selection"},{"text":"has","range":[32,35],"operation":"charade"},{"text":"ill-conceived","range":[41,54],"operation":"anagram"}],"substitutions":[{"text":"left","range":[36,40],"replacement":"L"}],"special":null},"18":{"definition":[{"text":"charts","range":[18,24]}],"indicators":[{"text":"Turning","range":[0,7],"operation":"reversal"}],"substitutions":[],"special":null},"19":{"definition":[{"text":"Christmas special","range":[27,44]}],"indicators":[{"text":"sorting out","range":[15,26],"operation":"anagram"}],"substitutions":[{"text":"Two grand","range":[0,9],"replacement":"GG"}],"special":null}},"down":{"1":{"definition":[{"text":"wilderness","range":[34,44]}],"indicators":[{"text":"abruptly","range":[12,20],"operation":"deletion"},{"text":"confused","range":[22,30],"operation":"anagram"}],"substitutions":[{"text":"Jack","range":[0,4],"replacement":"J"}],"special":null},"2":{"definition":[{"text":"Pulling","range":[0,7]}],"indicators":[],"substitutions":[{"text":"one side","range":[11,19],"replacement":"WING"}],"special":null},"3":{"definition":[{"text":"Other half","range":[0,10]}],"indicators":[{"text":"shot","range":[19,23],"operation":"anagram"},{"text":"around","range":[30,36],"operation":"containment"}],"substitutions":[{"text":"bird","range":[14,18],"replacement":"GIRL"},{"text":"noon","range":[37,41],"replacement":"N"}],"special":null},"5":{"definition":[{"text":"stomach insides","range":[9,24]}],"indicators":[{"text":"out","range":[5,8],"operation":"anagram"}],"substitutions":[],"special":null},"6":{"definition":[{"text":"immature men","range":[17,29]}],"indicators":[{"text":"angry","range":[10,15],"operation":"anagram"}],"substitutions":[{"text":"Left","range":[0,4],"replacement":"L"}],"special":null},"7":{"definition":[{"text":"Best Drumstick","range":[54,68]}],"indicators":[{"text":"plays","range":[5,10],"operation":"anagram"},{"text":"the first-half nearly","range":[11,32],"operation":"selection"}],"substitutions":[{"text":"Girl","range":[0,4],"replacement":"CHICKS"}],"special":null},"11":{"definition":[{"text":"Sty","range":[0,3]}],"indicators":[{"text":"clumsy","range":[18,24],"operation":"anagram"},{"text":"mostly","range":[26,32],"operation":"deletion"},{"text":"in middle of eye","range":[46,62],"operation":"insertion, based on the meaning of eye as a hole"}],"substitutions":[{"text":"doctor","range":[39,45],"replacement":"GP"}],"special":null},"12":{"definition":[{"text":"Odd hours","range":[0,9]}],"indicators":[{"text":"with","range":[14,18],"operation":"charade"}],"substitutions":[{"text":"fly","range":[10,13],"replacement":"JET"},{"text":"delay","range":[19,24],"replacement":"LAG"}],"special":null},"14":{"definition":[{"text":"fraud","range":[35,40]}],"indicators":[{"text":"seeing increase","range":[16,31],"operation":"down-clue reversal"}],"substitutions":[{"text":"Apple computers","range":[0,15],"replacement":"MACS"}],"special":null},"15":{"definition":[{"text":"Not beneath","range":[0,11]}],"indicators":[{"text":"Cockney to reverse-call","range":[12,35],"operation":"accent-specific homophone, with reversal"}],"substitutions":[{"text":"the boy who lived","range":[36,53],"replacement":"POTTER [I.e., POTA]"}],"special":null}}};
+
+const hintDialog = document.getElementById('hintDialog');
+const hintTabs = document.getElementById('hintTabs');
+const hintBody = document.getElementById('hintBody');
+const revealHint = document.getElementById('revealHint');
+const hintCategories = ['definition', 'indicators', 'substitutions'];
+const hintLabels = { definition: 'Definition', indicators: 'Indicators', substitutions: 'Substitutions' };
+const hintStorageKey = 'cryptic-puzzle12-parsing-hints-v1';
+let revealedParsing = {};
+try { revealedParsing = JSON.parse(localStorage.getItem(hintStorageKey) || '{}') || {}; } catch {}
+let activeParsing = null;
+let activeCategory = 'definition';
+
+function availableHintCategories(parsing) {
+  return hintCategories.filter(category => category === 'definition' || parsing[category].length > 0);
+}
+
+function isHintRevealed(id, category) {
+  return revealedParsing[id]?.[category] === true;
+}
+
+function parsingNodes(text, dir, number) {
+  const italicRanges = [];
+  let clean = '';
+  for (const [index, part] of text.split(/\*([^*]+)\*/).entries()) {
+    if (index % 2) italicRanges.push([clean.length, clean.length + part.length]);
+    clean += part;
+  }
+  text = clean;
+  const parsing = parsingHints[dir]?.[number];
+  const id = `${dir}-${number}`;
+  const spans = [];
+  for (const category of hintCategories) {
+    if (!isHintRevealed(id, category)) continue;
+    for (const item of parsing?.[category] || []) spans.push({ start: item.range[0], end: item.range[1], category });
+  }
+  const boundaries = [...new Set([0, text.length, ...spans.flatMap(s => [s.start, s.end]), ...italicRanges.flat()])].sort((a,b) => a-b);
+  const nodes = [];
+  for (let i = 0; i < boundaries.length - 1; i++) {
+    const start = boundaries[i], end = boundaries[i + 1];
+    const matching = spans.filter(s => start >= s.start && end <= s.end);
+    const span = matching[0];
+    const node = span ? document.createElement('mark') : document.createTextNode(text.slice(start, end));
+    if (span) { node.className = [...new Set(matching.map(s => `parse-${s.category}`))].join(" "); node.textContent = text.slice(start, end); }
+    if (italicRanges.some(([a,b]) => start >= a && end <= b)) {
+      const em = document.createElement('em'); em.textContent = text.slice(start, end);
+      if (span) { node.replaceChildren(em); nodes.push(node); } else { nodes.push(em); }
+    } else { nodes.push(node); }
+  }
+  return nodes;
+}
+
+function updateParsingHighlights() {
+  for (const dir of ['across', 'down']) {
+    for (const [number, text] of clueText[dir]) {
+      const item = document.querySelector(`[data-clue="${dir}-${number}"]`);
+      if (!item) continue;
+      const label = document.createElement('span');
+      label.className = 'clue-num'; label.textContent = number + '.';
+      item.replaceChildren(label, document.createTextNode(' '), ...parsingNodes(text, dir, number));
+    }
+  }
+  highlight();
+  document.getElementById('hideHintsBtn').disabled = !Object.values(revealedParsing).some(categories => hintCategories.some(category => categories?.[category] === true));
+}
+
+// Keep the selected-clue banner in sync with the same exact source ranges.
+const originalSelectedClue = updateSelectedClue;
+updateSelectedClue = function(dir, number) {
+  originalSelectedClue(dir, number);
+  const text = getClueText(dir, number);
+  if (!text) return;
+  const label = document.createElement('span');
+  label.className = 'selected-clue-label'; label.textContent = `${number}${dir === 'across' ? 'A' : 'D'}.`;
+  selectedClue.replaceChildren(label, ...parsingNodes(text, dir, number));
+};
+
+function englishList(items) {
+  if (items.length < 2) return items[0] || '';
+  if (items.length === 2) return items.join(' and ');
+  return items.slice(0, -1).join(', ') + ', and ' + items.at(-1);
+}
+
+function hintExplanation(parsing, category) {
+  const items = parsing[category];
+  const quoted = englishList(items.map(item => `“${item.text}”`));
+  if (category === 'definition') {
+    if (parsing.special === '&lit') return 'The whole clue acts as the definition. Its wording also supplies the wordplay, so read it in both ways.';
+    if (parsing.special === 'cryptic definition') return `This clue's cryptic definition is ${quoted}. Read the wording as a playful description rather than a literal one.`;
+    return `This clue's definition is ${quoted}. Look for a word or phrase with that meaning.`;
+  }
+  if (category === 'substitutions') {
+    if (!items.length) return 'Your parsing notes identify no fodder requiring substitution in this clue. Use the wording already present when applying the wordplay instructions.';
+    const replacements = englishList(items.map(item => `“${item.text}” → “${item.replacement}”`));
+    return `The ${items.length === 1 ? 'substitution for this clue is' : 'substitutions for this clue are'} ${replacements}. Use ${items.length === 1 ? 'this replacement' : 'these replacements'} when following the wordplay instructions.`;
+  }
+  if (!items.length) return 'Your parsing notes identify no separate indicators in this clue. Read the wording as a whole for the intended cryptic meaning.';
+  const instructions = {
+    'homophone, requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
+    translation: 'translate the nearby wording into the indicated language',
+    'deletion, requiring lateral thinking': 'remove part of the wording, with some lateral thinking about what to remove',
+    'accent-specific homophone': 'use a soundalike in a Cockney accent',
+    'accent-specific homophone, with reversal': 'use a soundalike in a Cockney accent and reverse it',
+    'down-clue reversal': 'reverse the letters so they run upwards in this down answer',
+    'insertion, based on the meaning of eye as a hole': 'insert letters into the middle, reading eye as a hole',
+    anagram: 'rearrange letters', containment: 'put one piece around another', reversal: 'reverse the order of letters',
+    deletion: 'remove letters', selection: 'select particular letters', combination: 'combine pieces',
+    charade: 'put pieces in the stated order', 'hidden word': 'find consecutive letters hidden in the wording',
+    insertion: 'put one piece inside another', replacement: 'replace one piece with another',
+    'homophone indicator requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
+    cycling: 'move letters from one end to the other while retaining their order', homophone: 'use a soundalike'
+  };
+  const actions = englishList(items.map(item => instructions[item.operation] || item.operation));
+  return `The ${items.length === 1 ? 'indicator for this clue is' : 'indicators for this clue are'} ${quoted}. ${items.length === 1 ? 'It asks you to' : 'Respectively, they ask you to'} ${actions}.`;
+}
+
+function showParsingCategory(category, focus = false) {
+  activeCategory = category;
+  const revealed = isHintRevealed(activeParsing.id, category);
+  for (const tab of hintTabs.children) {
+    const name = tab.dataset.category;
+    tab.setAttribute('aria-selected', String(name === category));
+    tab.classList.toggle('is-revealed', isHintRevealed(activeParsing.id, name));
+    tab.tabIndex = name === category ? 0 : -1;
+    if (focus && name === category) tab.focus();
+  }
+  document.getElementById('hintSlide').setAttribute('aria-labelledby', 'parsing-tab-' + category);
+  document.getElementById('hintHeading').textContent = hintLabels[category];
+  hintBody.textContent = revealed ? hintExplanation(activeParsing.parsing, category) : '';
+  revealHint.hidden = revealed;
+  revealHint.textContent = 'Reveal';
+  document.getElementById('hintClue').replaceChildren(...parsingNodes(activeParsing.text, activeParsing.dir, activeParsing.number));
+}
+
+function openParsingHints() {
+  const number = cellEntries.get(currentKey)?.[direction];
+  const parsing = parsingHints[direction]?.[number];
+  if (!parsing) { setStatus('Select a clue to see its hints.'); return; }
+  activeParsing = { id: `${direction}-${number}`, dir: direction, number, parsing, text: getClueText(direction, number) };
+  document.getElementById('hintTitle').textContent = `${number} ${direction === 'across' ? 'Across' : 'Down'} · Hints`;
+  document.getElementById('hintClue').className = 'hint-clue';
+  hintTabs.replaceChildren();
+  for (const category of availableHintCategories(parsing)) {
+    const tab = document.createElement('button');
+    tab.type = 'button'; tab.className = 'hint-tab'; tab.id = 'parsing-tab-' + category;
+    tab.dataset.category = category;
+    tab.setAttribute('role', 'tab'); tab.setAttribute('aria-controls', 'hintSlide');
+    tab.textContent = hintLabels[category];
+    tab.addEventListener('click', () => showParsingCategory(category));
+    hintTabs.appendChild(tab);
+  }
+  showParsingCategory('definition');
+  hintDialog.showModal();
+  document.getElementById('hintClose').focus();
+}
+
+document.getElementById('hintBtn').addEventListener('click', openParsingHints);
+document.getElementById('hideHintsBtn').addEventListener('click', () => {
+  revealedParsing = {};
+  try { localStorage.setItem(hintStorageKey, '{}'); } catch {}
+  updateParsingHighlights();
+  if (activeParsing) showParsingCategory(activeCategory);
+  setStatus('All hints hidden and reset. Your letters are unchanged.');
+});
+document.getElementById('hintClose').addEventListener('click', () => hintDialog.close());
+hintDialog.addEventListener('close', () => { updateParsingHighlights(); document.getElementById('hintBtn').focus(); });
+revealHint.addEventListener('click', () => {
+  revealedParsing[activeParsing.id] ||= {};
+  revealedParsing[activeParsing.id][activeCategory] = true;
+  try { localStorage.setItem(hintStorageKey, JSON.stringify(revealedParsing)); } catch {}
+  showParsingCategory(activeCategory);
+  updateParsingHighlights();
+});
+hintTabs.addEventListener('keydown', event => {
+  const categories = availableHintCategories(activeParsing.parsing);
+  let index = categories.indexOf(activeCategory);
+  if (event.key === 'ArrowRight') index = (index + 1) % categories.length;
+  else if (event.key === 'ArrowLeft') index = (index + categories.length - 1) % categories.length;
+  else if (event.key === 'Home') index = 0;
+  else if (event.key === 'End') index = categories.length - 1;
+  else return;
+  event.preventDefault(); showParsingCategory(categories[index], true);
+});
+updateParsingHighlights();
+
+</script></body></html>
+
