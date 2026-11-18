@@ -802,13 +802,24 @@ function fitMobileClue(){
 }
 function scheduleClueFit(){cancelAnimationFrame(clueFitFrame);clueFitFrame=requestAnimationFrame(fitMobileClue);}
 const fitOriginalHighlight=highlight;
-highlight=function(){fitOriginalHighlight();scheduleClueFit();};
+highlight=function(){
+  fitOriginalHighlight();
+  if(typeof parsingNodes==='function')for(const dir of ['across','down'])for(const [number,text]of clueText[dir]){
+    const button=compactClueButtons.get(dir+'-'+number);
+    if(button)button.replaceChildren(document.createTextNode(number+'. '),...parsingNodes(text,dir,number));
+  }
+  scheduleClueFit();
+};
 window.addEventListener('resize',scheduleClueFit);
 mobilePuzzleMedia.addEventListener('change',()=>{
   if(!mobilePuzzleMedia.matches){selectedClue.style.removeProperty('font-size');selectedClue.style.removeProperty('--clue-box-height');}
   scheduleClueFit();
 });
 scheduleClueFit();
+// Some grids begin with a blocked corner: select their first actual entry.
+if(mobilePuzzleMedia.matches&&!inputs.has(currentKey)){
+  const first=[...entries.across.values()][0];if(first){setDirection('across');focusCell(first[0]);}
+}
 
 </script></body></html>
 
