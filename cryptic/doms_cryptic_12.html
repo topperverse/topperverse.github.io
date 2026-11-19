@@ -326,6 +326,13 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
  .mobile-keyboard .key-delete{font-size:16px;background:#aaa}
 }
 
+
+/* Reversible mobile typography experiment. */
+@media screen and (max-width:860px){
+ .selected-clue{font-family:var(--sans);font-weight:400;-webkit-text-stroke:0;line-height:1.35}
+ .cell input,.puzzle-15 .cell input{font-family:var(--mono);font-weight:700}
+}
+
 </style>
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (12)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Wednesday 18 November 2026. Set by Harry Topper.</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
