@@ -318,7 +318,8 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 /* Shared letterforms and keyboard metrics on every puzzle. */
 .cell input{font-family:var(--sans);font-weight:600}
 @media screen and (max-width:860px){
- .cell input{font-family:var(--sans);font-weight:600}
+ .cell input{font-family:var(--sans);font-weight:600;font-size:var(--mobile-letter-size,20px)}
+ .num{font-size:var(--mobile-number-size,10px)}
  .mobile-keyboard button{height:39px;min-height:39px;border:2px solid #333;background:#dedede;font-family:var(--mono);font-weight:800;font-size:20px}
  .mobile-keyboard .key-direction{font:700 13px/1 var(--mono);background:var(--ink);color:#fff}
  .mobile-keyboard .key-delete{font-size:16px;background:#aaa}
@@ -912,6 +913,9 @@ function fitMobileClue(){
   mobileClueLayout={signature,width,boxHeight,base};
   }
   document.documentElement.style.setProperty('--mobile-grid-size',width+'px');
+  const mobileCellSize=(width-6-2.5*(gridPattern.length-1))/gridPattern.length;
+  document.documentElement.style.setProperty('--mobile-letter-size',Math.max(10.5,Math.min(32,mobileCellSize*.75))+'px');
+  document.documentElement.style.setProperty('--mobile-number-size',Math.max(7,Math.min(10,mobileCellSize*.3))+'px');
   selectedClue.style.setProperty('--clue-box-height',boxHeight+'px');
   let content=selectedClue.querySelector('.clue-fit-text');
   if(!content){content=document.createElement('span');content.className='clue-fit-text';content.append(...selectedClue.childNodes);selectedClue.append(content);}
