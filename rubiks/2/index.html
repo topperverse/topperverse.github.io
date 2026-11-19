@@ -278,6 +278,16 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
 .in-entry,.active-clue,.clue-button.active,.clue-button.active:hover{background:#c6c6c6}
 .is-current{background:#a3a3a3}
 
+
+/* Shared letterforms and keyboard metrics on every puzzle. */
+.cell input{font-family:var(--sans);font-weight:600}
+@media screen and (max-width:860px){
+ .cell input{font-family:var(--sans);font-weight:600}
+ .mobile-keyboard button{height:39px;min-height:39px;border:2px solid #333;background:#dedede;font-family:var(--mono);font-weight:800;font-size:20px}
+ .mobile-keyboard .key-direction{font:700 13px/1 var(--mono);background:var(--ink);color:#fff}
+ .mobile-keyboard .key-delete{font-size:16px;background:#aaa}
+}
+
 </style></head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">CRYPTIC'S ONLY FANS</span><h1>Crubik's Cube (2)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Puzzles 7–12, all in one. Set by Harry Topper.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
 <details id="cubeClues" class="cube-dropdown"><summary><span id="cubeClueLabel">Choose clue</span><span aria-hidden="true">&#8964;</span></summary><div id="cubeClueMenu" class="cube-popup" aria-label="Choose a clue"></div></details>
 <button id="nextPuzzle" type="button" aria-label="Next puzzle side">&#8594;</button>
@@ -394,7 +404,12 @@ function keyboard(event){
  const arrows={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowUp:[-1,0],ArrowDown:[1,0]};if(arrows[key]){event.preventDefault();moveCell(...arrows[key]);}
 }
 function revealWord(){const entry=currentEntry();if(!entry)return;for(const ri of entry.cells)writeLetter(ri,model.rays[ri].letter);saveProgress();refreshUI();status(entry.number+(direction==='across'?' Across':' Down')+' revealed.');focusTyping();}
-function checkPuzzle(){let correct=0,incorrect=0,empty=0;model.rays.forEach((r,ri)=>{if(r.face!==selectedFace||!r.white)return;checks.delete(ri);if(!values.has(ri)){empty++;return;}const ok=values.get(ri)===r.letter;checks.set(ri,ok?'correct':'incorrect');if(ok)correct++;else incorrect++;});refreshUI();status(incorrect===0&&empty===0?'Everything is correct. Puzzle complete!':`${correct} correct, ${incorrect} incorrect, ${empty} empty.`);}
+function checkPuzzle(){
+ let correct=0,empty=0;const wrong=[];
+ model.rays.forEach((ray,ri)=>{if(ray.face!==selectedFace||!ray.white)return;checks.delete(ri);if(!values.has(ri)){empty++;return;}if(values.get(ri)===ray.letter)correct++;else wrong.push(ri);});
+ for(const ri of wrong)writeLetter(ri,'');saveProgress();refreshUI();
+ status(!wrong.length&&!empty?'Everything is correct. Puzzle complete!':`${wrong.length} incorrect letter${wrong.length===1?'':'s'} cleared. ${correct} correct, ${empty+wrong.length} empty.`);
+}
 function clearPuzzle(){const id=model.faces[selectedFace].puzzle.id;if(!confirm(`Clear all letters from Puzzle ${id}? Linked letters on other faces will also clear.`))return;model.rays.forEach((r,ri)=>{if(r.face===selectedFace&&r.white)writeLetter(ri,'')});saveProgress();refreshUI();status('Puzzle '+id+' cleared.');focusTyping();}
 function updateActionAvailability(busy=navigationTarget!==null){const entry=currentEntry(),refs=cellEntries.get(selectedRay)||{};for(const id of ['checkPuzzleBtn','clearBtn'])$(id).disabled=busy;for(const id of ['revealWordBtn','hintBtn'])$(id).disabled=busy||!entry;input.disabled=busy||selectedRay<0;}
 function setBusy(busy){$('cluePanel').classList.toggle('busy',busy);updateActionAvailability(busy);if(busy)input.blur();}
@@ -414,7 +429,7 @@ ctx.fillStyle='#000';ctx.fillRect(0,0,lastW,lastH);
 if(aligned){const edge=Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*11;ctx.fillStyle='#000';ctx.fillRect((lastW-edge)/2,(lastH-edge)/2,edge,edge)}
 polygons=[];const activeCells=new Set(currentEntry()?.cells||[]),visible=i=>i>=0&&i<V&&occ[i];
 for(let i=0;i<V;i++){if(!visible(i))continue;let p=xyz(i).map(x=>x-5);model.faces.forEach((f,fi)=>{if(dot(f.n,view.n)<1e-7)return;let adj=add(xyz(i),f.n),adjacentInside=inside(adj);if(adjacentInside&&visible(idx(...adj)))return;let center=add(p,mul(f.n,.5)),corners=[[-.5,.5],[.5,.5],[.5,-.5],[-.5,-.5]].map(([a,b])=>projection(add(center,add(mul(f.u,a),mul(f.v,b)))));polygons.push({i,fi,corners,z:dot(center,view.n),label:labels.get(i+','+fi)});});}
-polygons.sort((a,b)=>a.z-b.z);for(const p of polygons){path(p.corners);let selected=p.label&&p.label.ri===selectedRay;const inWord=p.label&&p.label.face===selectedFace&&activeCells.has(p.label.ri);ctx.fillStyle=p.label?(selected?'#a3a3a3':inWord?'#c6c6c6':checks.get(p.label.ri)==='correct'?'#bcbcbc':'#fff'):sideColour(p.i,p.fi).hex;ctx.fill();ctx.strokeStyle='#050505';const border=Math.max(1.5,Math.min(2.5,Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*.07));ctx.lineWidth=border;ctx.stroke();if(p.label){let q=p.corners,a=q[0],b=q[1],d=q[3];ctx.save();ctx.transform((b[0]-a[0])/100,(b[1]-a[1])/100,(d[0]-a[0])/100,(d[1]-a[1])/100,a[0],a[1]);ctx.fillStyle='#07111a';if(values.has(p.label.ri)){ctx.font='800 69px Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(values.get(p.label.ri),50,57)}if(links.has(p.label.ri)){ctx.fillStyle='#e1251b';ctx.beginPath();ctx.arc(88,12,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#07111a'}const checked=checks.get(p.label.ri);if(checked){ctx.strokeStyle='#050505';ctx.lineWidth=3;if(checked==='correct')ctx.strokeRect(5,5,90,90);else{ctx.beginPath();ctx.moveTo(15,15);ctx.lineTo(85,85);ctx.moveTo(85,15);ctx.lineTo(15,85);ctx.stroke();}}if(p.label.number){ctx.font='800 30px Arial, sans-serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(p.label.number,5,3)}ctx.restore();}}
+polygons.sort((a,b)=>a.z-b.z);for(const p of polygons){path(p.corners);let selected=p.label&&p.label.ri===selectedRay;const inWord=p.label&&p.label.face===selectedFace&&activeCells.has(p.label.ri);ctx.fillStyle=p.label?(selected?'#a3a3a3':inWord?'#c6c6c6':checks.get(p.label.ri)==='correct'?'#bcbcbc':'#fff'):sideColour(p.i,p.fi).hex;ctx.fill();ctx.strokeStyle='#050505';const border=Math.max(1.5,Math.min(2.5,Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*.07));ctx.lineWidth=border;ctx.stroke();if(p.label){let q=p.corners,a=q[0],b=q[1],d=q[3];ctx.save();ctx.transform((b[0]-a[0])/100,(b[1]-a[1])/100,(d[0]-a[0])/100,(d[1]-a[1])/100,a[0],a[1]);ctx.fillStyle='#07111a';if(values.has(p.label.ri)){ctx.font='600 69px Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(values.get(p.label.ri),50,57)}if(links.has(p.label.ri)){ctx.fillStyle='#e1251b';ctx.beginPath();ctx.arc(88,12,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#07111a'}const checked=checks.get(p.label.ri);if(checked){ctx.strokeStyle='#050505';ctx.lineWidth=3;if(checked==='correct')ctx.strokeRect(5,5,90,90);else{ctx.beginPath();ctx.moveTo(15,15);ctx.lineTo(85,85);ctx.moveTo(85,15);ctx.lineTo(15,85);ctx.stroke();}}if(p.label.number){ctx.font='800 30px Arial, sans-serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(p.label.number,5,3)}ctx.restore();}}
 }
 
 function snap(fi){animationId++;navigationTarget=null;navigationZoom=null;const f=model.faces[fi];view={n:f.n.slice(),u:f.u.slice(),v:f.v.slice()};setBusy(false);showFace(fi);$('tag').textContent='Side '+(f.puzzle.id-6);document.querySelectorAll('#faceButtons button').forEach(b=>{b.classList.toggle('active',+b.dataset.face===fi);b.classList.remove('travelling')});draw();}
