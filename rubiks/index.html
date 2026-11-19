@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cryptic's Only Fans — The Cube</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Crubik's Cube (1)</title>
 <link rel="icon" type="image/png" sizes="48x48" href="/rubiks/favicon-48.png">
 <link rel="icon" type="image/svg+xml" sizes="any" href="/rubiks/favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="/rubiks/apple-touch-icon.png">
@@ -219,6 +219,7 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
 
 /* Shared letterforms and keyboard metrics on every puzzle. */
 .cell input{font-family:var(--sans);font-weight:600}
+.clue-button.active,.clue-button.active:hover{background:#c6c6c6}
 @media screen and (max-width:860px){
  .cell input{font-family:var(--sans);font-weight:600;font-size:var(--mobile-letter-size,20px)}
  .num{font-size:var(--mobile-number-size,10px)}
@@ -227,7 +228,7 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
  .mobile-keyboard .key-delete{font-size:16px;background:#aaa}
 }
 
-</style></head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">THE CUBE · SIX CROSSWORDS, ONE PUZZLE</span><h1>Cryptic's Only Fans</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper. Turn it. Solve it.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
+</style></head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">THE CUBE · SIX CROSSWORDS, ONE PUZZLE</span><h1>Crubik's Cube (1)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper. Turn it. Solve it.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
 <details id="cubeClues" class="cube-dropdown"><summary><span id="cubeClueLabel">Choose clue</span><span aria-hidden="true">&#8964;</span></summary><div id="cubeClueMenu" class="cube-popup" aria-label="Choose a clue"></div></details>
 <button id="nextPuzzle" type="button" aria-label="Next puzzle side">&#8594;</button>
 <details id="cubeMenu" class="cube-dropdown"><summary aria-label="Puzzle menu">&#8943;</summary><div id="cubeActions" class="cube-popup action-menu"></div></details>
