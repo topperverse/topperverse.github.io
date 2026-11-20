@@ -435,26 +435,31 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 }
 
 
-/* Explicit weights and sizes also apply on phones without Cascadia/Consolas. */
-.anagram-circle::before{inset:35%;border:2px solid var(--ink);border-radius:0;background:var(--yellow);transform:rotate(8deg)}
+/* Explicit sizes and ink weights avoid mobile font substitution producing hairline text. */
+.anagram-circle::before{inset:36%;border:2px solid var(--ink);border-radius:0;background:var(--yellow);transform:rotate(8deg)}
 .anagram-circle::after{display:none}
 .anagram-letter{font-family:var(--mono);font-weight:800;-webkit-text-stroke:.25px currentColor}
+.unified-actions .ui-clear,.action-menu .unified-actions .ui-clear{background:#fff!important;color:#b51e18!important;border-color:#b51e18!important}
+.ui-anagram::after{content:"⇄";font:800 22px/1 var(--mono);margin-left:auto}
+.ui-home::after{content:"↰";font:800 23px/1 var(--sans);margin-left:auto}
 @media screen and (max-width:860px){
- .anagram-dialog{-webkit-text-size-adjust:100%;text-size-adjust:100%}
- .anagram-top h2{font:800 22px/1.15 var(--mono)}
- .anagram-dialog .selected-clue{font:700 16px/1.35 var(--mono);-webkit-text-stroke:.15px currentColor}
- .anagram-dialog .anagram-label{font:700 14px/1.25 var(--mono)}
- .anagram-dialog #anagramFodder{font:700 20px/1.2 var(--mono)}
- .anagram-dialog #anagramShuffle{font:800 15px/1.2 var(--mono)}
- .anagram-dialog .anagram-letter{font-weight:800;font-size:max(24px,var(--letter-size));-webkit-text-stroke:.3px currentColor}
- .anagram-dialog .anagram-square{font:700 21px/1 var(--mono);-webkit-text-stroke:.2px currentColor}
- .anagram-dialog .anagram-status{font:600 14px/1.3 var(--sans)}
- .anagram-dialog .anagram-keyboard button{font:800 21px/1 var(--mono);-webkit-text-stroke:.2px currentColor}
+ .unified-actions .ui-print{display:none!important}
+ .anagram-dialog{font-family:var(--sans);font-weight:600;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+ .anagram-dialog .anagram-top h2{font:800 22px/1.2 var(--mono)!important}
+ .anagram-dialog #anagramClue{font:700 16px/1.35 var(--mono)!important;-webkit-text-stroke:.2px currentColor}
+ .anagram-dialog .anagram-label{font:700 14px/1.25 var(--sans)!important}
+ .anagram-dialog #anagramFodder{font:800 21px/1.2 var(--mono)!important;-webkit-text-stroke:.2px currentColor}
+ .anagram-dialog #anagramShuffle{font:750 15px/1.2 var(--sans)!important}
+ .anagram-dialog .anagram-letter{font-size:clamp(20px,7vw,30px)!important;font-weight:800!important}
+ .anagram-dialog .anagram-square{font:800 22px/1 var(--mono)!important;-webkit-text-stroke:.2px currentColor}
+ .anagram-dialog .anagram-keyboard button{font:800 21px/1 var(--mono)!important;-webkit-text-stroke:.15px currentColor}
+ .anagram-dialog .anagram-keyboard .key-delete{font-size:16px!important}
+ .anagram-status{font-size:14px;font-weight:600}
 }
 
 </style>
 </head>
-<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (8)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
+<body><main><div class="topbar"><div><h1>Cryptic's Only Fans (8)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagrammer</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
   <div class="compact-clue-control">
     <button id="compactPrevious" type="button" aria-label="Previous clue">&lt;</button>
     <details id="compactClues" class="compact-dropdown">
@@ -471,8 +476,8 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 </div><div class="layout"><section class="grid-wrap" aria-label="Crossword grid"><div id="selectedClue" class="selected-clue" aria-live="polite" hidden></div><div id="grid" class="crossword"></div><p class="hint">Type letters to fill the grid. Click the selected intersection square once to change direction.</p><div id="status" class="status" aria-live="polite"></div></section><section id="mobileClueList" class="clues" aria-label="Crossword clues"><div class="mobile-clue-header">Clues<button id="mobileCloseClues" type="button">Back to grid</button></div><div><h2>Across</h2><ol id="acrossClues"></ol></div><div><h2>Down</h2><ol id="downClues"></ol></div></section></div><section id="mobileKeyboard" class="mobile-keyboard" aria-label="Crossword keyboard"><div class="mobile-keyboard-row mobile-keyboard-nav"><button id="mobilePreviousClue" type="button" aria-label="Previous clue">Previous</button><button id="mobileCluesButton" type="button" aria-expanded="false" aria-controls="mobileClueList">Clues</button><button id="mobileNextClue" type="button" aria-label="Next clue">Next</button></div><button id="mobileDirectionKey" type="button" class="key-direction">Across</button></section></main>
 <dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
   <div class="anagram-top">
-    <h2 id="anagramTitle">Anagram helper</h2>
-    <button id="anagramClose" type="button" aria-label="Close anagram helper"><span aria-hidden="true"></span></button>
+    <h2 id="anagramTitle">Anagrammer</h2>
+    <button id="anagramClose" type="button" aria-label="Close Anagrammer"><span aria-hidden="true"></span></button>
   </div>
   <div id="anagramClue" class="selected-clue"></div>
   <label class="anagram-label" for="anagramFodder">Letters to shuffle</label>
@@ -992,7 +997,7 @@ mobilePuzzleMedia.addEventListener('change',arrangeCompactControls);
 arrangeCompactControls();highlight();
 
 
-const mobileMenuLabels={hintBtn:'Get hint',checkPuzzleBtn:'Check puzzle',revealWordBtn:'Reveal word',anagramBtn:'Anagram helper',hideHintsBtn:'Hide hints',clearBtn:'Clear letters',printBtn:'Print'};
+const mobileMenuLabels={hintBtn:'Get hint',checkPuzzleBtn:'Check puzzle',revealWordBtn:'Reveal word',anagramBtn:'Anagrammer',hideHintsBtn:'Hide hints',clearBtn:'Clear letters',printBtn:'Print'};
 const menuOrder=['hintBtn','anagramBtn','checkPuzzleBtn','revealWordBtn','hideHintsBtn','clearBtn','printBtn'];
 const desktopLabels=new Map(compactOriginalControls.map(control=>[control,control.textContent]));
 const originalArrangeCompact=arrangeCompactControls;
@@ -1141,7 +1146,7 @@ function group(label,extra){
 }
 const home=document.createElement('a');home.className='ui-action ui-home';home.href=archive?.getAttribute('href')||'/cryptic/';home.textContent='Back to archive';row.appendChild(home);
 const hints=group('Get hint','ui-hint');hints.node.hidden=!supportsHints;
-const anagram=button('Anagram helper',()=>{if(!current()){announce('Select a specific word to use the anagram helper.');return;}el('anagramBtn').click();},'ui-anagram');row.appendChild(anagram);
+const anagram=button('Anagrammer',()=>{if(!current()){announce('Select a specific word to use the anagram helper.');return;}el('anagramBtn').click();},'ui-anagram');row.appendChild(anagram);
 const check=group('Check','ui-check');
 const reveal=group('Reveal','ui-reveal'),clear=group('Clear','ui-clear'),hide=group('Hide hints','ui-hide');hide.node.hidden=!supportsHints;
 if(!cube&&el('printBtn'))row.appendChild(button('Print',()=>window.print(),'ui-print'));

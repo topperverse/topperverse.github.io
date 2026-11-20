@@ -334,31 +334,36 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
 }
 
 
-/* Explicit weights and sizes also apply on phones without Cascadia/Consolas. */
-.anagram-circle::before{inset:35%;border:2px solid var(--ink);border-radius:0;background:var(--yellow);transform:rotate(8deg)}
+/* Explicit sizes and ink weights avoid mobile font substitution producing hairline text. */
+.anagram-circle::before{inset:36%;border:2px solid var(--ink);border-radius:0;background:var(--yellow);transform:rotate(8deg)}
 .anagram-circle::after{display:none}
 .anagram-letter{font-family:var(--mono);font-weight:800;-webkit-text-stroke:.25px currentColor}
+.unified-actions .ui-clear,.action-menu .unified-actions .ui-clear{background:#fff!important;color:#b51e18!important;border-color:#b51e18!important}
+.ui-anagram::after{content:"⇄";font:800 22px/1 var(--mono);margin-left:auto}
+.ui-home::after{content:"↰";font:800 23px/1 var(--sans);margin-left:auto}
 @media screen and (max-width:860px){
- .anagram-dialog{-webkit-text-size-adjust:100%;text-size-adjust:100%}
- .anagram-top h2{font:800 22px/1.15 var(--mono)}
- .anagram-dialog .selected-clue{font:700 16px/1.35 var(--mono);-webkit-text-stroke:.15px currentColor}
- .anagram-dialog .anagram-label{font:700 14px/1.25 var(--mono)}
- .anagram-dialog #anagramFodder{font:700 20px/1.2 var(--mono)}
- .anagram-dialog #anagramShuffle{font:800 15px/1.2 var(--mono)}
- .anagram-dialog .anagram-letter{font-weight:800;font-size:max(24px,var(--letter-size));-webkit-text-stroke:.3px currentColor}
- .anagram-dialog .anagram-square{font:700 21px/1 var(--mono);-webkit-text-stroke:.2px currentColor}
- .anagram-dialog .anagram-status{font:600 14px/1.3 var(--sans)}
- .anagram-dialog .anagram-keyboard button{font:800 21px/1 var(--mono);-webkit-text-stroke:.2px currentColor}
+ .unified-actions .ui-print{display:none!important}
+ .anagram-dialog{font-family:var(--sans);font-weight:600;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+ .anagram-dialog .anagram-top h2{font:800 22px/1.2 var(--mono)!important}
+ .anagram-dialog #anagramClue{font:700 16px/1.35 var(--mono)!important;-webkit-text-stroke:.2px currentColor}
+ .anagram-dialog .anagram-label{font:700 14px/1.25 var(--sans)!important}
+ .anagram-dialog #anagramFodder{font:800 21px/1.2 var(--mono)!important;-webkit-text-stroke:.2px currentColor}
+ .anagram-dialog #anagramShuffle{font:750 15px/1.2 var(--sans)!important}
+ .anagram-dialog .anagram-letter{font-size:clamp(20px,7vw,30px)!important;font-weight:800!important}
+ .anagram-dialog .anagram-square{font:800 22px/1 var(--mono)!important;-webkit-text-stroke:.2px currentColor}
+ .anagram-dialog .anagram-keyboard button{font:800 21px/1 var(--mono)!important;-webkit-text-stroke:.15px currentColor}
+ .anagram-dialog .anagram-keyboard .key-delete{font-size:16px!important}
+ .anagram-status{font-size:14px;font-weight:600}
 }
 
 </style></head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">THE CUBE · SIX CROSSWORDS, ONE PUZZLE</span><h1>Crubik's Cube (1)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper. Turn it. Solve it.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
 <details id="cubeClues" class="cube-dropdown"><summary><span id="cubeClueLabel">Choose clue</span><span aria-hidden="true">&#8964;</span></summary><div id="cubeClueMenu" class="cube-popup" aria-label="Choose a clue"></div></details>
 <button id="nextPuzzle" type="button" aria-label="Next puzzle side">&#8594;</button>
 <details id="cubeMenu" class="cube-dropdown"><summary aria-label="Puzzle menu">&#8943;</summary><div id="cubeActions" class="cube-popup action-menu"></div></details>
-</nav><div id="selectedClue" class="selected-clue" aria-live="polite"><span>Select a clue to begin.</span></div><div id="stage" class="stage"><canvas id="view" tabindex="0" aria-label="Crossword cube. Select a square and type. Drag to rotate."></canvas><input id="letterInput" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Type letters for the selected crossword cell"><div id="rotationZone" class="rotation-zone" aria-hidden="true"></div><div id="tag" class="tag">Side 1</div><div class="view-controls" aria-label="View zoom"><button id="zoomOut" aria-label="Zoom out">−</button><input id="zoom" aria-label="Zoom" type="range" min="0.5" max="2" step="0.01" value="1"><button id="zoomIn" aria-label="Zoom in">+</button></div></div><div class="play-footer"><p id="status" class="status" role="status"></p><button id="linkedFace" class="linked" hidden>Follow linked letter →</button><p class="help">Select a square or clue, then type. Click a selected crossing to change direction. Drag centrally to rotate; swipe the right edge to scroll.</p></div></section><aside id="cluePanel" class="clue-panel" aria-label="Crossword clues"><div class="puzzle-heading"><h2 id="puzzleTitle">Puzzle 1</h2><span id="progress" class="progress"></span></div><div class="play-toolbar" aria-label="Puzzle controls"><div class="direction-toggle" aria-label="Typing direction"><button id="acrossBtn" aria-pressed="true">Across</button><button id="downBtn" aria-pressed="false">Down</button></div><button id="revealWordBtn">Reveal word</button><button id="hintBtn" hidden>Hint</button><button id="checkPuzzleBtn">Check puzzle</button><button id="anagramBtn" type="button">Anagram helper</button><button id="clearBtn">Clear</button></div><div class="clue-lists"><section><h3>Across</h3><ol id="acrossClues" role="list"></ol></section><section><h3>Down</h3><ol id="downClues" role="list"></ol></section></div><p id="saveNote" class="save-note">Progress is saved on this device. Matching letters on linked faces fill together.</p></aside></main><section id="cubeKeyboard" class="mobile-keyboard" aria-label="Crossword keyboard"></section><dialog id="hintDialog" aria-labelledby="hintTitle"><div class="dialog-head"><h2 id="hintTitle">Hint</h2><button id="hintClose" aria-label="Close hint">×</button></div><div class="dialog-body"><div id="hintTabs" class="hint-tabs" role="tablist" aria-label="Hint stages"></div><p id="hintBody"></p><div class="hint-actions"><button id="hintPrev">Previous</button><button id="hintNext">Next</button></div></div></dialog><section id="printArea" aria-label="Printable crossword"></section><dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
+</nav><div id="selectedClue" class="selected-clue" aria-live="polite"><span>Select a clue to begin.</span></div><div id="stage" class="stage"><canvas id="view" tabindex="0" aria-label="Crossword cube. Select a square and type. Drag to rotate."></canvas><input id="letterInput" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Type letters for the selected crossword cell"><div id="rotationZone" class="rotation-zone" aria-hidden="true"></div><div id="tag" class="tag">Side 1</div><div class="view-controls" aria-label="View zoom"><button id="zoomOut" aria-label="Zoom out">−</button><input id="zoom" aria-label="Zoom" type="range" min="0.5" max="2" step="0.01" value="1"><button id="zoomIn" aria-label="Zoom in">+</button></div></div><div class="play-footer"><p id="status" class="status" role="status"></p><button id="linkedFace" class="linked" hidden>Follow linked letter →</button><p class="help">Select a square or clue, then type. Click a selected crossing to change direction. Drag centrally to rotate; swipe the right edge to scroll.</p></div></section><aside id="cluePanel" class="clue-panel" aria-label="Crossword clues"><div class="puzzle-heading"><h2 id="puzzleTitle">Puzzle 1</h2><span id="progress" class="progress"></span></div><div class="play-toolbar" aria-label="Puzzle controls"><div class="direction-toggle" aria-label="Typing direction"><button id="acrossBtn" aria-pressed="true">Across</button><button id="downBtn" aria-pressed="false">Down</button></div><button id="revealWordBtn">Reveal word</button><button id="hintBtn" hidden>Hint</button><button id="checkPuzzleBtn">Check puzzle</button><button id="anagramBtn" type="button">Anagrammer</button><button id="clearBtn">Clear</button></div><div class="clue-lists"><section><h3>Across</h3><ol id="acrossClues" role="list"></ol></section><section><h3>Down</h3><ol id="downClues" role="list"></ol></section></div><p id="saveNote" class="save-note">Progress is saved on this device. Matching letters on linked faces fill together.</p></aside></main><section id="cubeKeyboard" class="mobile-keyboard" aria-label="Crossword keyboard"></section><dialog id="hintDialog" aria-labelledby="hintTitle"><div class="dialog-head"><h2 id="hintTitle">Hint</h2><button id="hintClose" aria-label="Close hint">×</button></div><div class="dialog-body"><div id="hintTabs" class="hint-tabs" role="tablist" aria-label="Hint stages"></div><p id="hintBody"></p><div class="hint-actions"><button id="hintPrev">Previous</button><button id="hintNext">Next</button></div></div></dialog><section id="printArea" aria-label="Printable crossword"></section><dialog id="anagramDialog" class="anagram-dialog" aria-labelledby="anagramTitle">
   <div class="anagram-top">
-    <h2 id="anagramTitle">Anagram helper</h2>
-    <button id="anagramClose" type="button" aria-label="Close anagram helper"><span aria-hidden="true"></span></button>
+    <h2 id="anagramTitle">Anagrammer</h2>
+    <button id="anagramClose" type="button" aria-label="Close Anagrammer"><span aria-hidden="true"></span></button>
   </div>
   <div id="anagramClue" class="selected-clue"></div>
   <label class="anagram-label" for="anagramFodder">Letters to shuffle</label>
@@ -890,7 +895,7 @@ function group(label,extra){
 }
 const home=document.createElement('a');home.className='ui-action ui-home';home.href=archive?.getAttribute('href')||'/cryptic/';home.textContent='Back to archive';row.appendChild(home);
 const hints=group('Get hint','ui-hint');hints.node.hidden=!supportsHints;
-const anagram=button('Anagram helper',()=>{if(!current()){announce('Select a specific word to use the anagram helper.');return;}el('anagramBtn').click();},'ui-anagram');row.appendChild(anagram);
+const anagram=button('Anagrammer',()=>{if(!current()){announce('Select a specific word to use the anagram helper.');return;}el('anagramBtn').click();},'ui-anagram');row.appendChild(anagram);
 const check=group('Check','ui-check');
 const reveal=group('Reveal','ui-reveal'),clear=group('Clear','ui-clear'),hide=group('Hide hints','ui-hide');hide.node.hidden=!supportsHints;
 if(!cube&&el('printBtn'))row.appendChild(button('Print',()=>window.print(),'ui-print'));
