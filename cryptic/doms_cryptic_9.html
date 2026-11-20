@@ -329,6 +329,58 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
  .mobile-keyboard .key-delete{font-size:16px;background:#aaa}
 }
 
+[data-legacy-control=true],.toolbar,.play-toolbar{display:none!important}
+.ui-action-dock{position:sticky;top:0;z-index:25;padding:8px 0 12px;margin-bottom:16px;background:var(--paper);border-bottom:2px solid var(--ink);flex:none}
+.ui-cube-dock{width:min(1580px,calc(100% - 40px));margin:0 auto 16px}
+.unified-actions{display:flex;flex-wrap:nowrap;align-items:stretch;gap:6px;width:100%}
+.unified-actions .ui-action,.action-menu .unified-actions .ui-action{appearance:none;display:flex;align-items:center;justify-content:center;gap:8px;min-height:42px;height:auto;padding:9px 10px;margin:0;border:2px solid var(--ink)!important;background:#fff!important;color:var(--ink)!important;border-radius:0;text-decoration:none;white-space:nowrap;font:700 13px/1.2 var(--sans)!important;cursor:pointer;text-align:center;box-sizing:border-box}
+.unified-actions>.ui-action,.unified-actions>.ui-group{flex:1;min-width:0}
+.unified-actions .ui-home,.action-menu .unified-actions .ui-home{background:var(--ink)!important;color:#fff!important}
+.unified-actions .ui-hint,.action-menu .unified-actions .ui-hint{background:var(--yellow)!important;color:var(--ink)!important}
+.unified-actions .ui-anagram,.action-menu .unified-actions .ui-anagram{background:#aaa!important}
+.unified-actions .ui-check,.unified-actions .ui-clear,.unified-actions .ui-print,.action-menu .unified-actions .ui-check,.action-menu .unified-actions .ui-clear,.action-menu .unified-actions .ui-print{background:#dedede!important}
+.unified-actions .ui-action:hover{filter:brightness(.94)}
+.unified-actions .ui-action:disabled,.unified-actions [aria-disabled=true]{color:#666!important;cursor:default;filter:none;opacity:.65}
+.ui-group{position:relative}
+.ui-group>summary{list-style:none;width:100%}
+.ui-group>summary::-webkit-details-marker{display:none}
+.ui-group>summary::marker{content:""}
+.ui-chevron{width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin-top:-3px;flex:none}
+.ui-group[open] .ui-chevron{transform:rotate(225deg);margin-top:3px}
+.ui-submenu{position:absolute;left:0;top:calc(100% + 5px);min-width:190px;padding:5px;border:2px solid var(--ink);background:#fff;box-shadow:0 4px 0 #0002;z-index:30}
+.ui-group:nth-last-child(-n+2) .ui-submenu{left:auto;right:0}
+.unified-actions .ui-submenu .ui-action{width:100%;justify-content:flex-start;min-height:40px;border:0!important;border-bottom:.5px solid #888!important;font-weight:600!important}
+.unified-actions .ui-submenu .ui-action:last-child{border-bottom:0!important}
+.ui-direct-hint .hint-tabs,.ui-direct-hint .hint-navigation,.ui-direct-hint .hint-actions,.ui-direct-hint #revealHint,.ui-direct-hint #hintHeading{display:none!important}
+.ui-direct-hint .hint-slide{min-height:0;padding-bottom:22px}
+.ui-direct-hint #hintBody{min-height:0}
+.ui-sticky-clue-headings{display:none}
+@media screen and (min-width:861px){
+ .face-nav #cubeMenu{display:none}
+ .clues{max-height:calc(100dvh - 240px);overflow:auto;overscroll-behavior:contain;align-self:start}
+ .clues>div>h2{position:sticky;top:0;z-index:3;background:var(--paper);padding:8px 0 10px;border-bottom:2px solid var(--ink)}
+ .clues .ui-original-clue-heading{display:none}
+ .clues>.ui-sticky-clue-headings{display:grid;grid-template-columns:1fr 1fr;gap:22px;grid-column:1/-1;position:sticky;top:0;z-index:6;background:var(--paper);padding:8px 0 10px;border-bottom:2px solid var(--ink)}
+ .clues>.ui-sticky-clue-headings>h2{position:static;border:0;padding:0;margin:0}
+ .clue-panel{min-height:0;max-height:calc(100dvh - 260px);overscroll-behavior:contain}
+ .clue-panel .puzzle-heading{position:sticky;top:0;z-index:6;background:var(--paper);min-height:52px;padding-top:8px}
+ .clue-panel .clue-lists h3{position:sticky;top:52px;z-index:4;padding:8px 0;background:var(--paper);border-bottom:2px solid var(--ink)}
+}
+@media screen and (max-width:1100px) and (min-width:861px){.unified-actions .ui-action{font-size:12px!important;padding:8px 6px}}
+@media screen and (max-width:860px){
+ .topbar h1,body>header h1{font-size:clamp(22px,5.8vw,29px);font-weight:900;-webkit-text-stroke:.28px currentColor}
+ .ui-action-dock{display:none}
+ .unified-actions{display:grid;grid-template-columns:1fr;gap:6px}
+ .unified-actions .ui-action,.action-menu .unified-actions .ui-action{min-height:44px;width:100%;justify-content:space-between;padding:10px 12px;font-size:14px!important}
+ .unified-actions>.ui-action{justify-content:flex-start}
+ .ui-submenu{position:static;min-width:0;margin-top:0;padding:4px 7px;border-top:0;box-shadow:none;background:#f4f4f4}
+ .ui-group:nth-last-child(-n+2) .ui-submenu{left:auto;right:auto}
+ .unified-actions .ui-submenu .ui-action{background:#fff!important;min-height:40px;padding:9px 10px}
+ .compact-tool-options.action-menu,#cubeActions.action-menu{padding:7px}
+ .action-menu>.unified-actions{border:0!important}
+}
+@media print{.ui-action-dock,.unified-actions{display:none!important}.clues,.clue-panel{overflow:visible;max-height:none}.clues h2,.clue-panel h3,.puzzle-heading{position:static!important}}
+
 </style>
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (9)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagram helper</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
@@ -967,6 +1019,147 @@ if(mobilePuzzleMedia.matches&&!inputs.has(currentKey)){
   const first=[...entries.across.values()][0];if(first){setDirection('across');focusCell(first[0]);}
 }
 highlight();
+
+(()=>{
+const cube=false;
+const modern=typeof availableHintCategories==='function'&&typeof revealedParsing!=='undefined';
+const el=id=>document.getElementById(id);
+const media=window.matchMedia('(max-width:860px)');
+const legacyButtons=['hintBtn','anagramBtn','checkPuzzleBtn','revealWordBtn','clearBtn','hideHintsBtn','printBtn'];
+for(const id of legacyButtons)if(el(id))el(id).dataset.legacyControl='true';
+const archive=cube?document.querySelector('.cube-archive'):compactOriginalControls.find(node=>node.tagName==='A');
+if(archive)archive.dataset.legacyControl='true';
+const dock=document.createElement('div');dock.className='ui-action-dock'+(cube?' ui-cube-dock':'');
+const row=document.createElement('nav');row.className='unified-actions';row.setAttribute('aria-label','Puzzle actions');dock.appendChild(row);
+const heading=cube?document.querySelector('body>header'):document.querySelector('.topbar');heading.insertAdjacentElement('afterend',dock);
+const groups=[];let legacyRevealed=new Map();
+function current(){
+ if(cube){const entry=currentEntry();return entry?{number:String(entry.number),dir:direction,cells:entry.cells,entry}:null;}
+ const number=cellEntries.get(currentKey)?.[direction];return number?{number:String(number),dir:direction,cells:getEntry(currentKey)||[]}:null;
+}
+function puzzleId(){return cube?model.faces[selectedFace].puzzle.id:null;}
+function keyFor(c=current()){return c?(cube?puzzleId()+':':'')+c.dir+'-'+c.number:null;}
+function busy(){return cube&&navigationTarget!==null;}
+function announce(text){if(cube)status(text);else setStatus(text);}
+function closeAll(){for(const group of groups)group.open=false;if(cube)closeCubeMenus();else closeCompactMenus();}
+function selectedSquare(){return cube?selectedRay>=0:inputs.has(currentKey);}
+function hintData(c=current()){
+ if(!c)return null;
+ if(modern)return cube?model.faces[selectedFace].puzzle.parsingHints?.[c.dir]?.[c.number]:parsingHints[c.dir]?.[c.number];
+ return cube?model.faces[selectedFace].puzzle.hints?.[c.dir]?.[c.number]:(typeof hintText!=='undefined'?hintText[c.dir]?.[c.number]:null);
+}
+function hintOptions(){
+ const data=hintData();if(!data)return [];
+ if(modern)return availableHintCategories(data).map(category=>({key:category,label:hintLabels[category]}));
+ return data.map((text,index)=>({key:index,label:data.length===1?'A nudge':['Definition','Wordplay','Fodder'][index]||'Hint '+(index+1),text})).filter(x=>x.text);
+}
+const supportsHints=modern||(cube?model.faces.some(face=>face.puzzle.hints):typeof hintText!=='undefined');
+function button(label,action,extra=''){
+ const node=document.createElement('button');node.type='button';node.className='ui-action '+extra;node.textContent=label;
+ node.addEventListener('click',()=>{if(node.disabled)return;closeAll();action();});return node;
+}
+function group(label,extra){
+ const node=document.createElement('details');node.className='ui-group';
+ const summary=document.createElement('summary');summary.className='ui-action '+extra;
+ const text=document.createElement('span');text.textContent=label;
+ const arrow=document.createElement('span');arrow.className='ui-chevron';arrow.setAttribute('aria-hidden','true');summary.append(text,arrow);
+ const menu=document.createElement('div');menu.className='ui-submenu';node.append(summary,menu);row.appendChild(node);groups.push(node);
+ summary.addEventListener('click',event=>{if(summary.getAttribute('aria-disabled')==='true')event.preventDefault();});
+ node.addEventListener('toggle',()=>{if(node.open)for(const other of groups)if(other!==node)other.open=false;});
+ return {node,summary,menu};
+}
+const home=document.createElement('a');home.className='ui-action ui-home';home.href=archive?.getAttribute('href')||'/cryptic/';home.textContent='Back to archive';row.appendChild(home);
+const hints=group('Get hint','ui-hint');hints.node.hidden=!supportsHints;
+const anagram=button('Anagram helper',()=>el('anagramBtn').click(),'ui-anagram');row.appendChild(anagram);
+const check=button('Check puzzle',()=>checkPuzzle(),'ui-check');row.appendChild(check);
+const reveal=group('Reveal','ui-reveal'),clear=group('Clear','ui-clear'),hide=group('Hide hints','ui-hide');hide.node.hidden=!supportsHints;
+if(!cube&&el('printBtn'))row.appendChild(button('Print',()=>window.print(),'ui-print'));
+function targetCells(scope){
+ if(cube){if(scope==='square')return selectedRay>=0?[selectedRay]:[];if(scope==='word')return current()?.cells||[];return model.rays.map((ray,ri)=>[ray,ri]).filter(([ray])=>ray.white&&(scope==='cube'||ray.face===selectedFace)).map(([,ri])=>ri);}
+ if(scope==='square')return inputs.has(currentKey)?[currentKey]:[];if(scope==='word')return current()?.cells||[];return [...inputs.keys()];
+}
+function changeLetters(action,scope){
+ if(busy())return;
+ const targets=targetCells(scope);if(!targets.length){announce('Select a square or clue first.');return;}
+ if(scope==='puzzle'||scope==='cube'){
+  const area=scope==='cube'?'the whole cube':cube?'this side':'the whole puzzle';
+  const linked=cube&&scope==='puzzle'?' Linked letters on other sides will update too.':'';
+  if(!confirm((action==='clear'?'Clear all letters in ':'Reveal every answer in ')+area+'?'+linked))return;
+ }
+ if(cube){for(const ri of targets)writeLetter(ri,action==='clear'?'':model.rays[ri].letter);saveProgress();refreshUI();}
+ else{for(const key of targets){inputs.get(key).value=action==='clear'?'':solution.get(key);clearCheck(key);}saveLetters();highlight();}
+ announce((action==='clear'?'Cleared ':'Revealed ')+(scope==='square'?'this square':scope==='word'?'this word':scope==='cube'?'the whole cube':cube?'this side':'the whole puzzle')+'.');
+}
+for(const [action,control]of [['reveal',reveal],['clear',clear]]){
+ for(const scope of cube?['square','word','puzzle','cube']:['square','word','puzzle']){
+  const label=scope==='square'?'This square':scope==='word'?'This word':scope==='cube'?'Whole cube':'Whole puzzle';
+  const item=button(label,()=>changeLetters(action,scope));item.dataset.scope=scope;control.menu.appendChild(item);
+ }
+}
+function revealCategory(category){
+ if(busy()||!hintData())return;
+ if(modern){
+  openParsingHints();
+  revealedParsing[activeParsing.id] ||= {};revealedParsing[activeParsing.id][category]=true;
+  try{localStorage.setItem(hintStorageKey,JSON.stringify(revealedParsing));}catch{}
+  showParsingCategory(category);updateParsingHighlights();
+ }else{
+  openHints();showHintSlide(category);legacyRevealed.set(keyFor(),true);
+ }
+ const dialog=el('hintDialog');dialog.classList.add('ui-direct-hint');
+ const label=hintOptions().find(option=>option.key===category)?.label||'Hint';
+ const c=current();el('hintTitle').textContent=(cube?'Puzzle '+puzzleId()+' · ':'')+c.number+' '+(c.dir==='across'?'Across':'Down')+' · '+label;
+ update();
+}
+function revealedKeys(){return modern?Object.keys(revealedParsing).filter(key=>Object.values(revealedParsing[key]||{}).some(Boolean)):[...legacyRevealed.keys()];}
+function matchingHints(scope){const key=keyFor(),prefix=cube?puzzleId()+':':'';return revealedKeys().filter(item=>scope==='cube'||(scope==='word'?item===key:!cube||item.startsWith(prefix)));}
+function resetHints(scope){
+ if(busy())return;
+ const keys=matchingHints(scope);
+ if(modern){for(const key of keys)delete revealedParsing[key];try{localStorage.setItem(hintStorageKey,JSON.stringify(revealedParsing));}catch{}updateParsingHighlights();}
+ else{
+  for(const key of keys)legacyRevealed.delete(key);
+  const remembered=cube?hintHistory:typeof rememberedHintSlides!=='undefined'?rememberedHintSlides:null;
+  if(remembered){for(const key of [...remembered.keys()]){
+   const normalized=cube?key.replace(/:(across|down):/,':$1-'):key;
+   if(scope==='cube'||scope==='puzzle'&&(!cube||key.startsWith(puzzleId()+':'))||scope==='word'&&normalized===keyFor())remembered.delete(key);
+  }}
+ }
+ announce('Hints hidden for '+(scope==='word'?'this word':scope==='cube'?'the whole cube':'this puzzle')+'.');update();
+}
+for(const scope of cube?['word','puzzle','cube']:['word','puzzle']){
+ const item=button(scope==='word'?'This word':scope==='cube'?'Whole cube':'Whole puzzle',()=>resetHints(scope));item.dataset.scope=scope;hide.menu.appendChild(item);
+}
+function update(){
+ const c=current(),blocked=busy();anagram.disabled=blocked||!c;check.disabled=blocked;
+ const options=hintOptions();hints.summary.setAttribute('aria-disabled',String(blocked||!options.length));
+ hints.menu.replaceChildren(...options.map(option=>button(option.label,()=>revealCategory(option.key))));
+ hide.summary.setAttribute('aria-disabled',String(blocked||!revealedKeys().length));
+ for(const item of hide.menu.children)item.disabled=blocked||!matchingHints(item.dataset.scope).length;
+ for(const control of [reveal,clear])for(const item of control.menu.children)item.disabled=blocked||(item.dataset.scope==='square'&&!selectedSquare())||(item.dataset.scope==='word'&&!c);
+}
+function place(){
+ const destination=media.matches?el(cube?'cubeActions':'compactToolOptions'):dock;destination.appendChild(row);update();
+}
+if(cube){const previous=refreshUI;refreshUI=function(){previous();update();};const previousBusy=setBusy;setBusy=function(value){previousBusy(value);update();};}
+else{const previous=highlight;highlight=function(){previous();update();};}
+media.addEventListener('change',place);
+document.addEventListener('pointerdown',event=>{if(!row.contains(event.target))for(const group of groups)group.open=false;});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')for(const group of groups)group.open=false;});
+if(el('hintDialog'))el('hintDialog').addEventListener('close',()=>{
+ const target=media.matches?document.querySelector(cube?'#cubeMenu>summary':'#compactTools>summary'):hints.summary;
+ target?.focus({preventScroll:true});
+});
+if(!cube){
+ const panel=document.querySelector('.clues'),fixed=document.createElement('div');fixed.className='ui-sticky-clue-headings';
+ for(const original of document.querySelectorAll('.clues>div>h2'))original.classList.add('ui-original-clue-heading');
+ for(const label of ['Across','Down']){const title=document.createElement('h2');title.textContent=label;fixed.appendChild(title);}
+ panel.insertAdjacentElement('afterbegin',fixed);
+}
+place();
+// Expose only the action adapter for regression checks and keyboard extensions.
+window.crosswordActions={changeLetters,revealCategory,resetHints,targetCells,update};
+})();
 
 </script></body></html>
 
