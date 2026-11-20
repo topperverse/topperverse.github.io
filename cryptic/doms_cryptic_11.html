@@ -454,6 +454,15 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
  .anagram-status{font-size:14px;font-weight:600}
 }
 
+
+/* Root actions share one exact box height; symbols cannot enlarge individual cards. */
+.unified-actions>.ui-action,.unified-actions>.ui-group>summary{height:44px!important;min-height:44px!important;box-sizing:border-box;align-self:stretch}
+@media screen and (max-width:860px){
+ .unified-actions>.ui-action,.unified-actions>.ui-group>summary{height:40px!important;min-height:40px!important;padding-top:6px!important;padding-bottom:6px!important}
+ .anagram-dialog[open]{box-sizing:border-box!important;left:0!important;right:0!important;width:calc(100% - 20px)!important;max-width:none!important;margin:8px auto!important;height:calc(100dvh - 16px)}
+ .unified-actions>.ui-awake{height:auto!important;min-height:40px!important}
+}
+
 </style>
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (11)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Monday 16 November 2026. Set by Harry Topper.</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagrammer</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
@@ -1208,10 +1217,10 @@ function update(){
  for(const control of [check,reveal,clear])for(const item of control.menu.children)item.disabled=blocked||(item.dataset.scope==='square'&&!selectedSquare())||(item.dataset.scope==='word'&&!c);
 }
 let wakeWanted=false,wakeLock=null;
-const awake=button('Keep screen awake: Off',async()=>{
+const awake=button('Keep screen awake is off: Turn on',async()=>{
  wakeWanted=!wakeWanted;await syncWake();
 },'ui-awake');row.appendChild(awake);
-function wakeLabel(){awake.textContent='Keep screen awake: '+(wakeWanted?'On':'Off');awake.setAttribute('aria-pressed',String(wakeWanted));}
+function wakeLabel(){awake.textContent=wakeWanted?'Keep screen awake is on: Turn off':'Keep screen awake is off: Turn on';awake.setAttribute('aria-pressed',String(wakeWanted));}
 async function syncWake(){
  if(!wakeWanted||!media.matches){const lock=wakeLock;wakeLock=null;if(lock)await lock.release();wakeLabel();return;}
  if(typeof navigator==='undefined'||!navigator.wakeLock){wakeWanted=false;wakeLabel();announce('Keeping the screen awake is not supported in this browser.');return;}
