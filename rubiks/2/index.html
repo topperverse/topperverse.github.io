@@ -301,7 +301,7 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
 .unified-actions .ui-anagram,.action-menu .unified-actions .ui-anagram{background:#aaa!important}
 .unified-actions .ui-check,.unified-actions .ui-clear,.unified-actions .ui-print,.action-menu .unified-actions .ui-check,.action-menu .unified-actions .ui-clear,.action-menu .unified-actions .ui-print{background:#dedede!important}
 .unified-actions .ui-action:hover{filter:brightness(.94)}
-.unified-actions .ui-action:disabled,.unified-actions [aria-disabled=true]{color:#666!important;cursor:default;filter:none;opacity:.65}
+.unified-actions .ui-action:disabled,.unified-actions [aria-disabled=true]{color:var(--ink)!important;cursor:default;filter:none;opacity:1!important}
 .ui-group{position:relative}
 .ui-group>summary{list-style:none;width:100%}
 .ui-group>summary::-webkit-details-marker{display:none}
@@ -341,6 +341,16 @@ h1{font-weight:900;-webkit-text-stroke:.2px currentColor}
  .action-menu>.unified-actions{border:0!important}
 }
 @media print{.ui-action-dock,.unified-actions{display:none!important}.clues,.clue-panel{overflow:visible;max-height:none}.clues h2,.clue-panel h3,.puzzle-heading{position:static!important}}
+
+.ui-menu-note{margin:0;padding:10px;font:500 14px/1.5 var(--sans)}
+.ui-awake{background:#dedede!important}
+.ui-awake[aria-pressed=true]{background:var(--yellow)!important;color:var(--ink)!important}
+@media screen and (min-width:861px){
+ .unified-actions .ui-action,.action-menu .unified-actions .ui-action,button:not(.clue-button),summary{font-family:var(--mono)!important}
+ .cell input{font-family:var(--mono)!important;font-weight:700}
+}
+
+.unified-actions [hidden]{display:none!important}
 
 </style></head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">CRYPTIC'S ONLY FANS</span><h1>Crubik's Cube (2)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Puzzles 7–12, all in one. Set by Harry Topper.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
 <details id="cubeClues" class="cube-dropdown"><summary><span id="cubeClueLabel">Choose clue</span><span aria-hidden="true">&#8964;</span></summary><div id="cubeClueMenu" class="cube-popup" aria-label="Choose a clue"></div></details>
@@ -483,7 +493,7 @@ ctx.fillStyle='#000';ctx.fillRect(0,0,lastW,lastH);
 if(aligned){const edge=Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*11;ctx.fillStyle='#000';ctx.fillRect((lastW-edge)/2,(lastH-edge)/2,edge,edge)}
 polygons=[];const activeCells=new Set(currentEntry()?.cells||[]),visible=i=>i>=0&&i<V&&occ[i];
 for(let i=0;i<V;i++){if(!visible(i))continue;let p=xyz(i).map(x=>x-5);model.faces.forEach((f,fi)=>{if(dot(f.n,view.n)<1e-7)return;let adj=add(xyz(i),f.n),adjacentInside=inside(adj);if(adjacentInside&&visible(idx(...adj)))return;let center=add(p,mul(f.n,.5)),corners=[[-.5,.5],[.5,.5],[.5,-.5],[-.5,-.5]].map(([a,b])=>projection(add(center,add(mul(f.u,a),mul(f.v,b)))));polygons.push({i,fi,corners,z:dot(center,view.n),label:labels.get(i+','+fi)});});}
-polygons.sort((a,b)=>a.z-b.z);for(const p of polygons){path(p.corners);let selected=p.label&&p.label.ri===selectedRay;const inWord=p.label&&p.label.face===selectedFace&&activeCells.has(p.label.ri);ctx.fillStyle=p.label?(selected?'#a3a3a3':inWord?'#c6c6c6':checks.get(p.label.ri)==='correct'?'#bcbcbc':'#fff'):sideColour(p.i,p.fi).hex;ctx.fill();ctx.strokeStyle='#050505';const border=Math.max(1.5,Math.min(2.5,Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*.07));ctx.lineWidth=border;ctx.stroke();if(p.label){let q=p.corners,a=q[0],b=q[1],d=q[3];ctx.save();ctx.transform((b[0]-a[0])/100,(b[1]-a[1])/100,(d[0]-a[0])/100,(d[1]-a[1])/100,a[0],a[1]);ctx.fillStyle='#07111a';if(values.has(p.label.ri)){ctx.font='600 69px Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(values.get(p.label.ri),50,57)}if(links.has(p.label.ri)){ctx.fillStyle='#e1251b';ctx.beginPath();ctx.arc(88,12,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#07111a'}const checked=checks.get(p.label.ri);if(checked){ctx.strokeStyle='#050505';ctx.lineWidth=3;if(checked==='correct')ctx.strokeRect(5,5,90,90);else{ctx.beginPath();ctx.moveTo(15,15);ctx.lineTo(85,85);ctx.moveTo(85,15);ctx.lineTo(15,85);ctx.stroke();}}if(p.label.number){ctx.font='800 30px Arial, sans-serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(p.label.number,5,3)}ctx.restore();}}
+polygons.sort((a,b)=>a.z-b.z);for(const p of polygons){path(p.corners);let selected=p.label&&p.label.ri===selectedRay;const inWord=p.label&&p.label.face===selectedFace&&activeCells.has(p.label.ri);ctx.fillStyle=p.label?(selected?'#a3a3a3':inWord?'#c6c6c6':checks.get(p.label.ri)==='correct'?'#bcbcbc':'#fff'):sideColour(p.i,p.fi).hex;ctx.fill();ctx.strokeStyle='#050505';const border=Math.max(1.5,Math.min(2.5,Math.min(lastW,lastH)*(cubeMobile()?1/11:.058)*zoom*.07));ctx.lineWidth=border;ctx.stroke();if(p.label){let q=p.corners,a=q[0],b=q[1],d=q[3];ctx.save();ctx.transform((b[0]-a[0])/100,(b[1]-a[1])/100,(d[0]-a[0])/100,(d[1]-a[1])/100,a[0],a[1]);ctx.fillStyle='#07111a';if(values.has(p.label.ri)){ctx.font=cubeMobile()?'600 69px Arial, sans-serif':'700 69px Consolas, Courier New, monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(values.get(p.label.ri),50,57)}if(links.has(p.label.ri)){ctx.fillStyle='#e1251b';ctx.beginPath();ctx.arc(88,12,4,0,Math.PI*2);ctx.fill();ctx.fillStyle='#07111a'}const checked=checks.get(p.label.ri);if(checked){ctx.strokeStyle='#050505';ctx.lineWidth=3;if(checked==='correct')ctx.strokeRect(5,5,90,90);else{ctx.beginPath();ctx.moveTo(15,15);ctx.lineTo(85,85);ctx.moveTo(85,15);ctx.lineTo(15,85);ctx.stroke();}}if(p.label.number){ctx.font=cubeMobile()?'800 30px Arial, sans-serif':'700 30px Consolas, Courier New, monospace';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(p.label.number,5,3)}ctx.restore();}}
 }
 
 function snap(fi){animationId++;navigationTarget=null;navigationZoom=null;const f=model.faces[fi];view={n:f.n.slice(),u:f.u.slice(),v:f.v.slice()};setBusy(false);showFace(fi);$('tag').textContent='Side '+(f.puzzle.id-6);document.querySelectorAll('#faceButtons button').forEach(b=>{b.classList.toggle('active',+b.dataset.face===fi);b.classList.remove('travelling')});draw();}
@@ -1081,8 +1091,8 @@ function group(label,extra){
 }
 const home=document.createElement('a');home.className='ui-action ui-home';home.href=archive?.getAttribute('href')||'/cryptic/';home.textContent='Back to archive';row.appendChild(home);
 const hints=group('Get hint','ui-hint');hints.node.hidden=!supportsHints;
-const anagram=button('Anagram helper',()=>el('anagramBtn').click(),'ui-anagram');row.appendChild(anagram);
-const check=button('Check puzzle',()=>checkPuzzle(),'ui-check');row.appendChild(check);
+const anagram=button('Anagram helper',()=>{if(!current()){announce('Select a specific word to use the anagram helper.');return;}el('anagramBtn').click();},'ui-anagram');row.appendChild(anagram);
+const check=group('Check','ui-check');
 const reveal=group('Reveal','ui-reveal'),clear=group('Clear','ui-clear'),hide=group('Hide hints','ui-hide');hide.node.hidden=!supportsHints;
 if(!cube&&el('printBtn'))row.appendChild(button('Print',()=>window.print(),'ui-print'));
 function targetCells(scope){
@@ -1092,16 +1102,26 @@ function targetCells(scope){
 function changeLetters(action,scope){
  if(busy())return;
  const targets=targetCells(scope);if(!targets.length){announce('Select a square or clue first.');return;}
- if(scope==='puzzle'||scope==='cube'){
+ if(action!=='check'&&(scope==='puzzle'||scope==='cube')){
   const area=scope==='cube'?'the whole cube':cube?'this side':'the whole puzzle';
   const linked=cube&&scope==='puzzle'?' Linked letters on other sides will update too.':'';
   if(!confirm((action==='clear'?'Clear all letters in ':'Reveal every answer in ')+area+'?'+linked))return;
+ }
+ if(action==='check'){
+  let correct=0,cleared=0;
+  for(const key of targets){const value=cube?values.get(key):inputs.get(key).value;const expected=cube?model.rays[key].letter:solution.get(key);
+   if(cube)checks.delete(key);else clearCheck(key);
+   if(!value)continue;if(value.toUpperCase()===expected){correct++;continue;}
+   if(cube)writeLetter(key,'');else inputs.get(key).value='';cleared++;
+  }
+  if(cube){saveProgress();refreshUI();}else{saveLetters();highlight();}
+  announce('Checked '+(scope==='cube'?'the whole cube':scope==='puzzle'?'this puzzle':scope==='word'?'this word':'this square')+': '+cleared+' incorrect letters cleared, '+correct+' correct.');return;
  }
  if(cube){for(const ri of targets)writeLetter(ri,action==='clear'?'':model.rays[ri].letter);saveProgress();refreshUI();}
  else{for(const key of targets){inputs.get(key).value=action==='clear'?'':solution.get(key);clearCheck(key);}saveLetters();highlight();}
  announce((action==='clear'?'Cleared ':'Revealed ')+(scope==='square'?'this square':scope==='word'?'this word':scope==='cube'?'the whole cube':cube?'this side':'the whole puzzle')+'.');
 }
-for(const [action,control]of [['reveal',reveal],['clear',clear]]){
+for(const [action,control]of [['check',check],['reveal',reveal],['clear',clear]]){
  for(const scope of cube?['square','word','puzzle','cube']:['square','word','puzzle']){
   const label=scope==='square'?'This square':scope==='word'?'This word':scope==='cube'?'Whole cube':'Whole puzzle';
   const item=button(label,()=>changeLetters(action,scope));item.dataset.scope=scope;control.menu.appendChild(item);
@@ -1141,15 +1161,32 @@ function resetHints(scope){
 for(const scope of cube?['word','puzzle','cube']:['word','puzzle']){
  const item=button(scope==='word'?'This word':scope==='cube'?'Whole cube':'Whole puzzle',()=>resetHints(scope));item.dataset.scope=scope;hide.menu.appendChild(item);
 }
+function notice(text){const p=document.createElement('p');p.className='ui-menu-note';p.textContent=text;return p;}
 function update(){
- const c=current(),blocked=busy();anagram.disabled=blocked||!c;check.disabled=blocked;
- const options=hintOptions();hints.summary.setAttribute('aria-disabled',String(blocked||!options.length));
- hints.menu.replaceChildren(...options.map(option=>button(option.label,()=>revealCategory(option.key))));
- hide.summary.setAttribute('aria-disabled',String(blocked||!revealedKeys().length));
+ const c=current(),blocked=busy();anagram.disabled=blocked;
+ const options=hintOptions();hints.summary.setAttribute('aria-disabled',String(blocked));
+ hints.menu.replaceChildren(...(options.length?options.map(option=>button(option.label,()=>revealCategory(option.key))):[notice(c?'No hints are available for this word.':'Select a specific word to see its hints.')]));
+ hide.summary.setAttribute('aria-disabled',String(blocked));
  for(const item of hide.menu.children)item.disabled=blocked||!matchingHints(item.dataset.scope).length;
- for(const control of [reveal,clear])for(const item of control.menu.children)item.disabled=blocked||(item.dataset.scope==='square'&&!selectedSquare())||(item.dataset.scope==='word'&&!c);
+ for(const control of [check,reveal,clear])for(const item of control.menu.children)item.disabled=blocked||(item.dataset.scope==='square'&&!selectedSquare())||(item.dataset.scope==='word'&&!c);
 }
+let wakeWanted=false,wakeLock=null;
+const awake=button('Keep screen awake: Off',async()=>{
+ wakeWanted=!wakeWanted;await syncWake();
+},'ui-awake');row.appendChild(awake);
+function wakeLabel(){awake.textContent='Keep screen awake: '+(wakeWanted?'On':'Off');awake.setAttribute('aria-pressed',String(wakeWanted));}
+async function syncWake(){
+ if(!wakeWanted||!media.matches){const lock=wakeLock;wakeLock=null;if(lock)await lock.release();wakeLabel();return;}
+ if(typeof navigator==='undefined'||!navigator.wakeLock){wakeWanted=false;wakeLabel();announce('Keeping the screen awake is not supported in this browser.');return;}
+ if(document.visibilityState==='hidden')return;
+ try{if(!wakeLock){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null;});}wakeLabel();}
+ catch{wakeWanted=false;wakeLabel();announce('Screen awake could not be enabled. Check battery-saving settings.');}
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&wakeWanted)syncWake();});
+window.addEventListener('pagehide',()=>{wakeWanted=false;syncWake();});
 function place(){
+ awake.hidden=!media.matches;if(!media.matches){wakeWanted=false;syncWake();}
+
  const destination=media.matches?el(cube?'cubeActions':'compactToolOptions'):dock;destination.appendChild(row);update();
 }
 if(cube){const previous=refreshUI;refreshUI=function(){previous();update();};const previousBusy=setBusy;setBusy=function(value){previousBusy(value);update();};}
