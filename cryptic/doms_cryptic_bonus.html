@@ -435,6 +435,36 @@
  .unified-actions>.ui-awake{height:auto!important;min-height:40px!important}
 }
 
+@media screen and (min-width:861px){
+ html,body{height:100%;overflow:hidden}
+ body.desktop-fit-standalone main{height:100dvh;display:flex;flex-direction:column;padding:16px 0 12px;min-height:0}
+ .desktop-fit-standalone .topbar{flex:none;margin-bottom:12px;padding:12px 0}
+ .ui-action-dock{position:relative;top:auto;flex:none;margin-bottom:12px;padding:6px 0 10px}
+ .desktop-fit-standalone .layout{flex:1;min-height:0;overflow:hidden;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px;align-items:stretch}
+ .desktop-fit-standalone .grid-wrap{min-height:0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+ .desktop-fit-standalone #grid,.desktop-fit-standalone #selectedClue{width:var(--desktop-grid-size,100%);max-width:100%;flex:none;margin:0}
+ .desktop-fit-standalone #grid{height:var(--desktop-grid-size,auto)}
+ .desktop-fit-standalone .cell input{font-size:clamp(13px,calc(var(--desktop-grid-size,450px) / 15),38px)}
+ .desktop-fit-standalone .num{font-size:clamp(8px,calc(var(--desktop-grid-size,450px) / 43),13px)}
+ .desktop-fit-standalone #status{flex:none;min-height:20px;margin:0;max-width:100%;font-size:12px}
+ .desktop-fit-standalone .clues{min-height:0;height:100%;max-height:none;overflow-y:auto;overflow-x:hidden;align-self:stretch;align-content:start}
+ #selectedClue{display:flex;align-items:center;min-height:var(--desktop-clue-height,104px);height:var(--desktop-clue-height,104px);padding:12px 14px;font-family:var(--mono);font-weight:400;-webkit-text-stroke:0;line-height:1.35;overflow:hidden}
+ #selectedClue .selected-clue-label,#selectedClue .label{font-weight:700;-webkit-text-stroke:.15px currentColor}
+ #selectedClue.desktop-idle{background:#eee}
+ .desktop-clue-probe{padding:12px 14px;border:3px solid var(--ink);font:400 15px/1.35 var(--mono);-webkit-text-stroke:0}
+ body.desktop-fit-cube{height:100dvh;display:flex;flex-direction:column;padding:16px 0 12px}
+ .desktop-fit-cube>header{flex:none;margin:0 auto 12px;padding:12px 0}
+ .desktop-fit-cube .ui-action-dock{margin-bottom:12px}
+ .desktop-fit-cube main.layout{flex:1;min-height:0;margin-bottom:0;align-items:stretch;overflow:hidden}
+ .desktop-fit-cube .puzzle-panel{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+ .desktop-fit-cube .face-nav{flex:none}
+ .desktop-fit-cube #selectedClue{flex:none;width:100%}
+ .desktop-fit-cube .stage{flex:1;min-height:0;height:auto}
+ .desktop-fit-cube .play-footer{flex:none;padding:6px 12px}
+ .desktop-fit-cube .play-footer .help{display:none}
+ .desktop-fit-cube .clue-panel{height:100%;min-height:0;max-height:none;overflow:auto}
+}
+
 </style>
 </head>
 <body><main class="puzzle-15"><div class="topbar"><div><h1>Cryptic's Only Fans (Bonus 15x15)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><div class="direction-toggle" aria-label="Typing direction"><button id="acrossBtn" type="button" aria-pressed="true">Across</button><button id="downBtn" type="button" aria-pressed="false">Down</button></div><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagrammer</button><button id="clearBtn" type="button">Clear</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
@@ -1041,6 +1071,45 @@ media.addEventListener('change',helperInputMode);helperInputMode();
 place();
 // Expose only the action adapter for regression checks and keyboard extensions.
 window.crosswordActions={changeLetters,revealCategory,resetHints,targetCells,update};
+})();
+
+(()=>{
+ const cube=false,desktop=window.matchMedia('(min-width:861px)');
+ document.body.classList.add(cube?'desktop-fit-cube':'desktop-fit-standalone');
+ const banner=document.getElementById('selectedClue');let frame=0,cache=null;
+ function active(){return cube?!!currentEntry():!!cellEntries.get(currentKey)?.[direction];}
+ function fit(){
+  if(!desktop.matches)return;
+  const wrapper=document.querySelector(cube?'.puzzle-panel':'.grid-wrap');if(!wrapper||wrapper.clientWidth<1)return;
+  const idle=!active();banner.hidden=false;banner.classList.toggle('desktop-idle',idle);
+  if(idle)banner.textContent='Click on a square';
+  const signature=[wrapper.clientWidth,wrapper.clientHeight,cube?selectedFace:''].join(':');
+  let width,height,base;
+  if(cache?.signature===signature)({width,height,base}=cache);
+  else{
+   const probe=document.createElement('div');probe.className='selected-clue desktop-clue-probe';
+   Object.assign(probe.style,{position:'fixed',left:'-10000px',top:'0',height:'auto',minHeight:'0',display:'block',visibility:'hidden',fontSize:'15px',pointerEvents:'none'});document.body.appendChild(probe);
+   const all=[];for(const dir of ['across','down']){if(cube){for(const entry of entries[selectedFace][dir].values())all.push(entry.number+(dir==='across'?'A. ':'D. ')+entry.text.replace(/\*/g,''));}else for(const [n,text]of clueText[dir])all.push(n+(dir==='across'?'A. ':'D. ')+text.replace(/\*/g,''));}
+   function heightAt(w){probe.style.width=w+'px';let longest=104;for(const text of all){probe.textContent=text;longest=Math.max(longest,Math.ceil(probe.getBoundingClientRect().height+4));}return longest;}
+   base=15;width=0;height=104;
+   if(cube){width=wrapper.clientWidth;height=heightAt(width);}
+   else{
+    const budget=wrapper.clientHeight-document.getElementById('status').getBoundingClientRect().height-16;
+    for(;base>=10&&!width;base--){probe.style.fontSize=base+'px';for(let candidate=Math.floor(Math.min(wrapper.clientWidth,budget-104));candidate>=80;candidate--){const h=heightAt(candidate);if(candidate+h<=budget){width=candidate;height=h;break;}}}base++;
+    if(!width){width=80;height=heightAt(width);}
+   }
+   probe.remove();cache={signature,width,height,base};
+  }
+  wrapper.style.setProperty('--desktop-grid-size',width+'px');banner.style.setProperty('--desktop-clue-height',height+'px');
+  let content=banner.querySelector('.desktop-clue-text');if(!content){content=document.createElement('span');content.className='desktop-clue-text';content.append(...banner.childNodes);banner.appendChild(content);}
+  // Same fitting range and vertical-space rule as portrait mobile: base 15, cap 19.
+  for(let font=Math.min(base+4,19);font>=base;font--){banner.style.fontSize=font+'px';const style=getComputedStyle(banner);if(content.getBoundingClientRect().height<=banner.clientHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom))break;}
+ }
+ function schedule(){cancelAnimationFrame(frame);frame=requestAnimationFrame(fit);}
+ if(cube){const old=refreshUI;refreshUI=function(){old();schedule();};}else{const old=highlight;highlight=function(){old();schedule();};}
+ window.addEventListener('resize',schedule);desktop.addEventListener('change',()=>{cache=null;if(!desktop.matches){banner.classList.remove('desktop-idle');banner.style.removeProperty('font-size');if(!cube&&!active())banner.hidden=true;}schedule();});
+ new ResizeObserver(schedule).observe(document.querySelector(cube?'.puzzle-panel':'.grid-wrap'));
+ schedule();
 })();
 
 </script></body></html>
