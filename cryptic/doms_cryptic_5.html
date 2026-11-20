@@ -1155,7 +1155,7 @@ window.crosswordActions={changeLetters,revealCategory,resetHints,targetCells,upd
   const wrapper=document.querySelector(cube?'.puzzle-panel':'.grid-wrap');if(!wrapper||wrapper.clientWidth<1)return;
   const idle=!active();banner.hidden=false;banner.classList.toggle('desktop-idle',idle);
   if(idle)banner.textContent='Click on a square';
-  const signature=[wrapper.clientWidth,wrapper.clientHeight,cube?selectedFace:''].join(':');
+  const signature=[wrapper.clientWidth,wrapper.clientHeight,cube?selectedFace:document.getElementById('status').getBoundingClientRect().height].join(':');
   let width,height,base;
   if(cache?.signature===signature)({width,height,base}=cache);
   else{
@@ -1181,6 +1181,7 @@ window.crosswordActions={changeLetters,revealCategory,resetHints,targetCells,upd
  if(cube){const old=refreshUI;refreshUI=function(){old();schedule();};}else{const old=highlight;highlight=function(){old();schedule();};}
  window.addEventListener('resize',schedule);desktop.addEventListener('change',()=>{cache=null;if(!desktop.matches){banner.classList.remove('desktop-idle');banner.style.removeProperty('font-size');if(!cube&&!active())banner.hidden=true;}schedule();});
  new ResizeObserver(schedule).observe(document.querySelector(cube?'.puzzle-panel':'.grid-wrap'));
+ if(desktop.matches&&!cube){currentKey='';for(const input of inputs.values())input.blur();highlight();}
  schedule();
 })();
 
