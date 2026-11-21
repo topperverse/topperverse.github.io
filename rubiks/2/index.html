@@ -1027,7 +1027,12 @@ function hintExplanation(parsing, category) {
   return (items.length>1?'Definitions: ':'Definition: ')+englishList(items.map(quote))+'. '+(items.length>1?'One answer fits these meanings.':'The answer matches this meaning.');
  }
  if(category==='substitutions')return items.length?'Substitutions: '+englishList(items.map(item=>quote(item)+' → “'+item.replacement+'”'))+'. Use these equivalents in the wordplay.':'No substitutions are specified; work with the letters already supplied.';
- if(!items.length)return 'This clue has no indicators. It is a simple charade: substitute the elements and put them back to back in their existing order.';
+ if(!items.length){
+  if(parsing.definition.length>1)return 'This double-definition clue has no wordplay indicators. Find one answer that fits both definitions.';
+  if(parsing.special==='cryptic definition')return 'This cryptic-definition clue has no wordplay indicators. Read the whole clue as a playful description of the answer.';
+  if(parsing.special==='&lit')return 'This clue has no separately marked wordplay indicators. The whole clue serves as both the definition and the wordplay.';
+  return 'This clue has no indicators. It is a simple charade: substitute the elements and put them back to back in their existing order.';
+ }
  const describe=item=>{
   const op=item.operation.toLowerCase();
   if(op==='position')return ['Position',item.instruction||'change the order of the relevant pieces as directed'];

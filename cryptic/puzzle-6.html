@@ -510,6 +510,8 @@ h1,h2,h3,h4,.subtitle,.setter-credit,.eyebrow,button:not(.clue-button),summary,.
 .play-footer,.clue-panel .progress{display:none!important}
 
 mark.parse-indicators{background:rgba(225,37,27,.16);color:inherit}
+
+@media(min-width:861px){.unified-actions .ui-home::after{content:"";display:block;width:16px;height:16px;flex:0 0 16px;margin-left:0;background:center/16px 16px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13 13V7H3M7 3L3 7L7 11' fill='none' stroke='white' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E")}}
 </style>
 <link rel="stylesheet" href="/assets/font-consistency.css">
 </head>
@@ -801,7 +803,12 @@ function hintExplanation(parsing, category) {
   return (items.length>1?'Definitions: ':'Definition: ')+englishList(items.map(quote))+'. '+(items.length>1?'One answer fits these meanings.':'The answer matches this meaning.');
  }
  if(category==='substitutions')return items.length?'Substitutions: '+englishList(items.map(item=>quote(item)+' → “'+item.replacement+'”'))+'. Use these equivalents in the wordplay.':'No substitutions are specified; work with the letters already supplied.';
- if(!items.length)return 'This clue has no indicators. It is a simple charade: substitute the elements and put them back to back in their existing order.';
+ if(!items.length){
+  if(parsing.definition.length>1)return 'This double-definition clue has no wordplay indicators. Find one answer that fits both definitions.';
+  if(parsing.special==='cryptic definition')return 'This cryptic-definition clue has no wordplay indicators. Read the whole clue as a playful description of the answer.';
+  if(parsing.special==='&lit')return 'This clue has no separately marked wordplay indicators. The whole clue serves as both the definition and the wordplay.';
+  return 'This clue has no indicators. It is a simple charade: substitute the elements and put them back to back in their existing order.';
+ }
  const describe=item=>{
   const op=item.operation.toLowerCase();
   if(op==='position')return ['Position',item.instruction||'change the order of the relevant pieces as directed'];
@@ -1190,7 +1197,7 @@ function group(label,extra){
  node.addEventListener('toggle',()=>{if(node.open)for(const other of groups)if(other!==node)other.open=false;});
  return {node,summary,menu};
 }
-const home=document.createElement('a');home.className='ui-action ui-home';home.href=archive?.getAttribute('href')||'/cryptic/';home.textContent='Back to archive';row.appendChild(home);
+const home=document.createElement('a');home.className='ui-action ui-home';home.href=archive?.getAttribute('href')||'/cryptic/';const archiveMedia=window.matchMedia('(min-width:861px)');function archiveLabel(){home.textContent=archiveMedia.matches?'Archive':'Back to archive';}archiveLabel();archiveMedia.addEventListener('change',archiveLabel);row.appendChild(home);
 const hints=group('Get hint','ui-hint');hints.node.hidden=!supportsHints;
 const anagram=button('Anagrammer',()=>{if(!current()){announce('Select a specific word to use the anagram helper.');return;}el('anagramBtn').click();},'ui-anagram');row.appendChild(anagram);
 const check=group('Check','ui-check');
