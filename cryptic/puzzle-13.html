@@ -495,6 +495,17 @@ mark[class^="parse-"]{color:inherit;border-radius:2px;padding:1px 0;box-decorati
 h1,h2,h3,h4,.subtitle,.setter-credit,.eyebrow,button:not(.clue-button),summary,.unified-actions .ui-action,.action-menu .unified-actions .ui-action,.mobile-keyboard button,.anagram-dialog .anagram-top h2{font-family:var(--ui-mono)!important}
 .selected-clue,.selected-clue-label,.selected-clue .label,#selectedClue,#selectedClue .label,#selectedClue .selected-clue-label,.anagram-dialog #anagramClue,.hint-dialog .hint-clue{font-family:var(--clue-mono)!important}
 
+
+.hint-dialog #hintBody{white-space:pre-line}
+@media screen and (min-width:861px){
+ body:not(:has(>.layout)) .unified-actions .ui-action{font-size:14px!important}
+ #cubeClues>summary,#compactClues>summary{cursor:default}
+ #cubeClues>summary>span[aria-hidden],#compactClues>summary>span[aria-hidden]{display:none}
+ #cubeClues[open]>.cube-popup,#compactClues[open]>.compact-clue-options{display:none}
+}
+.play-footer,.clue-panel .progress{display:none!important}
+
+mark.parse-indicators{background:rgba(225,37,27,.16);color:inherit}
 </style>
 <link rel="stylesheet" href="/assets/font-consistency.css">
 </head>
@@ -700,7 +711,7 @@ anagramFodder.addEventListener('input', updateAnagramFodder);
 anagramFodder.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); shuffleAnagram(); } });
 anagramShuffle.addEventListener('click', shuffleAnagram);
 
-const parsingHints={"across":{"1":{"definition":[{"text":"Partner in crime","range":[0,16]}],"indicators":[{"text":"eats up","range":[25,32],"operation":"containment"},{"text":"roughly a third of","range":[45,63],"operation":"selection"}],"substitutions":[{"text":"Charlie","range":[33,40],"replacement":"C"}],"special":null},"7":{"definition":[{"text":"insolent","range":[69,77]}],"indicators":[{"text":"Eventually","range":[0,10],"operation":"charade"},{"text":"ask","range":[11,14],"operation":"homophone"},{"text":"having linked","range":[40,53],"operation":"charade"}],"substitutions":[{"text":"special-forces unit","range":[19,38],"replacement":"SAS"},{"text":"south","range":[54,59],"replacement":"S"}],"special":null},"8":{"definition":[{"text":"Stream","range":[0,6]}],"indicators":[{"text":"latest","range":[7,13],"operation":"position"},{"text":"having dropped","range":[23,37],"operation":"deletion"}],"substitutions":[{"text":"television","range":[38,48],"replacement":"TUBE"},{"text":"degree","range":[49,55],"replacement":"BA"}],"special":null},"9":{"definition":[{"text":"say?","range":[15,19]}],"indicators":[{"text":"Unhinged","range":[0,8],"operation":"anagram"}],"substitutions":[],"special":null},"10":{"definition":[{"text":"Graduates","range":[0,9]}],"indicators":[{"text":"after","range":[20,25],"operation":"charade"},{"text":"mostly","range":[30,36],"operation":"last-letter deletion"},{"text":"finish","range":[37,43],"operation":"selection"},{"text":"internally","range":[49,59],"operation":"containment"}],"substitutions":[],"special":null},"13":{"definition":[{"text":"igloo occupant","range":[13,27]}],"indicators":[{"text":"into","range":[4,8],"operation":"insertion"}],"substitutions":[{"text":"sad","range":[9,12],"replacement":"EMO"}],"special":null},"14":{"definition":[{"text":"against","range":[23,30]}],"indicators":[{"text":"complicated","range":[6,17],"operation":"anagram"}],"substitutions":[],"special":null},"16":{"definition":[{"text":"Draw","range":[0,4]}],"indicators":[],"substitutions":[{"text":"dog","range":[8,11],"replacement":"CUR"}],"special":null},"18":{"definition":[{"text":"Gloat","range":[0,5]}],"indicators":[{"text":"at the beginning","range":[34,50],"operation":"charade"}],"substitutions":[{"text":"regarding","range":[6,15],"replacement":"RE"},{"text":"English","range":[16,23],"replacement":"EN"},{"text":"quietly","range":[25,32],"replacement":"P"}],"special":null},"19":{"definition":[{"text":"Huge","range":[0,4]}],"indicators":[{"text":"strikes","range":[15,22],"operation":"deletion"},{"text":"the head","range":[23,31],"operation":"first-letter selection"},{"text":"finally","range":[33,40],"operation":"last-letter selection"},{"text":"shot","range":[51,55],"operation":"anagram"}],"substitutions":[],"special":null}},"down":{"2":{"definition":[{"text":"Horseman","range":[87,95]}],"indicators":[{"text":"core broadly","range":[19,31],"operation":"middle-three letter selection"},{"text":"on the rise","range":[32,43],"operation":"down-clue reversal"},{"text":"overtaking","range":[45,55],"operation":"replacement"},{"text":"the major characters in","range":[56,79],"operation":"selection"}],"substitutions":[],"special":null},"3":{"definition":[{"text":"Crystal","range":[0,7]}],"indicators":[{"text":"clear","range":[8,13],"operation":"deletion"},{"text":"except","range":[15,21],"operation":"selection"}],"substitutions":[{"text":"unknown","range":[32,39],"replacement":"Y"},{"text":"unknown","range":[40,47],"replacement":"X"}],"special":null},"4":{"definition":[{"text":"perhaps it can be skipped?","range":[29,55]}],"indicators":[{"text":"coverage on","range":[5,16],"operation":"containment"},{"text":"1 & 2","range":[21,26],"operation":"selection"}],"substitutions":[],"special":null},"5":{"definition":[{"text":"How one might describe a League","range":[0,31]}],"indicators":[{"text":"final","range":[43,48],"operation":"last-letter selection"}],"substitutions":[{"text":"Four","range":[32,36],"replacement":"IV"}],"special":null},"6":{"definition":[{"text":"Having read lots","range":[0,16]}],"indicators":[{"text":"about","range":[28,33],"operation":"containment"}],"substitutions":[{"text":"Russia","range":[34,40],"replacement":"RU"}],"special":null},"7":{"definition":[{"text":"Putting on","range":[0,10]},{"text":"type of military operation","range":[11,37]}],"indicators":[],"substitutions":[],"special":null},"11":{"definition":[{"text":"Nelson","range":[0,6]}],"indicators":[{"text":"centre","range":[26,32],"operation":"central-letter selection"},{"text":"will sink","range":[38,47],"operation":"delete"},{"text":"at sea","range":[52,58],"operation":"anagram"}],"substitutions":[{"text":"one","range":[48,51],"replacement":"I"}],"special":null},"12":{"definition":[{"text":"no-storytelling policy?","range":[25,48]}],"indicators":[{"text":"flips","range":[16,21],"operation":"reversal"}],"substitutions":[{"text":"belatedly","range":[6,15],"replacement":"first-letter deletion"}],"special":null},"15":{"definition":[{"text":"Notice","range":[0,6]},{"text":"blotch","range":[7,13]}],"indicators":[],"substitutions":[],"special":null},"17":{"definition":[{"text":"vehicle","range":[77,84]}],"indicators":[{"text":"Lead","range":[0,4],"operation":"selection"},{"text":"gets","range":[13,17],"operation":"charade"},{"text":"larger semi","range":[18,29],"operation":"selection of the larger half"},{"text":"to turn back","range":[38,50],"operation":"reversal"},{"text":"upon","range":[51,55],"operation":"charade"},{"text":"losing","range":[56,62],"operation":"deletion"},{"text":"coverings","range":[63,72],"operation":"selection"}],"substitutions":[],"special":null}}};
+const parsingHints={"across":{"1":{"definition":[{"text":"Partner in crime","range":[0,16]}],"indicators":[{"text":"eats up","range":[25,32],"operation":"containment"},{"text":"roughly a third of","range":[45,63],"operation":"selection"}],"substitutions":[{"text":"Charlie","range":[33,40],"replacement":"C"}],"special":null},"7":{"definition":[{"text":"insolent","range":[69,77]}],"indicators":[{"text":"Eventually","range":[0,10],"operation":"position"},{"text":"ask","range":[11,14],"operation":"homophone"},{"text":"having linked","range":[40,53],"operation":"combination"}],"substitutions":[{"text":"special-forces unit","range":[19,38],"replacement":"SAS"},{"text":"south","range":[54,59],"replacement":"S"}],"special":null},"8":{"definition":[{"text":"Stream","range":[0,6]}],"indicators":[{"text":"latest","range":[7,13],"operation":"position"},{"text":"having dropped","range":[23,37],"operation":"deletion"}],"substitutions":[{"text":"television","range":[38,48],"replacement":"TUBE"},{"text":"degree","range":[49,55],"replacement":"BA"}],"special":null},"9":{"definition":[{"text":"say?","range":[15,19]}],"indicators":[{"text":"Unhinged","range":[0,8],"operation":"anagram"}],"substitutions":[],"special":null},"10":{"definition":[{"text":"Graduates","range":[0,9]}],"indicators":[{"text":"after","range":[20,25],"operation":"position"},{"text":"mostly","range":[30,36],"operation":"last-letter deletion"},{"text":"finish","range":[37,43],"operation":"selection"},{"text":"internally","range":[49,59],"operation":"containment"}],"substitutions":[],"special":null},"13":{"definition":[{"text":"igloo occupant","range":[13,27]}],"indicators":[{"text":"into","range":[4,8],"operation":"insertion"}],"substitutions":[{"text":"sad","range":[9,12],"replacement":"EMO"}],"special":null},"14":{"definition":[{"text":"against","range":[23,30]}],"indicators":[{"text":"complicated","range":[6,17],"operation":"anagram"}],"substitutions":[],"special":null},"16":{"definition":[{"text":"Draw","range":[0,4]}],"indicators":[],"substitutions":[{"text":"dog","range":[8,11],"replacement":"CUR"}],"special":null},"18":{"definition":[{"text":"Gloat","range":[0,5]}],"indicators":[{"text":"at the beginning","range":[34,50],"operation":"position"}],"substitutions":[{"text":"regarding","range":[6,15],"replacement":"RE"},{"text":"English","range":[16,23],"replacement":"EN"},{"text":"quietly","range":[25,32],"replacement":"P"}],"special":null},"19":{"definition":[{"text":"Huge","range":[0,4]}],"indicators":[{"text":"strikes","range":[15,22],"operation":"deletion"},{"text":"the head","range":[23,31],"operation":"first-letter selection"},{"text":"finally","range":[33,40],"operation":"last-letter selection"},{"text":"shot","range":[51,55],"operation":"anagram"}],"substitutions":[],"special":null}},"down":{"2":{"definition":[{"text":"Horseman","range":[87,95]}],"indicators":[{"text":"core broadly","range":[19,31],"operation":"middle-three letter selection"},{"text":"on the rise","range":[32,43],"operation":"down-clue reversal"},{"text":"overtaking","range":[45,55],"operation":"replacement"},{"text":"the major characters in","range":[56,79],"operation":"selection"}],"substitutions":[],"special":null},"3":{"definition":[{"text":"Crystal","range":[0,7]}],"indicators":[{"text":"clear","range":[8,13],"operation":"deletion"},{"text":"except","range":[15,21],"operation":"selection"}],"substitutions":[{"text":"unknown","range":[32,39],"replacement":"Y"},{"text":"unknown","range":[40,47],"replacement":"X"}],"special":null},"4":{"definition":[{"text":"perhaps it can be skipped?","range":[29,55]}],"indicators":[{"text":"coverage on","range":[5,16],"operation":"containment"},{"text":"1 & 2","range":[21,26],"operation":"selection"}],"substitutions":[],"special":null},"5":{"definition":[{"text":"How one might describe a League","range":[0,31]}],"indicators":[{"text":"final","range":[43,48],"operation":"last-letter selection"}],"substitutions":[{"text":"Four","range":[32,36],"replacement":"IV"}],"special":null},"6":{"definition":[{"text":"Having read lots","range":[0,16]}],"indicators":[{"text":"about","range":[28,33],"operation":"containment"}],"substitutions":[{"text":"Russia","range":[34,40],"replacement":"RU"}],"special":null},"7":{"definition":[{"text":"Putting on","range":[0,10]},{"text":"type of military operation","range":[11,37]}],"indicators":[],"substitutions":[],"special":null},"11":{"definition":[{"text":"Nelson","range":[0,6]}],"indicators":[{"text":"centre","range":[26,32],"operation":"central-letter selection"},{"text":"will sink","range":[38,47],"operation":"delete"},{"text":"at sea","range":[52,58],"operation":"anagram"}],"substitutions":[{"text":"one","range":[48,51],"replacement":"I"}],"special":null},"12":{"definition":[{"text":"no-storytelling policy?","range":[25,48]}],"indicators":[{"text":"flips","range":[16,21],"operation":"reversal"}],"substitutions":[{"text":"belatedly","range":[6,15],"replacement":"first-letter deletion"}],"special":null},"15":{"definition":[{"text":"Notice","range":[0,6]},{"text":"blotch","range":[7,13]}],"indicators":[],"substitutions":[],"special":null},"17":{"definition":[{"text":"vehicle","range":[77,84]}],"indicators":[{"text":"Lead","range":[0,4],"operation":"selection"},{"text":"gets","range":[13,17],"operation":"combination"},{"text":"larger semi","range":[18,29],"operation":"selection of the larger half"},{"text":"to turn back","range":[38,50],"operation":"reversal"},{"text":"upon","range":[51,55],"operation":"combination"},{"text":"losing","range":[56,62],"operation":"deletion"},{"text":"coverings","range":[63,72],"operation":"selection"}],"substitutions":[],"special":null}}};
 
 const hintDialog = document.getElementById('hintDialog');
 const hintTabs = document.getElementById('hintTabs');
@@ -715,7 +726,7 @@ let activeParsing = null;
 let activeCategory = 'definition';
 
 function availableHintCategories(parsing) {
-  return hintCategories.filter(category => category === 'definition' || parsing[category].length > 0);
+  return hintCategories.filter(category => category === 'definition' || category === 'indicators' || parsing[category].length > 0);
 }
 
 function isHintRevealed(id, category) {
@@ -785,44 +796,47 @@ function englishList(items) {
 }
 
 function hintExplanation(parsing, category) {
-  const items = parsing[category];
-  const quoted = englishList(items.map(item => `“${item.text}”`));
-  if (category === 'definition') {
-    if (parsing.special === '&lit') return 'The whole clue acts as the definition. Its wording also supplies the wordplay, so read it in both ways.';
-    if (parsing.special === 'cryptic definition') return `This clue's cryptic definition is ${quoted}. Read the wording as a playful description rather than a literal one.`;
-    return items.length>1 ? `This clue has two definitions: ${quoted}. Both describe the same answer.` : `This clue's definition is ${quoted}. Look for a word or phrase with that meaning.`;
+ const items=parsing[category]||[];
+ const quote=item=>'“'+item.text+'”';
+ if(category==='definition'){
+  if(parsing.special==='&lit')return 'Definition: the whole clue. Its wording both describes the answer and supplies its construction.';
+  if(parsing.special==='cryptic definition')return 'Cryptic definition: '+englishList(items.map(quote))+'. Read this as a playful description of the answer.';
+  return (items.length>1?'Definitions: ':'Definition: ')+englishList(items.map(quote))+'. '+(items.length>1?'One answer fits these meanings.':'The answer matches this meaning.');
+ }
+ if(category==='substitutions')return items.length?'Substitutions: '+englishList(items.map(item=>quote(item)+' → “'+item.replacement+'”'))+'. Use these equivalents in the wordplay.':'No substitutions are specified; work with the letters already supplied.';
+ if(!items.length)return 'This clue has no indicators. It is a simple charade: substitute the elements and put them back to back in their existing order.';
+ const describe=item=>{
+  const op=item.operation.toLowerCase();
+  if(op==='position')return ['Position',item.instruction||'change the order of the relevant pieces as directed'];
+  if(op==='combination')return ['Combination',item.scope==='anagram'?'include the relevant piece in the anagram fodder':item.scope==='reversal'?'combine the pieces before reversing the whole group':'put the relevant pieces side by side in sequence'];
+  if(op.includes('homophone'))return [op.includes('accent')?'Accent-specific homophone':'Homophone',op.includes('reversal')?'use a Cockney soundalike, then reverse it':op.includes('accent')?'use a soundalike in the indicated accent':'use a word or phrase that sounds like the indicated wording'+(op.includes('lateral')?', allowing for some lateral thinking':'')];
+  if(op.includes('reversal'))return [op.includes('down-clue')?'Down-clue reversal':'Reversal',op.includes('down-clue')?'read the letters upwards in this down answer':'reverse the order of the letters'];
+  if(op==='anagram')return ['Anagram','rearrange the indicated letters'];
+  if(op==='containment')return ['Containment','put one letter group around another'];
+  if(op.includes('insertion'))return ['Insertion',op.includes('eye')?'insert letters into the middle, treating “eye” as a hole':'put one letter group inside another'];
+  if(op.includes('delet')||op==='remainders')return [op.includes('last-letter')?'Last-letter deletion':'Deletion',op.includes('last-letter')?'remove the final letter':op==='remainders'?'use the letters remaining after the deletion':'remove the indicated letters'+(op.includes('lateral')?', using the clue context to identify what is removed':'')];
+  if(op.includes('selection')||op==='selections'){
+   let name='Selection',action='take the specified letters';
+   if(op.includes('middle-three')){name='Middle-three selection';action='take the middle three letters';}
+   else if(op.includes('first-letter')){name='First-letter selection';action='take the opening letter';}
+   else if(op.includes('last-letter')){name='Last-letter selection';action='take the final letter';}
+   else if(op.includes('central')||op.includes('centre-letter')){name='Central-letter selection';action='take the central letter or letters';}
+   else if(op.includes('larger half'))action='take the larger half of the letters';
+   if(op.includes('kernel'))action+='; “kernel” is being used in its scientific sense of nucleus';
+   if(op.includes('lateral'))action+=', allowing for some lateral thinking about which letters';
+   return [name,action];
   }
-  if (category === 'substitutions') {
-    if (!items.length) return 'Your parsing notes identify no fodder requiring substitution in this clue. Use the wording already present when applying the wordplay instructions.';
-    const replacements = englishList(items.map(item => `“${item.text}” → “${item.replacement}”`));
-    return `The ${items.length === 1 ? 'substitution for this clue is' : 'substitutions for this clue are'} ${replacements}. Use ${items.length === 1 ? 'this replacement' : 'these replacements'} when following the wordplay instructions.`;
-  }
-  if (!items.length) return 'Your parsing notes identify no separate indicators in this clue. Read the wording as a whole for the intended cryptic meaning.';
-  const instructions = {
-    'homophone, requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
-    translation: 'translate the nearby wording into the indicated language',
-    'deletion, requiring lateral thinking': 'remove part of the wording, with some lateral thinking about what to remove',
-    'accent-specific homophone': 'use a soundalike in a Cockney accent',
-    'accent-specific homophone, with reversal': 'use a soundalike in a Cockney accent and reverse it',
-    'down-clue reversal': 'reverse the letters so they run upwards in this down answer',
-    'insertion, based on the meaning of eye as a hole': 'insert letters into the middle, reading eye as a hole',
-    'last-letter deletion': 'remove the final letter',
-    'last-letter selection': 'take the final letter',
-    'first-letter selection': 'take the first letter',
-    'central-letter selection': 'take the central letter or letters',
-    'selection of the larger half': 'take the larger half of the letters',
-    'delete': 'remove letters',
-    anagram: 'rearrange letters', containment: 'put one piece around another', reversal: 'reverse the order of letters',
-    deletion: 'remove letters', selection: 'select particular letters', combination: 'combine pieces',
-    'middle-three letter selection': 'select the middle three letters', position: 'place the indicated piece last',
-    charade: 'put pieces in the stated order', 'hidden word': 'find consecutive letters hidden in the wording',
-    insertion: 'put one piece inside another', replacement: 'replace one piece with another',
-    'homophone indicator requiring some lateral thinking': 'use a soundalike, with some lateral thinking',
-    cycling: 'move letters from one end to the other while retaining their order', homophone: 'use a soundalike'
-  };
-  const actions = englishList(items.map(item => instructions[item.operation] || item.operation));
-  return `The ${items.length === 1 ? 'indicator for this clue is' : 'indicators for this clue are'} ${quoted}. ${items.length === 1 ? 'It asks you to' : 'Respectively, they ask you to'} ${actions}.`;
+  if(op==='hidden word')return ['Hidden-word','find a consecutive run of letters inside the supplied wording'];
+  if(op==='replacement')return ['Replacement','replace the indicated piece with another'];
+  if(op.includes('cycling'))return ['Cycling',op.includes('down-clue')?'move the opening letter to the bottom of this down answer':'move letters from one end to the other, keeping their relative order'];
+  if(op==='translation')return ['Translation','translate the indicated wording into the named language'];
+  if(op==='order of operations')return ['Operation-order','carry out the specified operations in their stated sequence'];
+  if(op.includes('lateral hint'))return ['Selection','use this as a lateral hint about which half of BACK to retain'];
+  return [item.operation,'follow this instruction in the surrounding wordplay'];
+ };
+ return items.map(item=>{const [name,action]=describe(item);return name+' indicator — '+quote(item)+': '+action+'.';}).join('\n\n');
 }
+
 
 function showParsingCategory(category, focus = false) {
   activeCategory = category;
@@ -1245,7 +1259,7 @@ function resetHints(scope){
    if(scope==='cube'||scope==='puzzle'&&(!cube||key.startsWith(puzzleId()+':'))||scope==='word'&&normalized===keyFor())remembered.delete(key);
   }}
  }
- announce('Hints hidden for '+(scope==='word'?'this word':scope==='cube'?'the whole cube':'this puzzle')+'.');update();
+ announce('');update();
 }
 for(const scope of cube?['word','puzzle','cube']:['word','puzzle']){
  const item=button(scope==='word'?'This word':scope==='cube'?'Whole cube':'Whole puzzle',()=>resetHints(scope));item.dataset.scope=scope;hide.menu.appendChild(item);
@@ -1316,5 +1330,15 @@ const openingAcross=[...entries.across.values()][0];if(openingAcross){setDirecti
 
 // Re-measure after the bundled fonts replace the system fallbacks.
 if(document.fonts?.ready)document.fonts.ready.then(()=>{if(typeof mobileClueLayout!=='undefined')mobileClueLayout=null;if(typeof cubeFitCache!=='undefined')cubeFitCache=null;if(typeof scheduleClueFit==='function')scheduleClueFit();if(typeof scheduleCubeFit==='function')scheduleCubeFit();});
+
+(()=>{
+ const media=window.matchMedia('(max-width:860px)'),chooser=document.getElementById('cubeClues')||document.getElementById('compactClues');
+ if(chooser){const summary=chooser.querySelector('summary');
+  function mode(){if(!media.matches){chooser.open=false;summary.setAttribute('aria-disabled','true');summary.setAttribute('tabindex','-1');}else{summary.removeAttribute('aria-disabled');summary.removeAttribute('tabindex');}}
+  summary.addEventListener('click',event=>{if(!media.matches){event.preventDefault();chooser.open=false;}},true);media.addEventListener('change',mode);mode();
+ }
+ if(typeof setStatus==='function'){const previous=setStatus;setStatus=function(text){previous(media.matches&&/hints.*hidden|hidden.*hints/i.test(text)?'':text);};}
+})();
+
 </script></body></html>
 

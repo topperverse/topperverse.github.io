@@ -1,5 +1,4 @@
-// Classic HTML pages are the sole editable clue sources. This reader never runs
-// their scripts. The complete cube and its embedded clues still work offline.
+// Classic clue and parsed-hint source synchronization. Hint formatters are supplied by the cube page.
 const CLASSIC_CLUE_SOURCES=Object.freeze({1:'../cryptic/puzzle-1.html',2:'../cryptic/puzzle-2.html',3:'../cryptic/puzzle-3.html',4:'../cryptic/puzzle-4.html',5:'../cryptic/puzzle-5.html',6:'../cryptic/puzzle-6.html'});
 function classicJSONLiteral(html,name){
  const expression=new RegExp('\\b(?:const|let|var)\\s+'+name+'\\s*=\\s*'),scripts=[...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)];
@@ -8,7 +7,7 @@ function classicJSONLiteral(html,name){
   throw Error('Unterminated '+name);
  }throw Error('Missing classic puzzle data: '+name);
 }
-function classicClueSnapshot(html){return {pattern:classicJSONLiteral(html,'gridPattern'),numbers:classicJSONLiteral(html,'numbers'),answers:classicJSONLiteral(html,'answers'),clues:classicJSONLiteral(html,'clueText')};}
+function classicClueSnapshot(html){const snapshot={pattern:classicJSONLiteral(html,'gridPattern'),numbers:classicJSONLiteral(html,'numbers'),answers:classicJSONLiteral(html,'answers'),clues:classicJSONLiteral(html,'clueText')};try{snapshot.parsingHints=classicJSONLiteral(html,'parsingHints');}catch{}return snapshot;}
 function validClassicClues(snapshot,puzzle){
  const sameObject=(a,b)=>a&&b&&Object.keys(a).length===Object.keys(b).length&&Object.keys(b).every(k=>a[k]===b[k]);
  if(!snapshot||JSON.stringify(snapshot.pattern)!==JSON.stringify(puzzle.pattern)||!sameObject(snapshot.numbers,puzzle.numbers))throw Error('Classic grid differs from cube; rebuild geometry before syncing');
@@ -22,6 +21,7 @@ function validClassicClues(snapshot,puzzle){
 const classicClueCacheKey='cryptics-cube-classic-clues-v1';
 function applyClassicClues(puzzle,snapshot){
  validClassicClues(snapshot,puzzle);let changed=false;
+ if(snapshot.parsingHints){changed=JSON.stringify(puzzle.parsingHints)!==JSON.stringify(snapshot.parsingHints);puzzle.parsingHints=snapshot.parsingHints;puzzle.hints=legacyHintsFromParsing(snapshot.parsingHints);}
  for(const dir of ['across','down']){const rows=snapshot.clues[dir].map(([number,text])=>[String(number),text]);if(JSON.stringify(puzzle.clues[dir])!==JSON.stringify(rows))changed=true;puzzle.clues[dir]=rows;const fi=model.faces.findIndex(f=>f.puzzle.id===puzzle.id);for(const [number,text]of rows)entries[fi][dir].get(number).text=text;}
  return changed;
 }

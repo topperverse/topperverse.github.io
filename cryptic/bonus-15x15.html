@@ -467,6 +467,17 @@
 h1,h2,h3,h4,.subtitle,.setter-credit,.eyebrow,button:not(.clue-button),summary,.unified-actions .ui-action,.action-menu .unified-actions .ui-action,.mobile-keyboard button,.anagram-dialog .anagram-top h2{font-family:var(--ui-mono)!important}
 .selected-clue,.selected-clue-label,.selected-clue .label,#selectedClue,#selectedClue .label,#selectedClue .selected-clue-label,.anagram-dialog #anagramClue,.hint-dialog .hint-clue{font-family:var(--clue-mono)!important}
 
+
+.hint-dialog #hintBody{white-space:pre-line}
+@media screen and (min-width:861px){
+ body:not(:has(>.layout)) .unified-actions .ui-action{font-size:14px!important}
+ #cubeClues>summary,#compactClues>summary{cursor:default}
+ #cubeClues>summary>span[aria-hidden],#compactClues>summary>span[aria-hidden]{display:none}
+ #cubeClues[open]>.cube-popup,#compactClues[open]>.compact-clue-options{display:none}
+}
+.play-footer,.clue-panel .progress{display:none!important}
+
+mark.parse-indicators{background:rgba(225,37,27,.16);color:inherit}
 </style>
 <link rel="stylesheet" href="/assets/font-consistency.css">
 </head>
@@ -1011,7 +1022,7 @@ function resetHints(scope){
    if(scope==='cube'||scope==='puzzle'&&(!cube||key.startsWith(puzzleId()+':'))||scope==='word'&&normalized===keyFor())remembered.delete(key);
   }}
  }
- announce('Hints hidden for '+(scope==='word'?'this word':scope==='cube'?'the whole cube':'this puzzle')+'.');update();
+ announce('');update();
 }
 for(const scope of cube?['word','puzzle','cube']:['word','puzzle']){
  const item=button(scope==='word'?'This word':scope==='cube'?'Whole cube':'Whole puzzle',()=>resetHints(scope));item.dataset.scope=scope;hide.menu.appendChild(item);
@@ -1082,4 +1093,14 @@ const openingAcross=[...entries.across.values()][0];if(openingAcross){setDirecti
 
 // Re-measure after the bundled fonts replace the system fallbacks.
 if(document.fonts?.ready)document.fonts.ready.then(()=>{if(typeof mobileClueLayout!=='undefined')mobileClueLayout=null;if(typeof cubeFitCache!=='undefined')cubeFitCache=null;if(typeof scheduleClueFit==='function')scheduleClueFit();if(typeof scheduleCubeFit==='function')scheduleCubeFit();});
+
+(()=>{
+ const media=window.matchMedia('(max-width:860px)'),chooser=document.getElementById('cubeClues')||document.getElementById('compactClues');
+ if(chooser){const summary=chooser.querySelector('summary');
+  function mode(){if(!media.matches){chooser.open=false;summary.setAttribute('aria-disabled','true');summary.setAttribute('tabindex','-1');}else{summary.removeAttribute('aria-disabled');summary.removeAttribute('tabindex');}}
+  summary.addEventListener('click',event=>{if(!media.matches){event.preventDefault();chooser.open=false;}},true);media.addEventListener('change',mode);mode();
+ }
+ if(typeof setStatus==='function'){const previous=setStatus;setStatus=function(text){previous(media.matches&&/hints.*hidden|hidden.*hints/i.test(text)?'':text);};}
+})();
+
 </script></body></html>
