@@ -1,6 +1,6 @@
 // Classic HTML pages are the sole editable clue sources. This reader never runs
 // their scripts. The complete cube and its embedded clues still work offline.
-const CLASSIC_CLUE_SOURCES=Object.freeze({1:'../cryptic/cryptic_crossword_interactive.html',2:'../cryptic/doms_cryptic_2.html',3:'../cryptic/doms_cryptic_3.html',4:'../cryptic/doms_cryptic_4.html',5:'../cryptic/doms_cryptic_5.html',6:'../cryptic/doms_cryptic_6.html'});
+const CLASSIC_CLUE_SOURCES=Object.freeze({1:'../cryptic/puzzle-1.html',2:'../cryptic/puzzle-2.html',3:'../cryptic/puzzle-3.html',4:'../cryptic/puzzle-4.html',5:'../cryptic/puzzle-5.html',6:'../cryptic/puzzle-6.html'});
 function classicJSONLiteral(html,name){
  const expression=new RegExp('\\b(?:const|let|var)\\s+'+name+'\\s*=\\s*'),scripts=[...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)];
  for(const [,script]of scripts){const match=expression.exec(script);if(!match)continue;const start=match.index+match[0].length;if(!'[{'.includes(script[start]))throw Error('Expected JSON literal for '+name);let stack=[],quoted=false,escaped=false;

@@ -4,14 +4,14 @@ The six classic puzzle HTML pages are the source of truth for clue wording:
 
 | Puzzle | Source |
 | --- | --- |
-| 1 | `cryptic/cryptic_crossword_interactive.html` |
-| 2 | `cryptic/doms_cryptic_2.html` |
-| 3 | `cryptic/doms_cryptic_3.html` |
-| 4 | `cryptic/doms_cryptic_4.html` |
-| 5 | `cryptic/doms_cryptic_5.html` |
-| 6 | `cryptic/doms_cryptic_6.html` |
+| 1 | `cryptic/puzzle-1.html` |
+| 2 | `cryptic/puzzle-2.html` |
+| 3 | `cryptic/puzzle-3.html` |
+| 4 | `cryptic/puzzle-4.html` |
+| 5 | `cryptic/puzzle-5.html` |
+| 6 | `cryptic/puzzle-6.html` |
 
-For a clue edit, change its text in the source page's `const clueText` literal. Keep the direction and clue number intact. The live cube at `/rubiks/` reads these pages automatically, so the same edit reaches both views after GitHub Pages deploys. Do not manually edit a second copy of the clue in the cube. Puzzle 7 is a separate standalone puzzle at `cryptic/doms_cryptic_7.html`. The 15x15 Bonus Edition is at `cryptic/doms_cryptic_bonus.html`. The cube uses Puzzles 1–6.
+For a clue edit, change its text in the source page's `const clueText` literal. Keep the direction and clue number intact. The live cube at `/rubiks/` reads these pages automatically, so the same edit reaches both views after GitHub Pages deploys. Do not manually edit a second copy of the clue in the cube. Puzzle 7 is a separate standalone puzzle at `cryptic/puzzle-7.html`. The 15x15 Bonus Edition is at `cryptic/bonus-15x15.html`. The cube uses Puzzles 1–6.
 
 Keep both archive pages in the same order. Each Crubik’s Cube follows its set of six numbered 11×11 puzzles and appears directly above the newest puzzle in that set. Newer puzzles go above that cube. Bonus editions do not count toward the six.
 
