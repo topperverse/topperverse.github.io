@@ -455,6 +455,24 @@ h1,h2,h3,h4,.subtitle,.setter-credit,.eyebrow,button:not(.clue-button),summary,.
 
 
 @media screen and (min-width:861px) and (max-width:1100px){body>header .unified-actions .ui-anagram{flex-direction:column;gap:0!important;padding:3px!important}body>header .ui-anagram::after{position:static;transform:none;font-size:12px;margin:0}}
+
+.ui-cube-dock{display:none!important}
+@media screen and (min-width:861px){
+ .face-nav #cubeMenu{display:block}
+ #cubeMenu>summary{background:var(--ink);color:#fff;font-size:26px}
+ #cubeActions.action-menu{width:min(370px,calc(100% - 16px));right:8px;left:auto;padding:6px;max-height:calc(100dvh - 210px);overflow:auto}
+ #cubeActions .unified-actions{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+ #cubeActions .unified-actions>.ui-home{grid-column:1/-1}
+ #cubeActions .ui-action{min-height:40px!important;height:40px!important;font-size:13px!important;padding:8px!important;white-space:normal}
+ #cubeActions .ui-group[open]{grid-column:1/-1}
+ #cubeActions .ui-submenu{position:static;min-width:0;margin:0;padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px;border-top:0;box-shadow:none}
+ #cubeActions .ui-menu-note{grid-column:1/-1}
+ #cubeActions .ui-submenu .ui-action{min-height:35px!important;height:auto!important;text-align:left}
+ #cubeActions .ui-home,#cubeActions .ui-anagram{justify-content:center!important;text-align:center;position:relative}
+ #cubeActions .ui-home::after,#cubeActions .ui-anagram::after{position:absolute;right:9px;top:50%;transform:translateY(-50%);margin:0;font-size:20px}
+ body>header{margin-bottom:10px}
+}
+
 </style><link rel="stylesheet" href="/assets/font-consistency.css">
 </head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">THE CUBE · SIX CROSSWORDS, ONE PUZZLE</span><h1>Crubik's Cube (1)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper. Turn it. Solve it.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
 <details id="cubeClues" class="cube-dropdown"><summary><span id="cubeClueLabel">Choose clue</span><span aria-hidden="true">&#8964;</span></summary><div id="cubeClueMenu" class="cube-popup" aria-label="Choose a clue"></div></details>
@@ -1092,7 +1110,7 @@ window.addEventListener('pagehide',()=>{wakeWanted=false;syncWake();});
 function place(){
  awake.hidden=!media.matches;if(!media.matches){wakeWanted=false;syncWake();}
 
- const destination=media.matches?el(cube?'cubeActions':'compactToolOptions'):dock;destination.appendChild(row);update();
+ const destination=cube?el('cubeActions'):media.matches?el('compactToolOptions'):dock;destination.appendChild(row);update();
 }
 if(cube){const previous=refreshUI;refreshUI=function(){previous();update();};const previousBusy=setBusy;setBusy=function(value){previousBusy(value);update();};}
 else{const previous=highlight;highlight=function(){previous();update();};}
@@ -1100,7 +1118,7 @@ media.addEventListener('change',place);
 document.addEventListener('pointerdown',event=>{if(!row.contains(event.target))for(const group of groups)group.open=false;});
 document.addEventListener('keydown',event=>{if(event.key==='Escape')for(const group of groups)group.open=false;});
 if(el('hintDialog'))el('hintDialog').addEventListener('close',()=>{
- const target=media.matches?document.querySelector(cube?'#cubeMenu>summary':'#compactTools>summary'):hints.summary;
+ const target=cube?document.querySelector('#cubeMenu>summary'):media.matches?document.querySelector('#compactTools>summary'):hints.summary;
  target?.focus({preventScroll:true});
 });
 if(!cube){
@@ -1146,7 +1164,7 @@ function fitDesktopCube(){
 
 (()=>{
  const media=window.matchMedia('(max-width:860px)'),header=document.querySelector('body>header'),dock=document.querySelector('.ui-cube-dock');
- function placeCubeActions(){if(media.matches)header.insertAdjacentElement('afterend',dock);else header.appendChild(dock);cubeFitCache=null;scheduleCubeFit();}
+ function placeCubeActions(){header.insertAdjacentElement('afterend',dock);cubeFitCache=null;scheduleCubeFit();}
  media.addEventListener('change',placeCubeActions);placeCubeActions();
  const heading=document.createElement('div');heading.className='cube-clue-headings';
  for(const label of ['Across','Down']){const title=document.createElement('h3');title.textContent=label;heading.appendChild(title);}
