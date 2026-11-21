@@ -440,6 +440,19 @@ h1,h2,h3,h4,.subtitle,.setter-credit,.eyebrow,button:not(.clue-button),summary,.
  .puzzle-panel>#selectedClue{font-size:18px!important;line-height:1.3;padding:4px 12px;display:flex;align-items:center;height:var(--desktop-cube-clue-height,56px);min-height:var(--desktop-cube-clue-height,56px)}
 }
 
+
+@media screen and (min-width:861px){
+ .face-nav #previousPuzzle,.face-nav #nextPuzzle{flex:0 0 44px;width:44px;min-width:44px}
+ body>header>.ui-cube-dock{width:var(--desktop-actions-width,448px);flex:0 0 var(--desktop-actions-width,448px)}
+ body>header .unified-actions{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body>header .unified-actions .ui-action{font-size:11px!important;text-align:center;justify-content:center!important}
+ body>header .unified-actions .ui-home,body>header .unified-actions .ui-anagram{position:relative;padding-left:18px!important;padding-right:18px!important;justify-content:center!important;text-align:center}
+ body>header .ui-home::after,body>header .ui-anagram::after{position:absolute;right:3px;top:50%;transform:translateY(-50%);margin:0;font-size:15px}
+ .puzzle-panel{position:relative}
+ .puzzle-panel>.play-footer{position:absolute;bottom:6px;left:8px;right:8px;width:auto;padding:4px 6px;border:0;z-index:4;background:#fff;pointer-events:none}
+ .puzzle-panel>.play-footer .linked{pointer-events:auto}
+}
+
 </style><link rel="stylesheet" href="/assets/font-consistency.css">
 </head><body><header><div class="brand-title"><div class="brand-mark" aria-hidden="true"><i>1</i><i></i><i>2</i><i></i><i>3</i><i></i><i>4</i><i></i><i></i></div><div><span class="eyebrow">THE CUBE · SIX CROSSWORDS, ONE PUZZLE</span><h1>Crubik's Cube (1)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper. Turn it. Solve it.</p></div></div></header><main class="layout"><section class="puzzle-panel" aria-label="Puzzle cube"><nav class="face-nav" aria-label="Choose puzzle"><div id="faceButtons"></div><button id="previousPuzzle" type="button" aria-label="Previous puzzle side">&#8592;</button>
 <details id="cubeClues" class="cube-dropdown"><summary><span id="cubeClueLabel">Choose clue</span><span aria-hidden="true">&#8964;</span></summary><div id="cubeClueMenu" class="cube-popup" aria-label="Choose a clue"></div></details>
@@ -568,7 +581,7 @@ function buildPrint(){const f=model.faces[selectedFace],p=f.puzzle,area=$('print
 $('acrossBtn').onclick=()=>setDirection('across');$('downBtn').onclick=()=>setDirection('down');$('revealWordBtn').onclick=revealWord;$('checkPuzzleBtn').onclick=checkPuzzle;$('clearBtn').onclick=clearPuzzle;$('hintBtn').onclick=openHints;$('hintClose').onclick=()=>$('hintDialog').close();$('hintPrev').onclick=()=>showHintSlide(hintIndex-1);$('hintNext').onclick=()=>showHintSlide(hintIndex+1);window.addEventListener('beforeprint',buildPrint);
 let composing=false;input.oncompositionstart=()=>{composing=true};input.oncompositionend=()=>{composing=false;let text=input.value;input.value='';editLetters(text)};input.onkeydown=e=>{if(!composing&&!e.isComposing)keyboard(e)};input.onbeforeinput=e=>{if(e.inputType==='deleteContentBackward'||e.inputType==='deleteContentForward'){e.preventDefault();erase(e.inputType==='deleteContentBackward')}};input.oninput=e=>{if(composing||e?.isComposing)return;let text=input.value;input.value='';editLetters(text)};input.onpaste=e=>{e.preventDefault();editLetters(e.clipboardData.getData('text'))};
 
-function projectionScale(){if(cubeMobile())return Math.min(lastW,lastH)/11*zoom;const spanU=11*view.u.reduce((s,v)=>s+Math.abs(v),0),spanV=11*view.v.reduce((s,v)=>s+Math.abs(v),0);return Math.max(1,Math.min((lastW-28)/spanU,(lastH-28)/spanV))*.94*zoom;}
+function projectionScale(){if(cubeMobile())return Math.min(lastW,lastH)/11*zoom;return Math.max(1,Math.min(lastW-28,lastH-28)/11)*.94*zoom;}
 function projection(p){let s=projectionScale();return [lastW/2+dot(p,view.u)*s,lastH/2-dot(p,view.v)*s,dot(p,view.n)]}
 function path(points){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath()}
 function draw(){let rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);lastW=rect.width;lastH=rect.height;if(canvas.width!==Math.round(lastW*dpr)||canvas.height!==Math.round(lastH*dpr)){canvas.width=Math.round(lastW*dpr);canvas.height=Math.round(lastH*dpr)}ctx.setTransform(dpr,0,0,dpr,0,0);const aligned= navigationTarget===null && model.faces.some(f=>dot(view.n,f.n)>1-1e-9&&dot(view.v,f.v)>1-1e-9);
@@ -592,7 +605,7 @@ function animateTo(fi,onArrive){
  const cosine=Math.max(-1,Math.min(1,dot(start.n,target.n))),angle=Math.acos(cosine),axis=angle<1e-7||Math.PI-angle<1e-7?start.u:norm(cross(start.n,target.n));
  const alignedUp=rotate(start.v,axis,angle),roll=Math.atan2(dot(cross(alignedUp,target.v),target.n),dot(alignedUp,target.v));
  const azimuth=(route+.5)*2.3999632297,elevation=.28+.055*(route%7),spinAxis=norm([Math.cos(azimuth),elevation,Math.sin(azimuth)]),bankAxis=norm(cross(spinAxis,Math.abs(spinAxis[1])<.9?[0,1,0]:[1,0,0]));
- const direction=(from+to)%2?1:-1,duration=3600+(route%5)*200,pullback=cubeMobile()?.46:.23+.015*(route%4),bank=.28+.045*(route%6);
+ const direction=(from+to)%2?1:-1,duration=3600+(route%5)*200,pullback=cubeMobile()?.46:.62,bank=.28+.045*(route%6);
  let began=null;
  $('tag').textContent=`Puzzle ${from} → ${to} · 3D transition`;
  $('status').textContent=`Turning to Puzzle ${to}…`;
@@ -605,7 +618,7 @@ function animateTo(fi,onArrive){
    let a=rotate(rotate(start[k],axis,angle*e),n,roll*e);
    view[k]=rotate(rotate(a,spinAxis,direction*2*Math.PI*e),bankAxis,bankAngle);
   }
-  orthogonal();zoom=(initialZoom+(endZoom-initialZoom)*e)*(1-pullback*Math.sin(Math.PI*t)**2);$('zoom').value=zoom;draw();
+  orthogonal();zoom=(initialZoom+(endZoom-initialZoom)*e)*(1-pullback*(cubeMobile()?Math.sin(Math.PI*t)**2:Math.sin(Math.PI*t)));$('zoom').value=zoom;draw();
   if(t<1)requestAnimationFrame(frame);
   else{zoom=endZoom;$('zoom').value=zoom;snap(fi);status('');onArrive?.();}
  }
@@ -1119,6 +1132,7 @@ const desktopOriginalShowFace=showFace;showFace=function(fi){desktopOriginalShow
 if(document.fonts?.ready)document.fonts.ready.then(()=>{if(typeof mobileClueLayout!=='undefined')mobileClueLayout=null;if(typeof cubeFitCache!=='undefined')cubeFitCache=null;if(typeof scheduleClueFit==='function')scheduleClueFit();if(typeof scheduleCubeFit==='function')scheduleCubeFit();});
 
 function fitDesktopCube(){
+ document.documentElement.style.setProperty('--desktop-actions-width',(document.querySelector('.clue-panel').getBoundingClientRect().width+8)+'px');
  const banner=$('selectedClue');
  let content=banner.querySelector('.cube-banner-text');
  if(!content){content=document.createElement('span');content.className='cube-banner-text';content.append(...banner.childNodes);banner.appendChild(content);}
