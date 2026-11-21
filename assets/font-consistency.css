@@ -7,3 +7,6 @@
  #selectedClue,.puzzle-panel>#selectedClue,.anagram-dialog #anagramClue{font-weight:400!important;-webkit-text-stroke:0!important}
  #selectedClue .selected-clue-label,#selectedClue .label,.anagram-dialog #anagramClue .selected-clue-label,.anagram-dialog #anagramClue .label{font-weight:700!important;-webkit-text-stroke:0!important}
 }
+
+/* Keep native overwrite selection without painting the browser blue highlight. */
+@media screen and (min-width:861px){.crossword .cell input::selection{background:transparent;color:var(--ink);text-shadow:none}}
