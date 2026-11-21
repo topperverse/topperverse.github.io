@@ -440,7 +440,13 @@
  .clue-fit-text,.cube-banner-text{display:block}
 }
 
+
+:root{--ui-mono:"COF UI",Consolas,monospace;--clue-mono:"COF Clue","Courier New",monospace}
+h1,h2,h3,h4,.subtitle,.setter-credit,.eyebrow,button:not(.clue-button),summary,.unified-actions .ui-action,.action-menu .unified-actions .ui-action,.mobile-keyboard button,.anagram-dialog .anagram-top h2{font-family:var(--ui-mono)!important}
+.selected-clue,.selected-clue-label,.selected-clue .label,#selectedClue,#selectedClue .label,#selectedClue .selected-clue-label,.anagram-dialog #anagramClue,.hint-dialog .hint-clue{font-family:var(--clue-mono)!important}
+
 </style>
+<link rel="stylesheet" href="/assets/font-consistency.css">
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (2)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><div class="direction-toggle" aria-label="Typing direction"><button id="acrossBtn" type="button" aria-pressed="true">Across</button><button id="downBtn" type="button" aria-pressed="false">Down</button></div><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="revealWordBtn" type="button">Reveal word</button><button id="anagramBtn" type="button">Anagrammer</button><button id="clearBtn" type="button">Clear</button><button id="printBtn" type="button">Print</button><a class="button-link home-link" href="cryptics_only_fans.html">Home</a></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
   <div class="compact-clue-control">
@@ -1048,4 +1054,7 @@ window.crosswordActions={changeLetters,revealCategory,resetHints,targetCells,upd
 // Always begin with the first Across entry, including grids with blocked corners.
 const openingAcross=[...entries.across.values()][0];if(openingAcross){setDirection('across');focusCell(openingAcross[0]);}scheduleClueFit();
 
+
+// Re-measure after the bundled fonts replace the system fallbacks.
+if(document.fonts?.ready)document.fonts.ready.then(()=>{if(typeof mobileClueLayout!=='undefined')mobileClueLayout=null;if(typeof cubeFitCache!=='undefined')cubeFitCache=null;if(typeof scheduleClueFit==='function')scheduleClueFit();if(typeof scheduleCubeFit==='function')scheduleCubeFit();});
 </script></body></html>
