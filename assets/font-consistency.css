@@ -46,3 +46,8 @@
  .cube-puzzle-subtitle{margin:5px 0 0;font:400 13px/1.4 var(--sans)}
  .cube-featured-credits{margin:4px 0 0;font:400 12px/1.4 var(--sans)}
 }
+
+/* The ellipsis control's tracking must not leak into nested menu summaries. */
+@media screen and (max-width:860px){
+ .compact-tools .unified-actions,.compact-tools .unified-actions .ui-action,.compact-tools .unified-actions .ui-submenu button,.compact-tools .unified-actions .ui-submenu a{letter-spacing:normal;word-spacing:normal}
+}
