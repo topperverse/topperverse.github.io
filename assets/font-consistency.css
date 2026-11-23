@@ -13,7 +13,8 @@
 
 /* Mobile archive/grid typography, clue dropdowns, and centred Anagrammer cross. */
 @media screen and (max-width:860px){
- #grid .cell input,#grid .cell .num{font-family:var(--mono)!important}
+ #grid .cell input{font-family:var(--sans)!important;font-weight:600!important}
+ #grid .cell .num{font-family:var(--sans)!important}
  #compactClueOptions,#compactClueOptions *,#cubeClueMenu,#cubeClueMenu *{font-family:var(--sans)!important}
  .anagram-dialog #anagramClose{display:grid!important;place-items:center!important;padding:0!important;line-height:1!important}
  .anagram-dialog #anagramClose span{position:relative;display:block;width:17px;height:17px;margin:0!important}
