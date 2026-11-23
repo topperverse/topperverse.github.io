@@ -152,6 +152,7 @@
    solvedDialog.querySelector('.solved-admire').addEventListener('click',()=>solvedDialog.close());
    document.body.appendChild(solvedDialog);
   }
+  solvedDialog.querySelector('.solved-admire').style.background=effectContext.isCube?'#fff':'var(--yellow)';
   solvedDialog.querySelector('#cofSolvedTitle').textContent=effectContext.isCube?'Side solved!':'Puzzle solved!';
   solvedDialog.querySelector('#cofSolvedMessage').textContent=effectContext.isCube?'Congratulations — every answer on this side is correct.':'Congratulations — every answer is correct.';
   let next=solvedDialog.querySelector('.solved-next');
