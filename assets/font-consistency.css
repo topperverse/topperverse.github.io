@@ -30,3 +30,19 @@
  .clue-panel .clue-lists .clue-item,.clues>div:not(.ui-sticky-clue-headings)>ol>li{margin:0;grid-column:auto!important;grid-row:auto!important}
  .clue-panel .clue-lists .clue-button{height:auto}
 }
+
+/* Keep mobile hint spacing identical in standalone and cube dialogs. */
+@media screen and (max-width:860px){
+ .hint-dialog{gap:0}
+ .hint-dialog .hint-header{position:static;display:flex;flex-direction:row;align-items:center;justify-content:space-between;width:auto;min-height:0;margin:0;padding:14px;border-top:0;border-bottom:2px solid var(--ink);gap:16px}
+ .hint-dialog .hint-header h2{margin:0}
+ .hint-dialog .hint-clue{margin:0;padding:14px}
+ .hint-dialog .hint-slide{margin:0;padding:14px 14px 22px;min-height:0}
+ .hint-dialog .hint-slide h3{margin:0 0 10px}
+ .hint-dialog .hint-slide p{margin:0}
+}
+@media screen and (min-width:861px){
+ .clue-panel .puzzle-heading{display:block}
+ .cube-puzzle-subtitle{margin:5px 0 0;font:400 13px/1.4 var(--sans)}
+ .cube-featured-credits{margin:4px 0 0;font:400 12px/1.4 var(--sans)}
+}
