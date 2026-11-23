@@ -21,3 +21,12 @@
  .anagram-dialog #anagramClose span::before,.anagram-dialog #anagramClose span::after{left:50%!important;top:50%!important;width:3px;height:17px;transform:translate(-50%,-50%) rotate(45deg)!important}
  .anagram-dialog #anagramClose span::after{transform:translate(-50%,-50%) rotate(-45deg)!important}
 }
+
+/* Across and Down are independent vertical lists, never paired grid rows. */
+@media screen and (min-width:861px){
+ .clue-panel .clue-lists{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:16px;row-gap:0;align-items:start}
+ .clue-panel .clue-lists>section{display:block;min-width:0}
+ .clue-panel .clue-lists ol,.clues>div:not(.ui-sticky-clue-headings)>ol{display:flex;flex-direction:column;gap:7px}
+ .clue-panel .clue-lists .clue-item,.clues>div:not(.ui-sticky-clue-headings)>ol>li{margin:0;grid-column:auto!important;grid-row:auto!important}
+ .clue-panel .clue-lists .clue-button{height:auto}
+}
