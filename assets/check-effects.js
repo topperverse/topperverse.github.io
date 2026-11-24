@@ -89,14 +89,17 @@
    function half(top,letter){
     const panel=document.createElement('div');panel.className='cof-flap-half';
     Object.assign(panel.style,{top:top?'0px':axis+'px',height:(top?axis:h-axis)+'px',background:cellStyle.backgroundColor,transformOrigin:top?'50% 100%':'50% 0%'});
-    const glyph=document.createElement('span');glyph.className='cof-flap-glyph';glyph.textContent=letter;
-    Object.assign(glyph.style,{height:h+'px',top:top?'0px':-axis+'px',font:style.font,color:style.color,paddingTop:style.paddingTop,paddingBottom:style.paddingBottom,paddingLeft:style.paddingLeft,paddingRight:style.paddingRight});
+    // Render with the same native input as the grid, rather than a flex span:
+    // input and span baselines differ, especially between mobile and desktop fonts.
+    const glyph=input.cloneNode(false);glyph.removeAttribute('id');glyph.removeAttribute('name');
+    glyph.className='cof-check-glyph';glyph.value=letter;glyph.readOnly=true;glyph.tabIndex=-1;glyph.setAttribute('aria-hidden','true');
+    Object.assign(glyph.style,{position:'absolute',left:'0px',width:'100%',height:h+'px',top:top?'0px':-axis+'px',boxSizing:'border-box',margin:'0',border:'0',borderRadius:'0',background:'transparent',outline:'none',boxShadow:'none',visibility:'inherit',pointerEvents:'none',font:style.font,lineHeight:style.lineHeight,textAlign:style.textAlign,letterSpacing:style.letterSpacing,color:style.color,paddingTop:style.paddingTop,paddingBottom:style.paddingBottom,paddingLeft:style.paddingLeft,paddingRight:style.paddingRight});
     panel.appendChild(glyph);layer.appendChild(panel);return {panel,glyph};
    }
    const top=half(true,item.to),bottom=half(false,item.from),turnTop=half(true,item.from),turnBottom=half(false,item.to);
    turnBottom.panel.style.visibility='hidden';
    const seam=document.createElement('span');seam.className='cof-flap-seam';seam.style.top=axis+'px';layer.appendChild(seam);
-   input.parentElement.appendChild(layer);const visibility=input.style.visibility;input.style.visibility='hidden';
+   layer.style.display='none';input.parentElement.appendChild(layer);const visibility=input.style.visibility;
    const slot=item.checkOffset??timeline,start=slot+222,duration=111;timeline=Math.max(timeline,slot+333);
    seam.style.background='transparent';
    return {...item,visibility,layer,top,bottom,turnTop,turnBottom,seam,baseColour:cellStyle.backgroundColor,slot,start,duration,settled:false};
@@ -109,6 +112,8 @@
     if(tile.settled)continue;
     const p=Math.max(0,Math.min(1,(elapsed-tile.start)/tile.duration));
     const active=elapsed>=tile.slot;
+    // Leave every waiting square completely untouched until its own check begins.
+    tile.layer.style.display=active?'block':'none';tile.input.style.visibility=active?'hidden':tile.visibility;
     for(const half of [tile.top,tile.bottom,tile.turnTop,tile.turnBottom])half.panel.style.background=active?'#fff':tile.baseColour;
     tile.seam.style.background=active?'rgba(5,5,5,.85)':'transparent';
     tile.seam.style.height=active?'2px':'1px';
