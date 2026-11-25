@@ -88,3 +88,7 @@
  .puzzle-panel,.clue-panel{height:calc(var(--desktop-grid-size) + 130px);max-height:calc(var(--desktop-grid-size) + 130px)}
  .puzzle-panel>.stage{height:var(--desktop-grid-size);min-height:var(--desktop-grid-size)}
 }
+
+/* Keep action feedback available to screen readers without subtitles below the grid. */
+#status{position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;max-height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+.grid-wrap>.hint,.play-footer .help,.save-note{display:none!important}
