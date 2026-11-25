@@ -55,7 +55,7 @@
 
 /* Desktop scales within readable bounds; smaller windows scroll instead. */
 @media screen and (min-width:861px){
- :root{--desktop-grid-size:clamp(420px,min(calc(100dvh - 280px),calc((100vw - 96px)*.48)),680px)}
+ :root{--desktop-grid-size:clamp(480px,min(calc(100dvh - 230px),calc((100vw - 96px)*.49)),720px)
  html,body{height:auto;min-height:100%;overflow:auto}
  body:has(>.layout){height:auto;display:block;min-width:1040px}
  body>main:not(.layout){height:auto;min-width:1040px;width:min(1560px,calc(100% - 48px));display:block;padding:14px 0 24px}

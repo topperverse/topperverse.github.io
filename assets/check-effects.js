@@ -76,66 +76,70 @@
   }
   frame=requestAnimationFrame(flick);
  }
+ function flipCheckedLetters(items,onSettle,onDone){
+  ensureFlapStyle();
+  const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const letterInputs=items.map(item=>item.input);
+  const order=letterInputs.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  const ranks=new Map(order.map((index,rank)=>[index,rank])),tail=Math.min(letterInputs.length,4,Math.max(2,Math.ceil(letterInputs.length*.04)));
+  flaps=letterInputs.map((input,index)=>{
+   const rect=input.getBoundingClientRect(),style=getComputedStyle(input),cellStyle=getComputedStyle(input.parentElement);
+   const h=rect.height,axis=(h+parseFloat(style.paddingTop)-parseFloat(style.paddingBottom))/2;
+   const layer=document.createElement('div');layer.className='cof-flap';layer.setAttribute('aria-hidden','true');
+   function half(top){
+    const panel=document.createElement('div');panel.className='cof-flap-half';
+    Object.assign(panel.style,{top:top?'0px':axis+'px',height:(top?axis:h-axis)+'px',background:cellStyle.backgroundColor,transformOrigin:top?'50% 100%':'50% 0%'});
+    const glyph=document.createElement('span');glyph.className='cof-flap-glyph';
+    Object.assign(glyph.style,{height:h+'px',top:top?'0px':-axis+'px',font:style.font,color:style.color,paddingTop:style.paddingTop,paddingBottom:style.paddingBottom,paddingLeft:style.paddingLeft,paddingRight:style.paddingRight});
+    panel.appendChild(glyph);layer.appendChild(panel);return {panel,glyph};
+   }
+   const top=half(true),bottom=half(false),turnTop=half(true),turnBottom=half(false);
+   const seam=document.createElement('span');seam.className='cof-flap-seam';seam.style.top=axis+'px';layer.appendChild(seam);
+   input.parentElement.appendChild(layer);
+   const visibility=input.style.visibility;input.style.visibility='hidden';
+   // Most settle gradually; a few scattered holdouts keep flipping on their own.
+   const rank=ranks.get(index),regular=letterInputs.length-tail;
+   const settleAt=letterInputs.length===1?2600:rank<regular?2600+3000*rank/Math.max(1,regular-1)+Math.random()*120:6400+1900*(rank-regular)/Math.max(1,tail-1);
+   const original=input.value,letters=[original],steps=Math.max(10,Math.round(settleAt/(155+Math.random()*65)));
+   for(let i=0;i<steps;i++){let letter;do{letter=alphabet[Math.floor(Math.random()*26)];}while(letter===letters.at(-1)||letter===original);letters.push(letter);}
+   letters.push(items[index].to);
+   let time=Math.random()*250;const transitions=[];
+   const beats=letters.slice(1).map(()=>({duration:90+Math.random()*70,pause:15+Math.random()*85}));
+   const factor=(settleAt-time)/beats.reduce((sum,b)=>sum+b.duration+b.pause,0);
+   for(let i=0;i<beats.length;i++){const duration=beats[i].duration*factor;transitions.push({start:time,duration,from:letters[i],to:letters[i+1]});time+=duration+beats[i].pause*factor;}
+   return {...items[index],input,visibility,layer,top,bottom,turnTop,turnBottom,letters,transitions,end:settleAt,settled:false};
+  });
+  const finish=Math.max(...flaps.map(tile=>tile.end))+650;let start=null;
+  function flick(now){
+   if(!desktop.matches){stop();return;}
+   if(start===null)start=now;const elapsed=now-start;
+   for(const tile of flaps){
+    if(tile.settled)continue;
+    if(elapsed>=tile.end){tile.input.value=tile.to;onSettle(tile);tile.layer.remove();tile.input.style.visibility=tile.visibility;tile.settled=true;continue;}
+    const step=tile.transitions.find(s=>elapsed<s.start+s.duration);
+    const from=step?.from||tile.letters.at(-1),to=step?.to||from;
+    const p=step?Math.max(0,Math.min(1,(elapsed-step.start)/step.duration)):1;
+    tile.top.glyph.textContent=to;tile.bottom.glyph.textContent=from;
+    tile.turnTop.glyph.textContent=from;tile.turnBottom.glyph.textContent=to;
+    tile.turnTop.panel.style.visibility=p<.5?'visible':'hidden';
+    tile.turnBottom.panel.style.visibility=p>=.5?'visible':'hidden';
+    // A fast hinge snap: the old upper flap falls away, then the new lower flap lands.
+    tile.turnTop.panel.style.transform='rotateX('+(-90*Math.min(1,p*2))+'deg)';
+    tile.turnBottom.panel.style.transform='rotateX('+(90*(1-Math.max(0,(p-.5)*2)))+'deg)';
+    tile.turnTop.panel.style.filter='brightness('+(1-.32*Math.min(1,p*2))+')';
+    tile.turnBottom.panel.style.filter='brightness('+(.68+.32*Math.max(0,(p-.5)*2))+')';
+   }
+   if(elapsed>=finish){stop();onDone();return;}
+   frame=requestAnimationFrame(flick);
+  }
+  frame=requestAnimationFrame(flick);
+ }
  window.checkLettersWithFlaps=function(items,onSettle,onDone){
   if(!items.length)return false;
   if(running)return true;
   running=true;lockedMain=document.body;previousInert=lockedMain.inert;lockedMain.inert=true;
-  const dpr=Math.min(devicePixelRatio||1,2);let timeline=0;
-  flaps=items.map(item=>{
-   const input=item.input,rect=input.getBoundingClientRect(),style=getComputedStyle(input);
-   const w=rect.width,h=rect.height,axis=Math.max(1,Math.min(h-1,(h+(parseFloat(style.paddingTop)||0)-(parseFloat(style.paddingBottom)||0))/2));
-   const layer=document.createElement('canvas');layer.setAttribute('aria-hidden','true');layer.className='cof-check-snap';
-   layer.width=Math.ceil(w*dpr);layer.height=Math.ceil(h*dpr);
-   Object.assign(layer.style,{position:'fixed',left:rect.left+'px',top:rect.top+'px',width:w+'px',height:h+'px',display:'none',pointerEvents:'none',zIndex:'10001',opacity:'1'});
-   document.body.appendChild(layer);
-   // Rasterise each letter once. Grid CSS cannot resize or move these half-tiles.
-   function face(letter){
-    const face=document.createElement('canvas');face.width=layer.width;face.height=layer.height;
-    const c=face.getContext('2d');c.scale(dpr,dpr);c.fillStyle='#fff';c.fillRect(0,0,w,h);
-    c.font=style.font;c.fillStyle=style.color;c.textAlign='center';c.textBaseline='middle';
-    const x=(w+(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0))/2;
-    c.fillText(letter,x,axis);return face;
-   }
-   const slot=item.checkOffset??timeline,duration=300;timeline=Math.max(timeline,slot+duration);
-   const letters=[item.from],alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-   for(let i=0;i<4;i++){let next;do{next=alphabet[Math.floor(Math.random()*26)];}while(next===letters.at(-1)||next===item.from);letters.push(next);}
-   letters.push(item.to);
-   const beats=letters.slice(1).map(()=>({duration:90+Math.random()*70,pause:15+Math.random()*55}));
-   const factor=duration/beats.reduce((sum,beat)=>sum+beat.duration+beat.pause,0);
-   let time=0;const transitions=beats.map((beat,i)=>{const transition={start:time,duration:beat.duration*factor,from:face(letters[i]),to:face(letters[i+1])};time+=(beat.duration+beat.pause)*factor;return transition;});
-   return {...item,layer,makeFace:face,ctx:layer.getContext('2d'),transitions,w,h,axis,slot,duration,visibility:input.style.visibility,settled:false};
-  });
-  let began=null;
-  function tick(now){
-   if(began===null)began=now;const elapsed=now-began;
-   for(const tile of flaps){
-    if(tile.settled||elapsed<tile.slot)continue;
-    if(!tile.started){tile.started=true;tile.transitions[0].from=tile.makeFace(tile.input.value);}
-    const {ctx,w,h,axis}=tile,local=elapsed-tile.slot;
-    const step=tile.transitions.find(step=>local<step.start+step.duration)||tile.transitions.at(-1);
-    const p=Math.max(0,Math.min(1,(local-step.start)/step.duration));
-    tile.layer.style.display='block';tile.input.style.visibility='hidden';
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    function half(face,upper,scale=1){
-     const y=upper?0:axis,sourceHeight=upper?axis:h-axis;
-     if(scale<=.001)return;
-     const height=sourceHeight*scale,top=upper?axis-height:axis;
-     ctx.drawImage(face,0,y*dpr,w*dpr,sourceHeight*dpr,0,top,w,height);
-    }
-    half(step.to,true);half(step.from,false);
-    // Rapid timetable flips, followed by the original correct letter or an empty tile.
-    if(p<.5){const phase=Math.min(1,p/.4),scale=Math.cos(phase*Math.PI/2);half(step.from,true,scale);
-     ctx.fillStyle='rgba(0,0,0,'+(.45*phase)+')';ctx.fillRect(0,axis-axis*scale,w,axis*scale);
-    }else{const phase=Math.max(0,Math.min(1,(p-.6)/.4)),scale=Math.sin(phase*Math.PI/2);half(step.to,false,scale);
-     ctx.fillStyle='rgba(0,0,0,'+(.45*(1-phase))+')';ctx.fillRect(0,axis,w,(h-axis)*scale);
-    }
-    ctx.fillStyle='#151515';ctx.fillRect(0,axis-1,w,2);
-    if(local>=tile.duration){tile.input.value=tile.to;tile.layer.remove();tile.input.style.visibility=tile.visibility;tile.settled=true;onSettle(tile);}
-   }
-   if(elapsed>=timeline){stop();onDone();return;}
-   frame=requestAnimationFrame(tick);
-  }
-  frame=requestAnimationFrame(tick);return true;
+  flipCheckedLetters(items,onSettle,onDone);return true;
  };
  let solvedDialog=null;
  function showSolvedDialog(){
