@@ -834,9 +834,9 @@ let mobileClueLayout=null;
 function fitMobileClue(){
   const wrapper=document.querySelector('.grid-wrap');
   if(wrapper.clientWidth<1)return;
-  const landscape=window.innerHeight<500&&window.innerWidth>window.innerHeight;
+  const landscape=mobilePuzzleMedia.matches&&window.innerHeight<500&&window.innerWidth>window.innerHeight;
   const gap=parseFloat(getComputedStyle(wrapper).gap)||0;
-  const budget=wrapper.clientHeight-status.getBoundingClientRect().height-2*gap;
+  const budget=mobilePuzzleMedia.matches?wrapper.clientHeight-status.getBoundingClientRect().height-2*gap:10000;
   const signature=[wrapper.clientWidth,budget,landscape].join(':');
   let width,boxHeight,base;
   if(mobileClueLayout?.signature===signature){({width,boxHeight,base}=mobileClueLayout);}
@@ -1003,26 +1003,26 @@ function animatedCheck(scope,targets){
  const complete=scope==='puzzle'&&filled.length===targets.length&&filled.every(key=>read(key).toUpperCase()===expected(key));
  const sequential=scope==='square'||scope==='word'||scope==='puzzle';
  if(!complete&&(!sequential||!filled.length))return false;
- const context=checkEffectContext(complete?targets:filled);
+ const context=checkEffectContext(targets);
  if(complete){
   if(cube){targets.forEach(key=>checks.delete(key));saveProgress();refreshUI();}
   else{targets.forEach(clearCheck);saveLetters();highlight();}
   effects.celebrate(context);return true;
  }
- const offsets=new Map(),letterDuration=effects.letterDuration||900;
+ const letterDuration=effects.letterDuration||300;
+ const planned=[];
  if(scope==='puzzle'){
-  const across=Array.from((cube?entries[selectedFace].across:entries.across).values());
-  const down=Array.from((cube?entries[selectedFace].down:entries.down).values());
-  let pairStart=0;const checked=new Set();
-  for(let pair=0;pair<Math.max(across.length,down.length);pair++){
-   const words=[across[pair],down[pair]].map(entry=>entry?(cube?entry.cells:entry).filter(key=>read(key)&&!checked.has(key)):[]);
-   for(const word of words)word.forEach((key,index)=>offsets.set(key,Math.min(offsets.get(key)??Infinity,pairStart+index*letterDuration)));
-   for(const word of words)for(const key of word)checked.add(key);
-   pairStart+=Math.max(...words.map(word=>word.length))*letterDuration;
+  const seen=new Set();
+  for(const dir of ['across','down']){
+   const list=cube?entries[selectedFace][dir]:entries[dir];
+   for(const entry of list.values())(cube?entry.cells:entry).forEach((key,index)=>{
+    const offset=index*letterDuration,stamp=key+':'+offset;
+    if(!seen.has(stamp)){seen.add(stamp);planned.push({key,offset});}
+   });
   }
- }
- const items=filled.map((key,index)=>{const from=read(key);return {key,input:cube?context.byKey.get(key):inputs.get(key),from,to:from.toUpperCase()===expected(key)?from:'',checkOffset:scope==='puzzle'?offsets.get(key)??0:index*letterDuration};});
- const correct=items.filter(item=>item.to).length,cleared=items.length-correct;
+ }else targets.forEach((key,index)=>planned.push({key,offset:index*letterDuration}));
+ const items=planned.sort((a,b)=>a.offset-b.offset).map(({key,offset})=>{const from=read(key);return {key,input:cube?context.byKey.get(key):inputs.get(key),from,to:from.toUpperCase()===expected(key)?from:'',checkOffset:offset};});
+ const correct=filled.filter(key=>read(key).toUpperCase()===expected(key)).length,cleared=filled.length-correct;
  return effects.check(items,tile=>{
   if(cube){writeLetter(tile.key,tile.input.value);saveProgress();refreshUI();}
   else{clearCheck(tile.key);saveLetters();}

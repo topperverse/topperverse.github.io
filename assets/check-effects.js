@@ -96,20 +96,21 @@
     const x=(w+(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0))/2;
     c.fillText(letter,x,axis);return face;
    }
-   const slot=item.checkOffset??timeline,duration=900;timeline=Math.max(timeline,slot+duration);
+   const slot=item.checkOffset??timeline,duration=300;timeline=Math.max(timeline,slot+duration);
    const letters=[item.from],alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
    for(let i=0;i<4;i++){let next;do{next=alphabet[Math.floor(Math.random()*26)];}while(next===letters.at(-1)||next===item.from);letters.push(next);}
    letters.push(item.to);
    const beats=letters.slice(1).map(()=>({duration:90+Math.random()*70,pause:15+Math.random()*55}));
    const factor=duration/beats.reduce((sum,beat)=>sum+beat.duration+beat.pause,0);
    let time=0;const transitions=beats.map((beat,i)=>{const transition={start:time,duration:beat.duration*factor,from:face(letters[i]),to:face(letters[i+1])};time+=(beat.duration+beat.pause)*factor;return transition;});
-   return {...item,layer,ctx:layer.getContext('2d'),transitions,w,h,axis,slot,duration,visibility:input.style.visibility,settled:false};
+   return {...item,layer,makeFace:face,ctx:layer.getContext('2d'),transitions,w,h,axis,slot,duration,visibility:input.style.visibility,settled:false};
   });
   let began=null;
   function tick(now){
    if(began===null)began=now;const elapsed=now-began;
    for(const tile of flaps){
     if(tile.settled||elapsed<tile.slot)continue;
+    if(!tile.started){tile.started=true;tile.transitions[0].from=tile.makeFace(tile.input.value);}
     const {ctx,w,h,axis}=tile,local=elapsed-tile.slot;
     const step=tile.transitions.find(step=>local<step.start+step.duration)||tile.transitions.at(-1);
     const p=Math.max(0,Math.min(1,(local-step.start)/step.duration));
@@ -220,7 +221,7 @@
   frame=requestAnimationFrame(draw);
  }
  window.crosswordCheckEffects={
-  letterDuration:900,
+  letterDuration:300,
   busy:()=>running,
   check(items,onSettle,onDone,context={}){if(running)return false;effectContext=context;return window.checkLettersWithFlaps(items,onSettle,onDone);},
   celebrate(context={}){if(running)return;effectContext=context;window.celebrateCorrectPuzzle14();}
