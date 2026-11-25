@@ -96,15 +96,23 @@
     const x=(w+(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0))/2;
     c.fillText(letter,x,axis);return face;
    }
-   const slot=item.checkOffset??timeline;timeline=Math.max(timeline,slot+333);
-   return {...item,layer,ctx:layer.getContext('2d'),fromFace:face(item.from),toFace:face(item.to),w,h,axis,slot,start:slot+222,duration:111,visibility:input.style.visibility,settled:false};
+   const slot=item.checkOffset??timeline,duration=900;timeline=Math.max(timeline,slot+duration);
+   const letters=[item.from],alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+   for(let i=0;i<4;i++){let next;do{next=alphabet[Math.floor(Math.random()*26)];}while(next===letters.at(-1)||next===item.from);letters.push(next);}
+   letters.push(item.to);
+   const beats=letters.slice(1).map(()=>({duration:90+Math.random()*70,pause:15+Math.random()*55}));
+   const factor=duration/beats.reduce((sum,beat)=>sum+beat.duration+beat.pause,0);
+   let time=0;const transitions=beats.map((beat,i)=>{const transition={start:time,duration:beat.duration*factor,from:face(letters[i]),to:face(letters[i+1])};time+=(beat.duration+beat.pause)*factor;return transition;});
+   return {...item,layer,ctx:layer.getContext('2d'),transitions,w,h,axis,slot,duration,visibility:input.style.visibility,settled:false};
   });
   let began=null;
   function tick(now){
    if(began===null)began=now;const elapsed=now-began;
    for(const tile of flaps){
     if(tile.settled||elapsed<tile.slot)continue;
-    const {ctx,w,h,axis}=tile,p=Math.max(0,Math.min(1,(elapsed-tile.start)/tile.duration));
+    const {ctx,w,h,axis}=tile,local=elapsed-tile.slot;
+    const step=tile.transitions.find(step=>local<step.start+step.duration)||tile.transitions.at(-1);
+    const p=Math.max(0,Math.min(1,(local-step.start)/step.duration));
     tile.layer.style.display='block';tile.input.style.visibility='hidden';
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
     function half(face,upper,scale=1){
@@ -113,15 +121,15 @@
      const height=sourceHeight*scale,top=upper?axis-height:axis;
      ctx.drawImage(face,0,y*dpr,w*dpr,sourceHeight*dpr,0,top,w,height);
     }
-    half(tile.toFace,true);half(tile.fromFace,false);
-    // One old upper flap falls to the hinge, pauses edge-on, then the new lower flap lands.
-    if(p<.5){const phase=Math.min(1,p/.4),scale=Math.cos(phase*Math.PI/2);half(tile.fromFace,true,scale);
+    half(step.to,true);half(step.from,false);
+    // Rapid timetable flips, followed by the original correct letter or an empty tile.
+    if(p<.5){const phase=Math.min(1,p/.4),scale=Math.cos(phase*Math.PI/2);half(step.from,true,scale);
      ctx.fillStyle='rgba(0,0,0,'+(.45*phase)+')';ctx.fillRect(0,axis-axis*scale,w,axis*scale);
-    }else{const phase=Math.max(0,Math.min(1,(p-.6)/.4)),scale=Math.sin(phase*Math.PI/2);half(tile.toFace,false,scale);
+    }else{const phase=Math.max(0,Math.min(1,(p-.6)/.4)),scale=Math.sin(phase*Math.PI/2);half(step.to,false,scale);
      ctx.fillStyle='rgba(0,0,0,'+(.45*(1-phase))+')';ctx.fillRect(0,axis,w,(h-axis)*scale);
     }
     ctx.fillStyle='#151515';ctx.fillRect(0,axis-1,w,2);
-    if(p===1){tile.input.value=tile.to;tile.layer.remove();tile.input.style.visibility=tile.visibility;tile.settled=true;onSettle(tile);}
+    if(local>=tile.duration){tile.input.value=tile.to;tile.layer.remove();tile.input.style.visibility=tile.visibility;tile.settled=true;onSettle(tile);}
    }
    if(elapsed>=timeline){stop();onDone();return;}
    frame=requestAnimationFrame(tick);
@@ -212,6 +220,7 @@
   frame=requestAnimationFrame(draw);
  }
  window.crosswordCheckEffects={
+  letterDuration:900,
   busy:()=>running,
   check(items,onSettle,onDone,context={}){if(running)return false;effectContext=context;return window.checkLettersWithFlaps(items,onSettle,onDone);},
   celebrate(context={}){if(running)return;effectContext=context;window.celebrateCorrectPuzzle14();}
