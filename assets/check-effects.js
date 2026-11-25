@@ -77,56 +77,50 @@
   frame=requestAnimationFrame(flick);
  }
  window.checkLettersWithFlaps=function(items,onSettle,onDone){
-  if(!desktop.matches||!items.length)return false;
+  if(!items.length)return false;
   if(running)return true;
-  ensureFlapStyle();running=true;lockedMain=document.body;
-  if(lockedMain){previousInert=lockedMain.inert;lockedMain.inert=true;}
-  let timeline=0;
+  running=true;lockedMain=document.body;previousInert=lockedMain.inert;lockedMain.inert=true;
+  const dpr=Math.min(devicePixelRatio||1,2);let timeline=0;
   flaps=items.map(item=>{
-   const input=item.input,rect=input.getBoundingClientRect(),style=getComputedStyle(input),cellStyle=getComputedStyle(input.parentElement);
-   const h=rect.height,axis=(h+parseFloat(style.paddingTop)-parseFloat(style.paddingBottom))/2;
-   const layer=document.createElement('div');layer.className='cof-flap';layer.setAttribute('aria-hidden','true');
-   function half(top,letter){
-    const panel=document.createElement('div');panel.className='cof-flap-half';
-    Object.assign(panel.style,{top:top?'0px':axis+'px',height:(top?axis:h-axis)+'px',background:cellStyle.backgroundColor,transformOrigin:top?'50% 100%':'50% 0%'});
-    // Render with the same native input as the grid, rather than a flex span:
-    // input and span baselines differ, especially between mobile and desktop fonts.
-    const glyph=input.cloneNode(false);glyph.removeAttribute('id');glyph.removeAttribute('name');
-    glyph.className='cof-check-glyph';glyph.value=letter;glyph.readOnly=true;glyph.tabIndex=-1;glyph.setAttribute('aria-hidden','true');
-    Object.assign(glyph.style,{position:'absolute',left:'0px',width:'100%',height:h+'px',top:top?'0px':-axis+'px',boxSizing:'border-box',margin:'0',border:'0',borderRadius:'0',background:'transparent',outline:'none',boxShadow:'none',visibility:'inherit',pointerEvents:'none',font:style.font,lineHeight:style.lineHeight,textAlign:style.textAlign,letterSpacing:style.letterSpacing,color:style.color,paddingTop:style.paddingTop,paddingBottom:style.paddingBottom,paddingLeft:style.paddingLeft,paddingRight:style.paddingRight});
-    panel.appendChild(glyph);layer.appendChild(panel);return {panel,glyph};
+   const input=item.input,rect=input.getBoundingClientRect(),style=getComputedStyle(input);
+   const w=rect.width,h=rect.height,axis=Math.max(1,Math.min(h-1,(h+(parseFloat(style.paddingTop)||0)-(parseFloat(style.paddingBottom)||0))/2));
+   const layer=document.createElement('canvas');layer.setAttribute('aria-hidden','true');layer.className='cof-check-snap';
+   layer.width=Math.ceil(w*dpr);layer.height=Math.ceil(h*dpr);
+   Object.assign(layer.style,{position:'fixed',left:rect.left+'px',top:rect.top+'px',width:w+'px',height:h+'px',display:'none',pointerEvents:'none',zIndex:'10001',opacity:'1'});
+   document.body.appendChild(layer);
+   // Rasterise each letter once. Grid CSS cannot resize or move these half-tiles.
+   function face(letter){
+    const face=document.createElement('canvas');face.width=layer.width;face.height=layer.height;
+    const c=face.getContext('2d');c.scale(dpr,dpr);c.fillStyle='#fff';c.fillRect(0,0,w,h);
+    c.font=style.font;c.fillStyle=style.color;c.textAlign='center';c.textBaseline='middle';
+    const x=(w+(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0))/2;
+    c.fillText(letter,x,axis);return face;
    }
-   const top=half(true,item.to),bottom=half(false,item.from),turnTop=half(true,item.from),turnBottom=half(false,item.to);
-   turnBottom.panel.style.visibility='hidden';
-   const seam=document.createElement('span');seam.className='cof-flap-seam';seam.style.top=axis+'px';layer.appendChild(seam);
-   layer.style.display='none';input.parentElement.appendChild(layer);const visibility=input.style.visibility;
-   const slot=item.checkOffset??timeline,start=slot+222,duration=111;timeline=Math.max(timeline,slot+333);
-   seam.style.background='transparent';
-   return {...item,visibility,layer,top,bottom,turnTop,turnBottom,seam,baseColour:cellStyle.backgroundColor,slot,start,duration,settled:false};
+   const slot=item.checkOffset??timeline;timeline=Math.max(timeline,slot+333);
+   return {...item,layer,ctx:layer.getContext('2d'),fromFace:face(item.from),toFace:face(item.to),w,h,axis,slot,start:slot+222,duration:111,visibility:input.style.visibility,settled:false};
   });
   let began=null;
   function tick(now){
-   if(!desktop.matches){stop();onDone();return;}
    if(began===null)began=now;const elapsed=now-began;
    for(const tile of flaps){
-    if(tile.settled)continue;
-    const p=Math.max(0,Math.min(1,(elapsed-tile.start)/tile.duration));
-    const active=elapsed>=tile.slot;
-    // Leave every waiting square completely untouched until its own check begins.
-    tile.layer.style.display=active?'block':'none';tile.input.style.visibility=active?'hidden':tile.visibility;
-    for(const half of [tile.top,tile.bottom,tile.turnTop,tile.turnBottom])half.panel.style.background=active?'#fff':tile.baseColour;
-    tile.seam.style.background=active?'rgba(5,5,5,.85)':'transparent';
-    tile.seam.style.height=active?'2px':'1px';
-    tile.seam.style.boxShadow=active?'0 1px 2px rgba(5,5,5,.35)':'none';
-    // Keep the total 111ms flip, with a brief edge-on beat between the two snaps.
-    const lift=Math.min(1,p/.38),land=Math.max(0,Math.min(1,(p-.62)/.38));
-    tile.turnTop.panel.style.visibility=p<.5?'visible':'hidden';tile.turnBottom.panel.style.visibility=p>=.5?'visible':'hidden';
-    tile.turnTop.panel.style.transform='rotateX('+(-90*lift)+'deg)';
-    tile.turnBottom.panel.style.transform='rotateX('+(90*(1-land))+'deg)';
-    tile.turnTop.panel.style.filter='brightness('+(1-.55*lift)+')';
-    tile.turnBottom.panel.style.filter='brightness('+(.45+.55*land)+')';
-    tile.turnTop.panel.style.boxShadow=p>0?'0 3px 4px rgba(5,5,5,.45)':'none';
-    tile.turnBottom.panel.style.boxShadow=p>0&&p<1?'0 -3px 4px rgba(5,5,5,.45)':'none';
+    if(tile.settled||elapsed<tile.slot)continue;
+    const {ctx,w,h,axis}=tile,p=Math.max(0,Math.min(1,(elapsed-tile.start)/tile.duration));
+    tile.layer.style.display='block';tile.input.style.visibility='hidden';
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    function half(face,upper,scale=1){
+     const y=upper?0:axis,sourceHeight=upper?axis:h-axis;
+     if(scale<=.001)return;
+     const height=sourceHeight*scale,top=upper?axis-height:axis;
+     ctx.drawImage(face,0,y*dpr,w*dpr,sourceHeight*dpr,0,top,w,height);
+    }
+    half(tile.toFace,true);half(tile.fromFace,false);
+    // One old upper flap falls to the hinge, pauses edge-on, then the new lower flap lands.
+    if(p<.5){const phase=Math.min(1,p/.4),scale=Math.cos(phase*Math.PI/2);half(tile.fromFace,true,scale);
+     ctx.fillStyle='rgba(0,0,0,'+(.45*phase)+')';ctx.fillRect(0,axis-axis*scale,w,axis*scale);
+    }else{const phase=Math.max(0,Math.min(1,(p-.6)/.4)),scale=Math.sin(phase*Math.PI/2);half(tile.toFace,false,scale);
+     ctx.fillStyle='rgba(0,0,0,'+(.45*(1-phase))+')';ctx.fillRect(0,axis,w,(h-axis)*scale);
+    }
+    ctx.fillStyle='#151515';ctx.fillRect(0,axis-1,w,2);
     if(p===1){tile.input.value=tile.to;tile.layer.remove();tile.input.style.visibility=tile.visibility;tile.settled=true;onSettle(tile);}
    }
    if(elapsed>=timeline){stop();onDone();return;}
