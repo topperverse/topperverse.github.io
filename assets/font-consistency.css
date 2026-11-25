@@ -76,3 +76,15 @@
  .clue-panel{height:690px;max-height:690px;align-content:start}
  .clue-panel .clue-lists{align-content:start;grid-auto-rows:max-content;flex:1}
 }
+
+/* Remove document overflow at normal desktop sizes; retain a readable lower bound. */
+@media screen and (min-width:861px){
+ body>main:not(.layout){padding-bottom:8px}
+ body>main:not(.layout)>.layout{grid-template-columns:var(--desktop-grid-size) minmax(0,1fr)}
+ .grid-wrap>.crossword,.grid-wrap>#selectedClue{width:var(--desktop-grid-size)!important}
+ .grid-wrap>.crossword{height:var(--desktop-grid-size)!important}
+ .clues{height:calc(var(--desktop-grid-size) + 112px);max-height:none;min-height:0}
+ body>.layout{height:calc(var(--desktop-grid-size) + 130px);margin-bottom:0}
+ .puzzle-panel,.clue-panel{height:calc(var(--desktop-grid-size) + 130px);max-height:calc(var(--desktop-grid-size) + 130px)}
+ .puzzle-panel>.stage{height:var(--desktop-grid-size);min-height:var(--desktop-grid-size)}
+}

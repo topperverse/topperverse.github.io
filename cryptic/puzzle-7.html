@@ -512,7 +512,7 @@ mark.parse-indicators{background:rgba(225,37,27,.16);color:inherit}
 
 @media(min-width:861px){.unified-actions .ui-home::after{content:"";display:block;width:16px;height:16px;flex:0 0 16px;margin-left:0;background:center/16px 16px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13 13V7H3M7 3L3 7L7 11' fill='none' stroke='white' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E")}}
 </style>
-<link rel="stylesheet" href="/assets/font-consistency.css?v=20261125-reference6">
+<link rel="stylesheet" href="/assets/font-consistency.css?v=20261125-fit7">
 </head>
 <body><main><div class="topbar"><div><h1>Cryptic's Only Fans (7)</h1><p class="setter-credit">Set by Harry Topper</p><p class="subtitle">Set by Harry Topper</p></div><div class="toolbar" aria-label="Puzzle controls"><a class="button-link home-link" href="cryptics_only_fans.html">Return home</a><button id="checkPuzzleBtn" type="button">Check puzzle</button><button id="hintBtn" type="button" aria-haspopup="dialog" aria-controls="hintDialog">Get hint</button><button id="revealWordBtn" type="button">Reveal word</button><button id="clearBtn" type="button">Clear letters</button><button id="anagramBtn" type="button">Anagrammer</button><button id="hideHintsBtn" type="button" title="Hide and reset all revealed hints">Hide hints</button><button id="printBtn" type="button">Print</button></div><nav class="compact-mobile-bar" aria-label="Mobile puzzle controls">
   <div class="compact-clue-control">
@@ -1124,6 +1124,11 @@ function fitMobileClue(){
   document.documentElement.style.setProperty('--mobile-letter-size',Math.max(10.5,Math.min(mobilePuzzleMedia.matches?32:50,mobileCellSize*.75))+'px');
   document.documentElement.style.setProperty('--mobile-number-size',Math.max(7,Math.min(10,mobileCellSize*.3))+'px');
   selectedClue.style.setProperty('--clue-box-height',boxHeight+'px');
+  if(!mobilePuzzleMedia.matches){
+    const room=innerHeight-wrapper.getBoundingClientRect().top-boxHeight-status.getBoundingClientRect().height-2*gap-8;
+    document.documentElement.style.setProperty('--desktop-grid-size',Math.max(400,Math.min(560,Math.floor(room)))+'px');
+  }
+
   let content=selectedClue.querySelector('.clue-fit-text');
   if(!content){content=document.createElement('span');content.className='clue-fit-text';content.append(...selectedClue.childNodes);selectedClue.append(content);}
   const max=Math.min(base+4,landscape?17:19);
