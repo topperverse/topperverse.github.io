@@ -52,21 +52,25 @@
  .compact-tools .unified-actions,.compact-tools .unified-actions .ui-action,.compact-tools .unified-actions .ui-submenu button,.compact-tools .unified-actions .ui-submenu a{letter-spacing:normal;word-spacing:normal}
 }
 
-/* Desktop keeps a readable laptop-sized puzzle; only clue lists scroll. */
+
+/* Desktop scales within readable bounds; smaller windows scroll instead. */
 @media screen and (min-width:861px){
+ :root{--desktop-grid-size:clamp(420px,min(calc(100dvh - 280px),calc((100vw - 96px)*.48)),680px)}
  html,body{height:auto;min-height:100%;overflow:auto}
- body:has(>.layout){height:auto;display:block;min-width:1080px}
- body>main:not(.layout){height:auto;min-width:1080px;display:block;padding:14px 0 24px}
- body>main:not(.layout)>.layout{display:grid;grid-template-columns:440px minmax(0,1fr);align-items:start;height:auto;min-height:0}
+ body:has(>.layout){height:auto;display:block;min-width:1040px}
+ body>main:not(.layout){height:auto;min-width:1040px;width:min(1560px,calc(100% - 48px));display:block;padding:14px 0 24px}
+ body>main:not(.layout)>.layout{display:grid;grid-template-columns:var(--desktop-grid-size) minmax(0,1fr);align-items:start;height:auto;min-height:0}
+ .topbar{padding-top:8px;padding-bottom:8px}
+ .ui-action-dock{margin-bottom:8px;padding-bottom:6px}
  .grid-wrap{height:auto;align-self:start;position:sticky;top:12px}
- .grid-wrap>.crossword,.grid-wrap>#selectedClue{width:440px!important;max-width:none}
- .grid-wrap>.crossword{height:440px!important}
- .clues{height:560px;max-height:calc(100dvh - 180px);min-height:320px;align-content:start;grid-template-rows:max-content max-content;row-gap:12px;overflow:auto}
+ .grid-wrap>.crossword,.grid-wrap>#selectedClue{width:var(--desktop-grid-size)!important;max-width:none}
+ .grid-wrap>.crossword{height:var(--desktop-grid-size)!important}
+ .clues{height:calc(var(--desktop-grid-size) + 112px);max-height:calc(100dvh - 180px);min-height:360px;align-content:start;grid-template-rows:max-content max-content;row-gap:12px;overflow:auto}
  .clues>.ui-sticky-clue-headings{align-self:start;margin:0}
  .clues>div:not(.ui-sticky-clue-headings){align-self:start}
- body>.layout{min-width:1040px;width:min(1500px,calc(100% - 40px));height:590px;display:grid;grid-template-columns:560px minmax(0,1fr);align-items:start}
- .puzzle-panel{height:590px;position:sticky;top:12px}
- .puzzle-panel>.stage{height:440px;min-height:440px;flex:none}
- .clue-panel{height:590px;max-height:590px;align-content:start}
+ body>.layout{min-width:1040px;width:min(1560px,calc(100% - 40px));height:calc(var(--desktop-grid-size) + 130px);display:grid;grid-template-columns:calc(var(--desktop-grid-size) + 120px) minmax(0,1fr);align-items:start}
+ .puzzle-panel{height:calc(var(--desktop-grid-size) + 130px);position:sticky;top:12px}
+ .puzzle-panel>.stage{height:var(--desktop-grid-size);min-height:var(--desktop-grid-size);flex:none}
+ .clue-panel{height:calc(var(--desktop-grid-size) + 130px);max-height:calc(var(--desktop-grid-size) + 130px);align-content:start}
  .clue-panel .clue-lists{align-content:start;grid-auto-rows:max-content;flex:1}
 }
