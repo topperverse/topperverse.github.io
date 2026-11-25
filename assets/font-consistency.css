@@ -53,24 +53,26 @@
 }
 
 
-/* Desktop scales within readable bounds; smaller windows scroll instead. */
+/* Desktop reference layout: centred 1180px page, 560px grid; scroll rather than squeeze. */
 @media screen and (min-width:861px){
- :root{--desktop-grid-size:clamp(480px,min(calc(100dvh - 230px),calc((100vw - 96px)*.49)),720px)}
+ :root{--desktop-grid-size:560px}
  html,body{height:auto;min-height:100%;overflow:auto}
- body:has(>.layout){height:auto;display:block;min-width:1040px}
- body>main:not(.layout){height:auto;min-width:1040px;width:min(1560px,calc(100% - 48px));display:block;padding:14px 0 24px}
- body>main:not(.layout)>.layout{display:grid;grid-template-columns:var(--desktop-grid-size) minmax(0,1fr);align-items:start;height:auto;min-height:0}
- .topbar{padding-top:8px;padding-bottom:8px}
- .ui-action-dock{margin-bottom:8px;padding-bottom:6px}
+ body{min-width:1212px}
+ body>main:not(.layout){width:1180px;min-width:1180px;max-width:1180px;height:auto;display:block;margin:0 auto;padding:14px 0 24px}
+ body>main:not(.layout)>.layout{display:grid;grid-template-columns:560px minmax(0,1fr);column-gap:38px;align-items:start;height:auto;min-height:0}
+ .topbar{padding-top:12px;padding-bottom:12px}
+ .ui-action-dock{margin-bottom:12px;padding-bottom:10px}
  .grid-wrap{height:auto;align-self:start;position:sticky;top:12px}
- .grid-wrap>.crossword,.grid-wrap>#selectedClue{width:var(--desktop-grid-size)!important;max-width:none}
- .grid-wrap>.crossword{height:var(--desktop-grid-size)!important}
- .clues{height:calc(var(--desktop-grid-size) + 112px);max-height:calc(100dvh - 180px);min-height:360px;align-content:start;grid-template-rows:max-content max-content;row-gap:12px;overflow:auto}
+ .grid-wrap>.crossword,.grid-wrap>#selectedClue{width:560px!important;max-width:none}
+ .grid-wrap>.crossword{height:560px!important}
+ .clues{height:692px;max-height:calc(100dvh - 180px);min-height:360px;align-content:start;grid-template-rows:max-content max-content;row-gap:12px;overflow:auto}
  .clues>.ui-sticky-clue-headings{align-self:start;margin:0}
  .clues>div:not(.ui-sticky-clue-headings){align-self:start}
- body>.layout{min-width:1040px;width:min(1560px,calc(100% - 40px));height:calc(var(--desktop-grid-size) + 130px);display:grid;grid-template-columns:calc(var(--desktop-grid-size) + 120px) minmax(0,1fr);align-items:start}
- .puzzle-panel{height:calc(var(--desktop-grid-size) + 130px);position:sticky;top:12px}
- .puzzle-panel>.stage{height:var(--desktop-grid-size);min-height:var(--desktop-grid-size);flex:none}
- .clue-panel{height:calc(var(--desktop-grid-size) + 130px);max-height:calc(var(--desktop-grid-size) + 130px);align-content:start}
+ body:has(>.layout){height:auto;display:block;min-width:1240px}
+ body>.layout{width:1200px;min-width:1200px;max-width:1200px;margin-left:auto;margin-right:auto;height:690px;display:grid;grid-template-columns:600px minmax(0,1fr);align-items:start}
+ body:has(>.layout)>header{width:1200px;min-width:1200px;max-width:1200px;margin-left:auto;margin-right:auto}
+ .puzzle-panel{height:690px;position:sticky;top:12px}
+ .puzzle-panel>.stage{height:560px;min-height:560px;flex:none}
+ .clue-panel{height:690px;max-height:690px;align-content:start}
  .clue-panel .clue-lists{align-content:start;grid-auto-rows:max-content;flex:1}
 }
